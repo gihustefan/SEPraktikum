@@ -1,0 +1,298 @@
+<div style="position: absolute; right: 0; top: 0;">
+    <archkb-loadindicator show="ui.showLoadIndicator"></archkb-loadindicator>
+</div>
+<textarea placeholder="{{'TITLE' | translate}}" rows="1" msd-elastic ng-model="archProfile.title" archkb-eip-input
+          size="xl"
+          ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions" ng-change="updateTitle()"></textarea>
+<textarea placeholder="{{'SHORT_DESCRIPTION' | translate}}" rows="1" msd-elastic ng-model="archProfile.description"
+          archkb-eip-input size="lg" ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+          ng-change="updateDescription()"></textarea>
+<div class="row">
+    <div class="col-sm-6">
+        <div ng-if="archProfile.designDecisions.length > 0">
+            <h3>{{'DESIGNDECISIONS' | translate}}</h3>
+            <dl style="margin-bottom: 2px"
+                ng-repeat="designDecision in archProfile.designDecisions | orderBy: 'ordering'"
+                archkb-eip-input-container collection="archProfile.designDecisions" item="designDecision"
+                ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(designDecision, relationIds.designDecisions)"
+                ordering-up-promise="updateRelationOrdering(designDecision, -1, relationIds.designDecisions)"
+                ordering-down-promise="updateRelationOrdering(designDecision, 1, relationIds.designDecisions)"
+                waiting-for-promise="ui.showLoadIndicator"
+                definition-change-callback="updateRelationDefinition(designDecision, relationIds.designDecisions)"
+                show-additional="ui.showAdditionalRelationInfo(designDecision)">
+                <dt>
+					<textarea placeholder="{{'DESIGNDECISION' | translate}}" rows="1" msd-elastic
+                              ng-model="designDecision.name"
+                              archkb-eip-input ng-disabled="ui.editDisabled"
+                              ng-model-options="ui.coreDataModelOptions"
+                              uib-typeahead="loadedDesignDecision.name for loadedDesignDecision in getCoreData($viewValue, relationIds.designDecisions)"
+                              typeahead-min-length="3"
+                              typeahead-on-select="addRelation($item, relationIds.designDecisions, designDecision)"
+                              typeahead-no-results="designDecision.noResults"></textarea>
+                    <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreData(designDecision)"
+                            ng-click="createNewAttribute(designDecision, relationIds.designDecisions)">{{"DEFINE"
+                        |
+                        translate}}
+                    </button>
+                </dt>
+                <dd>
+					<textarea placeholder="{{'RATIONALE' | translate}}" rows="1" msd-elastic
+                              ng-model="designDecision.description"
+                              ng-show="ui.showAdditionalRelationInfo(designDecision)"
+                              archkb-eip-input ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(designDecision, relationIds.designDecisions)"></textarea>
+                </dd>
+            </dl>
+        </div>
+        <hr ng-if="archProfile.designDecisions.length > 0"/>
+        <div ng-if="archProfile.drivers.length > 0">
+            <h3>{{'REQUIREMENTSADDRESSED' | translate}}</h3>
+            <dl style="margin-bottom: 2px"
+                ng-repeat="driver in archProfile.drivers | orderBy: 'ordering'"
+                archkb-eip-input-container collection="archProfile.drivers" item="driver" ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(driver, relationIds.drivers)"
+                ordering-up-promise="updateRelationOrdering(driver, -1, relationIds.drivers)"
+                ordering-down-promise="updateRelationOrdering(driver, 1, relationIds.drivers)"
+                waiting-for-promise="ui.showLoadIndicator"
+                definition-change-callback="updateRelationDefinition(driver, relationIds.drivers)"
+                show-additional="ui.showAdditionalRelationInfo(driver)">
+                <dt>
+					<textarea placeholder="{{'REQUIREMENTADDRESSED' | translate}}" rows="1" msd-elastic
+                              ng-model="driver.name"
+                              archkb-eip-input ng-disabled="ui.editDisabled"
+                              ng-model-options="ui.coreDataModelOptions"
+                              uib-typeahead="loadedDriver.name for loadedDriver in getCoreData($viewValue, relationIds.drivers)"
+                              typeahead-min-length="3"
+                              typeahead-on-select="addRelation($item, relationIds.drivers, driver)"
+                              typeahead-no-results="driver.noResults"></textarea>
+                    <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreData(driver)"
+                            ng-click="createNewAttribute(driver, relationIds.drivers)">{{"DEFINE"
+                        |
+                        translate}}
+                    </button>
+                </dt>
+                <dd>
+					<textarea placeholder="{{'DESCRIPTION' | translate}}" rows="1" msd-elastic
+                              ng-model="driver.description" archkb-eip-input
+                              ng-show="ui.showAdditionalRelationInfo(driver)"
+                              ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(driver, relationIds.drivers)"></textarea>
+                </dd>
+            </dl>
+        </div>
+        <hr ng-if="archProfile.drivers.length > 0"/>
+        <div ng-if="archProfile.constraints.length > 0">
+            <h3>{{'EFFECTEDDOCUMENTATIONMODELS' | translate}}</h3>
+            <dl style="margin-bottom: 2px"
+                ng-repeat="constraint in archProfile.constraints | orderBy: 'ordering'"
+                archkb-eip-input-container collection="archProfile.constraints" item="constraint"
+                ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(constraint, relationIds.constraints)"
+                ordering-up-promise="updateRelationOrdering(constraint, -1, relationIds.constraints)"
+                ordering-down-promise="updateRelationOrdering(constraint, 1, relationIds.constraints)"
+                waiting-for-promise="ui.showLoadIndicator"
+                definition-change-callback="updateRelationDefinition(constraint, relationIds.constraints)"
+                show-additional="ui.showAdditionalRelationInfo(constraint)">
+                <dt>
+					<textarea placeholder="{{'EFFECTEDDOCUMENTATIONMODEL' | translate}}" rows="1" msd-elastic ng-model="constraint.name"
+                              archkb-eip-input
+                              ng-disabled="ui.editDisabled"
+                              ng-model-options="ui.coreDataModelOptions"
+                              uib-typeahead="loadedConstraint.name for loadedConstraint in getCoreData($viewValue, relationIds.constraints)"
+                              typeahead-min-length="3"
+                              typeahead-on-select="addRelation($item, relationIds.constraints, constraint)"
+                              typeahead-no-results="constraint.noResults"></textarea>
+                    <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreData(constraint)"
+                            ng-click="createNewAttribute(constraint, relationIds.constraints)">{{"DEFINE" |
+                        translate}}
+                    </button>
+                </dt>
+                <dd>
+					<textarea placeholder="{{'DESCRIPTION' | translate}}" rows="1" msd-elastic
+                              ng-model="constraint.description" archkb-eip-input
+                              ng-show="ui.showAdditionalRelationInfo(constraint)"
+                              ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(constraint, relationIds.constraints)"></textarea>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div ng-if="archProfile.tradeoffs.length > 0">
+            <h3>{{'TRADEOFFS' | translate}}</h3>
+            <dl style="margin-bottom: 2px"
+                ng-repeat="tradeoff in archProfile.tradeoffs | orderBy: 'ordering'" archkb-eip-input-container
+                collection="archProfile.tradeoffs" item="tradeoff" ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(tradeoff, relationIds.tradeoffs)"
+                ordering-up-promise="updateRelationOrdering(tradeoff, -1, relationIds.tradeoffs)"
+                ordering-down-promise="updateRelationOrdering(tradeoff, 1, relationIds.tradeoffs)"
+                waiting-for-promise="ui.showLoadIndicator"
+                tradeoff-definition-over-change-callback="updateTradeoffRelationDefinitionOver(tradeoff)"
+                tradeoff-definition-under-change-callback="updateTradeoffRelationDefinitionUnder(tradeoff)"
+                show-additional="ui.showAdditionalRelationInfo(tradeoff)">
+                <dt>
+                <div class="form-inline">
+                    <div class="form-group">
+                                <textarea placeholder="{{'TRADEOFF' | translate}}" rows="1" msd-elastic
+                                          ng-model="tradeoff.nameOver" archkb-eip-input
+                                          ng-disabled="ui.editDisabled"
+                                          ng-model-options="ui.coreDataModelOptions"
+                                          uib-typeahead="loadedTradeoff.name for loadedTradeoff in getCoreData($viewValue, relationIds.tradeoffItems)"
+                                          typeahead-min-length="3"
+                                          typeahead-on-select="addTradeoffRelation($item, tradeoff, false)"
+                                          typeahead-no-results="tradeoff.noResultsOver"></textarea>
+                        <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreDataTradeoffOver(tradeoff)"
+                                ng-click="createNewTradeoffItem(tradeoff, false)">{{"DEFINE" |
+                            translate}}
+                        </button>
+                    </div>
+                    <div class="form-group ">{{'OVER' | translate}}</div>
+                    <div class="form-group">
+                                <textarea placeholder="{{'QUALITY_ATTRIBUTE' | translate}}" rows="1" msd-elastic
+                                          ng-model="tradeoff.nameUnder" archkb-eip-input
+                                          ng-disabled="ui.editDisabled"
+                                          ng-model-options="ui.coreDataModelOptions"
+                                          uib-typeahead="loadedTradeoff.name for loadedTradeoff in getCoreData($viewValue, relationIds.tradeoffItems)"
+                                          typeahead-min-length="3"
+                                          typeahead-append-to-body="true"
+                                          typeahead-on-select="addTradeoffRelation($item, tradeoff, true)"
+                                          typeahead-no-results="tradeoff.noResultsUnder"></textarea>
+                        <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreDataTradeoffUnder(tradeoff)"
+                                ng-click="createNewTradeoffItem(tradeoff, true)">{{"DEFINE" |
+                            translate}}
+                        </button>
+                    </div>
+                </div>
+                </dt>
+                <dd>
+					<textarea placeholder="{{'DESCRIPTION' | translate}}" rows="1" msd-elastic
+                              ng-model="tradeoff.description" archkb-eip-input
+                              ng-show="ui.showAdditionalRelationInfo(tradeoff)"
+                              ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(tradeoff, relationIds.tradeoffs)"></textarea>
+                </dd>
+            </dl>
+        </div>
+        <hr ng-if="archProfile.tradeoffs.length > 0"/>
+        <div ng-if="archProfile.qualityAttributes.length > 0">
+            <h3>{{'IMPLICATIONS' | translate}}</h3>
+            <!--<ul class="list-inline">
+                <li ng-repeat="qualityAttribute in archProfile.qualityAttributes | orderBy: 'ordering'"><span
+                        class="badge">{{qualityAttribute.name}}</span>
+                    {{$index + 1 != archProfile.qualityAttributes.length ? ">" : ""}}
+                </li>
+            </ul>-->
+            <dl style="margin-bottom: 2px"
+                ng-repeat="qualityAttribute in archProfile.qualityAttributes | orderBy: 'ordering'"
+                archkb-eip-input-container collection="archProfile.qualityAttributes" item="qualityAttribute"
+                ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(qualityAttribute, relationIds.qualityattributes)"
+                ordering-up-promise="updateRelationOrdering(qualityAttribute, -1, relationIds.qualityattributes)"
+                ordering-down-promise="updateRelationOrdering(qualityAttribute, 1, relationIds.qualityattributes)"
+                waiting-for-promise="ui.showLoadIndicator"
+                definition-change-callback="updateRelationDefinition(qualityAttribute, relationIds.qualityattributes)"
+                show-additional="ui.showAdditionalRelationInfo(qualityAttribute)">
+                <dt>
+					<textarea placeholder="{{'IMPLICATION' | translate}}" archkb-eip-input rows="1" msd-elastic
+                              ng-model="qualityAttribute.name" ng-disabled="ui.editDisabled"
+                              ng-model-options="ui.coreDataModelOptions"
+                              uib-typeahead="loadedQualityAttribute.name for loadedQualityAttribute in getCoreData($viewValue, relationIds.qualityattributes)"
+                              typeahead-min-length="3"
+                              typeahead-on-select="addRelation($item, relationIds.qualityattributes, qualityAttribute)"
+                              typeahead-no-results="qualityAttribute.noResults"
+                    ></textarea>
+                    <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreData(qualityAttribute)"
+                            ng-click="createNewAttribute(qualityAttribute, relationIds.qualityattributes)">{{"DEFINE" |
+                        translate}}
+                    </button>
+                </dt>
+                <dd>
+					<textarea placeholder="{{'DESCRIPTION' | translate}}" archkb-eip-input rows="1" msd-elastic
+                              ng-model="qualityAttribute.description" ng-disabled="ui.editDisabled"
+                              ng-show="ui.showAdditionalRelationInfo(qualityAttribute)"
+                              ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(qualityAttribute, relationIds.qualityattributes)"
+                    ></textarea>
+                </dd>
+            </dl>
+        </div>
+        <hr ng-if="archProfile.qualityAttributes.length > 0"/>
+        <div ng-if="archProfile.architecturestyles.length > 0">
+            <h3>{{'REQUIREDCOMPONENTS' | translate}}</h3>
+            <dl style="margin-bottom: 2px"
+                ng-repeat="architecturestyle in archProfile.architecturestyles | orderBy: 'ordering'"
+                archkb-eip-input-container collection="archProfile.architecturestyles" item="architecturestyle"
+                ng-disabled="ui.editDisabled"
+                delete-promise="deleteRelation(architecturestyle, relationIds.architecturestyles)"
+                ordering-up-promise="updateRelationOrdering(architecturestyle, -1, relationIds.architecturestyles)"
+                ordering-down-promise="updateRelationOrdering(architecturestyle, 1, relationIds.architecturestyles)"
+                waiting-for-promise="ui.showLoadIndicator"
+                definition-change-callback="updateRelationDefinition(architecturestyle, relationIds.architecturestyles)"
+                show-additional="ui.showAdditionalRelationInfo(architecturestyle)">
+                <dt>
+					<textarea placeholder="{{'REQUIREDCOMPONENT' | translate}}" rows="1" msd-elastic
+                              ng-model="architecturestyle.name"
+                              archkb-eip-input ng-disabled="ui.editDisabled"
+                              ng-model-options="ui.coreDataModelOptions"
+                              uib-typeahead="loadedArchitecturestyle.name for loadedArchitecturestyle in getCoreData($viewValue, relationIds.architecturestyles)"
+                              typeahead-min-length="3"
+                              typeahead-on-select="addRelation($item, relationIds.architecturestyles, architecturestyle)"
+                              typeahead-no-results="architecturestyle.noResults"></textarea>
+                    <button class="btn btn-xs btn-success" ng-if="ui.showAddToCoreData(architecturestyle)"
+                            ng-click="createNewAttribute(architecturestyle, relationIds.architecturestyles)">{{"DEFINE"
+                        |
+                        translate}}
+                    </button>
+                </dt>
+                <!--<dd>
+					<textarea placeholder="{{'DESCRIPTION' | translate}}" rows="1" msd-elastic
+                              ng-model="architecturestyle.description"
+                              ng-show="ui.showAdditionalRelationInfo(architecturestyle)"
+                              archkb-eip-input ng-disabled="ui.editDisabled" ng-model-options="ui.inputModelOptions"
+                              ng-change="updateRelationDescription(architecturestyle, relationIds.architecturestyles)"></textarea>
+                </dd>-->
+            </dl>
+        </div>
+    </div>
+</div>
+<!--
+<div class="row" ng-if="archProfile.diagrams.length > 0 || !ui.editDisabled">
+    <div class="col-sm-12">
+        <hr/>
+        <h3>{{"DIAGRAMS" | translate}}</h3>
+    </div>
+    <div class="col-sm-12" ng-if="!ui.editDisabled">
+        <div class="text-right">
+            <small>{{"ONLY_JPG_PNG_SIZE" | translate}}</small>
+        </div>
+        <div ng-if="!ui.editDisabled" ngf-drop="createDiagrams($files)" ngf-select="createDiagrams($files)"
+             ng-model="files" class="archkb-drop-box"
+             ngf-drag-over-class="'dragover'" ngf-multiple="true"
+             accept="image/png, image/jpeg"
+             ngf-pattern="'.jpg,.jpeg,.png,.JPG,.JPEG,.PNG'"
+             ngf-max-size="2MB"
+             ngf-max-tital-size="10MB"
+             ngf-allow-dir="false">{{"DRAG_IMAGES_HERE_OR_CLICK" | translate}}
+        </div>
+        <div style="position: absolute; right: 15px; top: 20px;">
+            <archkb-loadindicator show="ui.uploadInProgress"></archkb-loadindicator>
+        </div>
+    </div>
+    <div ng-if="archProfile.diagrams.length > 0">
+        <div ng-repeat="diagram in archProfile.diagrams" class="col-sm-6">
+            <div class="archkb-diagram-wrapper">
+                <div class="archkb-diagram-thumbnail" ng-style="getDiagramThumbnailStyle(diagram)"></div>
+                <div class="archkb-diagram-actions">
+                    <a ng-href="{{diagram.path}}" target="_blank" class="archkb-diagram-thumbnail-open"></span></a>
+                    <a ng-if="!ui.editDisabled" href ng-click="deleteDiagram(diagram)"
+                       class="archkb-diagram-action pull-right text-danger"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->

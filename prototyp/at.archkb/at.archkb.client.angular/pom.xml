@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>at.archkb</groupId>
+		<artifactId>at.archkb.all</artifactId>
+		<version>1.0.2</version>
+	</parent>
+
+	<artifactId>at.archkb.client.angular</artifactId>
+	<name>ArchKB Angular Client Project</name>
+
+	<packaging>war</packaging>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- Plugin for executing commands via maven (e.g. npm install, bower install, gunt, ...
+				on) -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>exec-npm-install</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>exec-bower-install</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>bower</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>exec-grunt</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>grunt</executable>
+							<!-- <arguments>
+								<argument>dist</argument>
+							</arguments> -->
+						</configuration>
+					</execution>
+					<execution>
+						<id>exec-grunt-test</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>grunt</executable>
+							<arguments>
+								<argument>test</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<targetPath>static/</targetPath>
+							<directory>src/main/webapp/build/dev</directory>
+						</resource>
+					</webResources>
+					<warSourceDirectory>war-resources</warSourceDirectory>
+					<failOnMissingWebXml>true</failOnMissingWebXml>
+					<overlays>
+						<overlay>
+							<groupId>at.archkb</groupId>
+							<artifactId>at.archkb.client.angular-admin</artifactId>
+							<excludes>
+								<exclude>WEB-INF</exclude>
+							</excludes>
+							<targetPath>static/admin</targetPath>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>at.archkb</groupId>
+			<artifactId>at.archkb.server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.archkb</groupId>
+			<artifactId>at.archkb.client.angular-admin</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+</project>

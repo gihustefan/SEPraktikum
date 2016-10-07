@@ -1,0 +1,64 @@
+<div class="container">
+    <h1 class="page-header">Core Data</h1>
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading ">General Information</div>
+            <div class="panel-body ">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="name">Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="apat.name" id="name" ng-readonly="!edit">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="definition">Definition:</label>
+                    <div class="col-sm-9">
+                        <textarea type="text" class="form-control" ng-model="apat.definition" rows="4" id="definition" ng-readonly="!edit"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="type">Type:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="apat.type" id="type" ng-readonly="true">
+                    </div>
+                </div>
+                <div class="form-group" ng-show="apat.creatorEmail&&apat.creatorId">
+                    <label class="control-label col-sm-3">Creator:</label>
+                    <div class="col-sm-9">
+                        <button ng-click="showCreator()" type="button" class="btn btn-default">{{apat.creatorEmail}}</button>
+                       
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="panel panel-default ">
+            <div class="panel-heading ">Activation</div>
+            <div class="panel-body ">
+                <div class="form-inline" ng-show="apat.creationDate>0">
+                    <label class="control-label col-sm-3">Creationdate</label>
+                    <label class="control-label col-sm-9"><p class="text-left">{{apat.creationDate | date:'medium'}}</p></label>
+                </div>
+                <div class="form-inline" ng-show="apat.coreAdded>0">
+                    <label class="control-label col-sm-3">Core Added:</label>
+                    <label class="control-label col-sm-9"><p class="text-left">{{apat.coreAdded | date:'medium'}}</p></label>
+                </div>
+                <div class="form-inline" ng-show="apat.lastModified>0">
+                    <label class="control-label col-sm-3">Last Modified:</label>
+                    <label class="control-label col-sm-9"><p class="text-left">{{apat.lastModified | date:'medium'}}</p></label>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body ">
+            <div class="form-group">
+                <div class="form-inline pull-right">
+                    <a ng-click="edit=false" class="btn btn-danger" ng-show="edit"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+                    <a ng-click="coreAdd()" class="btn btn-success" ng-show="edit&&(!apat.coreAdded)"><span class="glyphicon glyphicon-floppy-saved"></span> Add to Core</a>
+                    <a ng-click="coreRemove()" class="btn btn-warning" ng-show="edit&&apat.coreAdded"><span class="glyphicon glyphicon-floppy-remove"></span> Remove from Core</a>
+                    <a ng-click="update()" class="btn btn-primary" ng-show="edit"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <a ng-click="edit=true" class="btn btn-warning" ng-show="!edit"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,55 @@
+Steps to deploy to https://akb.se.jku.at
+
+Covers topics:
+    - Changes within the projects
+    - Deployment of the war file
+
+
+**********************************************************
+    Changes: Client Angular Project
+**********************************************************
+    - no changes needed
+
+**********************************************************
+    Changes: Client Angular-Admin Project:
+**********************************************************
+    - Changing the serverAdress in app.js from:
+        var serverAddress = "http://localhost:8080/";
+        to
+        var serverAddress = "https://akb.se.jku.at/";
+    - Build with grunt
+        grunt build
+
+**********************************************************
+    Changes: Server
+**********************************************************
+    - Changing the Neo4J Properties in the data.properties from
+      neo4j.uri=http://neo4j:neose@ec2.mayerb.net:7474
+      to
+      neo4j.uri=http://neo4j:ain2SA=)ad*a_DA2@localhost:7474
+
+**********************************************************
+    Deployment process
+**********************************************************
+    - Build the Project with maven
+        mvn clean install
+
+        (optional) recompile client:
+        npm install
+        bower install
+        grunt
+        mvn war:exploded
+
+    - Ready to deploy war file under:
+        [ProjectRoot]/at.archkb.client.angular/target/at.archkb.client.angular-x.x.x.war
+
+    - IMPORTANT - Rename file to (only then Tomcat will deploy it under path /ak and will be accessible via proxy):
+        ak.war
+
+    - Connect to Server via SSH tunnel
+        Configure Port forewarding e.g. via Putty
+        Than you can access Tomcat / Neo4J Server via the browser
+        e.g. localhost:8080 / localhost:7474 --> depends on Port forwarding
+
+    - Deploy the application via the upload and deploy functionality of the Tomcat Admin UI
+        localhost:8080

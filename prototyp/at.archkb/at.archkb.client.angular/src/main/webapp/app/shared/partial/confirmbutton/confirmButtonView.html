@@ -1,0 +1,5 @@
+<button class="btn btn-danger btn-sm" ng-click="showConfirm = true" ng-show="!showConfirm">{{text}}</button>
+<div class="btn-group btn-group-sm" ng-show="showConfirm">
+    <button class="btn btn-danger" ng-click="onConfirm()">{{"CONFIRM" | translate}} - {{text}}</button>
+    <button class="btn btn-default" ng-click="showConfirm = false">{{"CANCEL" | translate}}</button>
+</div>

@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <b>{{"DEFINE" | translate}} - {{attribute.name}}</b>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label>{{"NAME" | translate}}</label>
+        <textarea ng-disabled="true" archkb-eip-input msd-elastic type="text" class="form-control" placeholder="{{'NAME' | translate}}" ng-model="attribute.name"></textarea>
+    </div>
+    <div class="form-group">
+        <label>{{"DEFINITION" | translate}}</label>
+        <textarea archkb-eip-input msd-elastic class="form-control" placeholder="{{'DEFINITION' | translate}}" ng-model="attribute.definition"></textarea>
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button class="btn btn-success btn-sm" ng-click="saveAttribute()">{{"SAVE" | translate}}</button>
+</div>

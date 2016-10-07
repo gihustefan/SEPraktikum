@@ -1,0 +1,27 @@
+<div class="container">
+    <h1 class="page-header">Existing ArchProfile Attributes</h1>
+    <ul class="nav nav-tabs">
+    <li ng-repeat="type in allTypes" ng-class="active(type)"><a href="" ng-click="select(type)">{{type}}</a></li>
+  </ul>
+  </br>
+  
+  <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Core Added</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="apat in apats">
+                <td style="vertical-align:middle;">{{apat.id}}</td>
+                <td style="vertical-align:middle;">{{apat.name}}</td>
+                <td style="vertical-align:middle;"><div ng-show="apat.coreAdded">{{apat.coreAdded | date:'mediumDate'}}</div></td>
+                <td><a ng-click="navigate(apat.id)" class="btn btn-warning"><span class="glyphicon glyphicon-share"></span> Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>

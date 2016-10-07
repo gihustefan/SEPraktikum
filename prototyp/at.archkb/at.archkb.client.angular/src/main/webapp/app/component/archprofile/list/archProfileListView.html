@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-sm-2">
+		<archkb-loadindicator show="ui.loading"></archkb-loadindicator>
+	</div>
+	<div class="col-sm-10 text-right" ng-if="archProfiles.length > 0">
+		<uib-pagination ng-change="getArchProfiles()" items-per-page="ui.itemsPerPage" total-items="ui.totalItems" ng-model="ui.currentPage" max-size="ui.maxPageSize" boundary-links="true" force-ellipses="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+	</div>
+</div>
+<hr ng-if="archProfiles.length > 0"/>
+<div ng-repeat="archProfile in archProfiles">
+	<div class="text-right" ng-if="archProfile.published !== undefined && !archProfile.published">
+		<small class="text-muted text-right">{{"UNPUBLISHED" | translate}}</small>
+	</div>
+	<archkb-archprofile-info archprofile="archProfile" is-own="checkIfOwn(archProfile)" publish-archprofile="publishArchProfile(archProfile)" unpublish-archprofile="unpublishArchProfile(archProfile)"></archkb-archprofile-info>
+	<hr/>
+</div>

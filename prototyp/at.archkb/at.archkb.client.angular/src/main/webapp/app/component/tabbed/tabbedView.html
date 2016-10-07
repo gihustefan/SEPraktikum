@@ -1,0 +1,7 @@
+<div ui-view="title" class="archkb-tab-title"></div>
+<uib-tabset active="activeTab">
+	<uib-tab ng-repeat="tab in tabs.slice().reverse()" index="tabs.length - $index - 1" heading="{{tab.name}}" ui-sref="{{tab.state}}" class="pull-right">
+        <br/>
+        <div ui-view="{{tab.viewName}}"></div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,81 @@
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#archkb-navbar-collapse"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Architecture Knowledge Base</a>
+        </div>
+
+        <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon" id="archkb-navbar-search"><span
+                            class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" placeholder="{{'ARCHITECTURE_PROFILES' | translate}}"
+                           aria-describedby="archkb-navbar-search">
+                </div>
+            </div>
+        </form>
+        <div class="collapse navbar-collapse"
+             id="archkb-navbar-collapse">
+            <ul ng-if="authenticated" class="nav navbar-nav navbar-right" style="margin-right: 15px">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-bell"><span
+                                class="badge archkb-notification-badge">1</span></span> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a>SOME NOTIFICATION STUFF</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <span class="glyphicon glyphicon-plus"></span> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="master.base.decisionguidancemodel_new">{{'DECISION_GUIDANCE_MODEL' | translate}}</a></li>
+                        <li><a ui-sref="master.base.archprofile_new">{{'DECISION_DOCUMENTATION_MODEL' | translate}}</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        {{principal.originalUsername}} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="master.base.user.profile({un: principal.originalUsername})"><span
+                                class="glyphicon glyphicon-user"></span> {{'PROFILE' | translate}}</a></li>
+                        <li><a ui-sref="master.base.user.decisionguidancemodels({un: principal.id})"><span
+                                class="glyphicon glyphicon-list"></span> {{'DECISION_GUIDANCE_MODELS' | translate}}</a></li>
+                        <li><a ui-sref="master.base.user.archprofiles({un: principal.id})"><span
+                                class="glyphicon glyphicon-list"></span> {{'DECISION_DOCUMENTATION_MODELS' | translate}}</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a ng-click="global.logout()"><span class="glyphicon glyphicon-log-out"></span> {{'LOGOUT' |
+                            translate}}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form ng-if="!authenticated" class="navbar-form navbar-right" role="login">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="{{'USERNAME' | translate}}"
+                           ng-model="username"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control input-sm" placeholder="{{'PASSWORD' | translate}}"
+                           ng-model="password"/>
+                </div>
+                <button type="submit" class="btn btn-sm btn-default" ng-click="global.login(username, password)">
+                    <span class="glyphicon glyphicon-log-in"></span> {{'LOGIN' | translate}}
+                </button>
+                <a class="btn btn-sm btn-primary">{{'REGISTER' | translate}}</a>
+            </form>
+        </div>
+    </div>
+</nav>

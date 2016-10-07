@@ -1,0 +1,16 @@
+<div ng-transclude></div>
+<div class="archkb-eip-icon archkb-eip-input-icon-up" ng-click="up(item)" ng-if="showAdditional"><span class="glyphicon glyphicon-arrow-up"></span></div>
+<div class="archkb-eip-icon archkb-eip-input-icon-down" ng-click="down(item)" ng-if="showAdditional"><span class="glyphicon glyphicon-arrow-down"></span></div>
+<div class="archkb-eip-icon archkb-eip-input-icon-remove" ng-click="remove(item)"><span class="glyphicon glyphicon-remove"></span></div>
+<div class="archkb-eip-icon archkb-eip-input-icon-add" ng-click="add(item.ordering + 1)"><span class="glyphicon glyphicon-plus"></span></div>
+
+<div class="text-right" ng-if="showAdditional">
+	<div class="archkb-eip-icon-info" style="display: inline-block;"
+		uib-popover-template="'views/archProfileAttributeDefinitionPopupView.html'"
+		popover-append-to-body="true"
+		popover-title="{{'DEFINITION_OF' | translate}}...">
+		<small class="text-muted">
+			<span class="glyphicon glyphicon-option-horizontal"></span>
+		</small>
+	</div>
+</div>

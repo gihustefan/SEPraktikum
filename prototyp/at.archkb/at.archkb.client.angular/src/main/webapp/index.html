@@ -1,0 +1,23 @@
+<html ng-app="archkb">
+
+<head>
+    <base href="/">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script type="text/javascript" src="/scripts/vendor.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/views.js"></script>
+    <link rel="stylesheet" type="text/css" href="/styles/app.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Architecture Knowledge Base</title>
+</head>
+
+<body>
+<div class="archkb-global-load-indicator-wrapper" ng-if="global.showLoad">
+    <archkb-loadindicator show="global.showLoad"></archkb-loadindicator>
+</div>
+<div ui-view class="archkb-main-wrapper"></div>
+</body>
+</html>
