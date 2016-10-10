@@ -14,15 +14,15 @@ public interface UserRepository extends GraphRepository<User> {
 	User findByEmail(String email);
 
 	User findByOriginalUsername(String username);
-	
-	@Query("match(n:ArchProfile) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
-	User findOwnerOfProfile(long profileId);
 
 	@Query("match(n:DecisionGuidanceModel) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
 	User findOwnerOfDecisionGuidanceModel(long profileId);
 
 	@Query("match(n:DesignOption) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
 	User findOwnerOfDesignOption(long profileId);
+
+	@Query("match(n:DecisionDocumentationModel) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
+	User findOwnerOfDecisionDocumentationModel(long profileId);
 	
 	@Query("match (user:User) return id(user) as id, user.originalUsername as username, user.email as email, user.firstName as firstName, user.lastName as lastName")
 	Iterable<UserDto> findAllUserMin();

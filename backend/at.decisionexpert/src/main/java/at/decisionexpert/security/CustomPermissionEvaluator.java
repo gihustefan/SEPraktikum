@@ -1,5 +1,6 @@
 package at.decisionexpert.security;
 
+import at.decisionexpert.neo4jentity.node.DecisionDocumentationModel;
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.node.User;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 /**
  * Customized hasPermissions checks. Easier than to create full featured ACL.
  * 
- * @author Rainer
+ * @author stefanhaselboeck
  *
  */
 public class CustomPermissionEvaluator implements PermissionEvaluator {
@@ -81,26 +82,11 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 			return authentication.getName().equals(getDesignOptionOwnerFromDb((Long)targetId).getUsername());
 		}
 
+		if ("OWNER".equals(permission.toString()) && DecisionDocumentationModel.class.getName().equals(targetType.toString())) {
+			return authentication.getName().equals(getDecisionDocumentationModelOwnerFromDb((Long)targetId).getUsername());
+		}
+
 		return false;
-	}
-
-	/**
-	 * Help method for fetching the ArchProfileOwner from the DB
-	 * 
-	 * @param id
-	 *            ID of the ArchProfile
-	 * @return Owner of the ArchProfile if ArchProfile found, else empty User
-	 *         Object
-	 */
-	private User getArchProfileOwnerFromDb(Long id) {	
-		// Fetch user from DB -> the given
-		User user = userRepository.findOwnerOfProfile(id);
-
-		// given target Domain Object not found in DB, or owner not set
-		if (user == null)
-			return new User();
-
-		return user;
 	}
 
 	/**
@@ -123,16 +109,35 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 	}
 
 	/**
-	 * Help method for fetching the DecisionGuidanceModelOwner from the DB
+	 * Help method for fetching the DesignOption Owner from the DB
 	 *
 	 * @param id
-	 *            ID of the DecisionGuidanceModel
-	 * @return Owner of the DecisionGuidanceModel if DecisionGuidanceModel found, else empty User
+	 *            ID of the DesignOption
+	 * @return Owner of the DesignOption if DesignOption found, else empty User
 	 *         Object
 	 */
 	private User getDesignOptionOwnerFromDb(Long id) {
 		// Fetch user from DB -> the given
 		User user = userRepository.findOwnerOfDesignOption(id);
+
+		// given target Domain Object not found in DB, or owner not set
+		if (user == null)
+			return new User();
+
+		return user;
+	}
+
+	/**
+	 * Help method for fetching the DecisionDocumentationModelOwner from the DB
+	 *
+	 * @param id
+	 *            ID of the DecisionDocumentationModel
+	 * @return Owner of the DecisionDocumentationModel if DecisionDocumentationModel found, else empty User
+	 *         Object
+	 */
+	private User getDecisionDocumentationModelOwnerFromDb(Long id) {
+		// Fetch user from DB -> the given
+		User user = userRepository.findOwnerOfDecisionDocumentationModel(id);
 
 		// given target Domain Object not found in DB, or owner not set
 		if (user == null)

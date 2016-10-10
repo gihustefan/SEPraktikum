@@ -1,7 +1,9 @@
 package at.decisionexpert.controller.user;
 
+import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
+import at.decisionexpert.service.decisiondocumentation.DecisionDocumentationService;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
 import at.decisionexpert.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class UserControllerImpl implements UserController {
 
     @Autowired
     private DecisionGuidanceModelService decisionGuidanceModelService;
+
+    @Autowired
+    private DecisionDocumentationService decisionDocumentationService;
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
@@ -36,4 +41,9 @@ public class UserControllerImpl implements UserController {
         return decisionGuidanceModelService.getUserDecisionGuidanceModel(idUser, page, size);
     }
 
+    @Override
+    @RequestMapping(value = "/{idUser}/decisiondocumentationmodels", method = RequestMethod.GET)
+    public DecisionDocumentationModelPageableDto getDecisionDocumentationModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size) {
+        return decisionDocumentationService.getUserDecisionDocumentationModel(idUser, page, size);
+    }
 }

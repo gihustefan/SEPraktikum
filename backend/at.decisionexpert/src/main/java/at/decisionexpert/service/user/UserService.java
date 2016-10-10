@@ -37,5 +37,5 @@ public interface UserService {
 	AdminUserCreationDto createUserByAdmin(AdminUserCreationDto user);
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	AdminUserCreationDto resetPasword(Long userId);
+	AdminUserCreationDto resetPassword(Long userId);
 }
