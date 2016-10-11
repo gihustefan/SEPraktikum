@@ -79,8 +79,13 @@ public class CreateDGM {
         DecisionGuidanceModelChangeRequestDto dto = new DecisionGuidanceModelChangeRequestDto();
         dto.setTitle("Service Discovery");
         dto.setDescription("In order to make a request, the calling microservice has to know the location (IP address and port) of the called microservice. In microservice based systems, where microservice can come and go over time (auto-scaling, failures, updates), it’s hard to use a static configuration as in traditional monolithic systems. Therefore, a function to look up the actual running microservices and the location of them is needed. This function is called Service Discovery.");
-        dto.setPublished(true);
+
+        //createDecisionGuidanceModel sets published to false per default
         DecisionGuidanceModelDto response = decisionGuidanceModelBusiness.createDecisionGuidanceModel(dto);
+
+        //publish DGM
+        dto.setPublished(true);
+        decisionGuidanceModelBusiness.updateDecisionGuidanceModelProperties((Long)response.getId(), dto);
 
         DecisionGuidanceModelRealtionDto potentialRequirement = new DecisionGuidanceModelRealtionDto();
         potentialRequirement.setName("NFR1: Service Discovery is programming language independent");
