@@ -17,42 +17,8 @@ import java.time.ZoneId;
  * Created by stefanhaselboeck on 07.10.16.
  */
 @Component
-public class DOCoreDataBusinessImpl implements DOCoreDataBusiness{
+public class DOCoreDataBusinessImpl implements DOCoreDataBusiness {
 
-    @Autowired
-    private UserBusiness userBusiness;
 
-    @Autowired
-    private AttributeRepository attributeRepository;
 
-    @Override
-    public <T extends CoreData> T createCoreData(String title, String definition, Class<T> coreDataClass) {
-        Assert.notNull(title);
-        Assert.notNull(coreDataClass);
-
-        try {
-            Constructor constructor = coreDataClass.getConstructor();
-            constructor.setAccessible(true);
-            T newCoreData = (T) constructor.newInstance();
-
-            newCoreData.setName(title);
-            newCoreData.setDefinition(definition);
-            newCoreData.setCreationDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-            newCoreData.setLastModified(newCoreData.getCreationDate());
-            newCoreData.setCreator(userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
-
-            return attributeRepository.save(newCoreData);
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }

@@ -1,5 +1,6 @@
 package at.decisionexpert.business.decisiondocumentation;
 
+import at.decisionexpert.business.coredata.CreateCoreDataImpl;
 import at.decisionexpert.business.coredata.DDMCoreDataBusiness;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.exception.DecisionDocumentationNotFoundException;
@@ -57,6 +58,9 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
 
     @Autowired
     private DDMCoreDataBusiness ddmCoreDataBusiness;
+
+    @Autowired
+    private CreateCoreDataImpl createCoreDataImpl;
 
     @Autowired
     private ServletContext servletContext;
@@ -210,7 +214,7 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = ddmCoreDataBusiness.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 

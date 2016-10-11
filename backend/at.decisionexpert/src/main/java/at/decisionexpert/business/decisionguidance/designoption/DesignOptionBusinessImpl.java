@@ -1,6 +1,6 @@
 package at.decisionexpert.business.decisionguidance.designoption;
 
-import at.decisionexpert.business.coredata.DOCoreDataBusiness;
+import at.decisionexpert.business.coredata.CreateCoreDataImpl;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.exception.DesignOptionNotFoundException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionChangeRequestDto;
@@ -19,12 +19,10 @@ import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOpt
 import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOAttributeRelationshipRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOHasEffectedGuidanceModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.servlet.ServletContext;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
@@ -52,13 +50,10 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
     private DesignOptionAttributeRepository designOptionAttributeRepository;
 
     @Autowired
-    private Neo4jOperations neo4jOperations;
-
-    @Autowired
     private UserBusiness userBusiness;
 
     @Autowired
-    private DOCoreDataBusiness doCoreDataBusiness;
+    private CreateCoreDataImpl createCoreDataImpl;
 
 
 
@@ -136,7 +131,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = doCoreDataBusiness.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 

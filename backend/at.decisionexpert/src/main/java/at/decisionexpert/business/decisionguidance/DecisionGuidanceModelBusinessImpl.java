@@ -1,6 +1,6 @@
 package at.decisionexpert.business.decisionguidance;
 
-import at.decisionexpert.business.coredata.DGMCoreDataBusiness;
+import at.decisionexpert.business.coredata.CreateCoreDataImpl;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.servlet.ServletContext;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
@@ -58,11 +57,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     private UserBusiness userBusiness;
 
     @Autowired
-    private DGMCoreDataBusiness dgmCoreDataBusiness;
-
-    @Autowired
-    private ServletContext servletContext;
-
+    private CreateCoreDataImpl createCoreDataImpl;
 
     @Override
     @Transactional(readOnly = true)
@@ -216,7 +211,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = dgmCoreDataBusiness.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 
