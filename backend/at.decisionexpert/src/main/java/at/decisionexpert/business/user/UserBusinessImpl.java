@@ -2,6 +2,7 @@ package at.decisionexpert.business.user;
 
 import at.decisionexpert.neo4jentity.dto.user.AdminUserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserActivationDto;
+import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.node.UserAuthority;
@@ -122,6 +123,35 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public UserDto createUser(UserCreationDto user) {
+		//check if email and username do not exist
+		Iterable<Long> existingUsers = userRepository.checkForExistingUser(user.getEmail(), user.getUsername());
+		Assert.isTrue(!existingUsers.iterator().hasNext());
+		//create User
+		User creationUser = new User();
+		creationUser.setEmail(user.getEmail());
+		creationUser.setOriginalUsername(user.getUsername());
+		creationUser.setFirstName(user.getFirstName());
+		creationUser.setLastName(user.getLastName());
+		creationUser.setPassword(user.getPassword()); // Password encoded at the client
+		//creationUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		creationUser.setMailActivationToken(UUID.randomUUID().toString().replaceAll("-", ""));
+		//Set User Authority
+		UserAuthority auth = userAuthorityRepository.findByAuthority("ROLE_USER");
+		Assert.notNull(auth);
+		creationUser.addAuthority(auth);
+		creationUser = userRepository.save(creationUser);
+		//creat Dto
+		UserDto createdUser = new UserDto();
+		createdUser.setId(creationUser.getId());
+		createdUser.setEmail(creationUser.getEmail());
+		createdUser.setUsername(creationUser.getOriginalUsername());
+		createdUser.setFirstName(creationUser.getFirstName());
+		createdUser.setLastName(creationUser.getLastName());
+		return createdUser;
 	}
 
 	@Override

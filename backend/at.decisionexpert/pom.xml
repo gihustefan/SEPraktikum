@@ -182,7 +182,7 @@
         <spring.security.version>4.1.0.RELEASE</spring.security.version>
         <spring.data.neo4j.version>4.1.1.RELEASE</spring.data.neo4j.version>
         <spring.data.commons.version>1.12.1.RELEASE</spring.data.commons.version>
-        <neo4j.ogm.version>2.0.3</neo4j.ogm.version>
+        <neo4j.ogm.version>2.0.1</neo4j.ogm.version>
         <neo4j.version>2.3.4</neo4j.version>
         <modelmapper.version>0.7.5</modelmapper.version>
         <hibernate.validator.version>5.2.4.Final</hibernate.validator.version>

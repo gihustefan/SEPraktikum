@@ -56,6 +56,7 @@
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/service/decisiondocumentation/DecisionDocumentationService.java
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/repository/node/user/CityRepository.java
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/business/decisionguidance/designoption/DesignOptionBusiness.java
+/Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/neo4jentity/dto/user/UserCreationDto.java
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/neo4jentity/node/Tradeoff.java
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/repository/relationship/decisionguidance/designoption/DOAttributeRelationshipRepository.java
 /Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/main/java/at/decisionexpert/neo4jentity/relationship/decisiondocumentation/HasAddressedRequirement.java

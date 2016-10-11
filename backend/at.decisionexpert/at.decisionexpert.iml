@@ -59,18 +59,18 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.security:spring-security-test:4.1.0.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: javax.el:javax.el-api:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-neo4j:test-jar:tests:4.1.1.RELEASE" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-ogm-embedded-driver:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.neo4j:neo4j-ogm-api:2.0.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-ogm-embedded-driver:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j:neo4j-ogm-api:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-lucene-index:2.3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-lucene-index:2.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.lucene:lucene-core:3.6.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-graph-algo:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-udc:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-graph-matching:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-jmx:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-consistency-check:2.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-consistency-check-legacy:2.3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-graph-algo:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-udc:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-graph-matching:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-jmx:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-consistency-check:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-consistency-check-legacy:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-kernel:test-jar:tests:2.3.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.neo4j:neo4j-primitive-collections:2.3.4" level="project" />

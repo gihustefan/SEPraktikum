@@ -20,8 +20,8 @@ public class DesignOptionAddressedRequirementControllerImpl implements DesignOpt
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public DesignOptionRelationDto create(@PathVariable Long idDesginOption, @RequestBody DesignOptionRelationDto requirement) {
-        return designOptionService.createRelation(idDesginOption, requirement, HasAddressedRequirement.class, Requirement.class);
+    public DesignOptionRelationDto create(@PathVariable Long idDesginOption, @RequestBody DesignOptionRelationDto requiredComponent) {
+        return designOptionService.createRelation(idDesginOption, requiredComponent, HasAddressedRequirement.class, Requirement.class);
     }
 
     @Override

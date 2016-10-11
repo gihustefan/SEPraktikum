@@ -2,6 +2,7 @@ package at.decisionexpert.controller.user;
 
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
+import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.service.decisiondocumentation.DecisionDocumentationService;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
@@ -33,6 +34,12 @@ public class UserControllerImpl implements UserController {
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public UserDto getUserById(@PathVariable Long userId) {
         return new UserDto(userService.getUserById(userId));
+    }
+
+    @Override
+    @RequestMapping(value = "create/", method = RequestMethod.POST)
+    public UserDto createUser(@RequestBody UserCreationDto user) {
+        return userService.createUser(user);
     }
 
     @Override

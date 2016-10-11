@@ -37,7 +37,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.19" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.12.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-neo4j:test-jar:tests:4.1.1.RELEASE" />
-          <element id="library" level="project" name="Maven: org.neo4j:neo4j-ogm-api:2.0.3" />
+          <element id="library" level="project" name="Maven: org.neo4j:neo4j-ogm-api:2.0.1" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.10" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
           <element id="library" level="project" name="Maven: io.springfox:springfox-swagger2:2.4.0" />

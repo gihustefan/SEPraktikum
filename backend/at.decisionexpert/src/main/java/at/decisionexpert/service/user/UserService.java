@@ -2,6 +2,7 @@ package at.decisionexpert.service.user;
 
 import at.decisionexpert.neo4jentity.dto.user.AdminUserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserActivationDto;
+import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.neo4jentity.node.User;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,8 @@ public interface UserService {
 	void createUser(@NotNull String username, @Size(min = 8) String password, String... authorities);
 	
 	User getUser(@NotNull String username);
+
+	UserDto createUser(@NotNull UserCreationDto user);
 	
 	// TODO: Evaluate if this is necessary
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -3,9 +3,11 @@ package at.decisionexpert.service.user;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.neo4jentity.dto.user.AdminUserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserActivationDto;
+import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.node.UserAuthority;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String username) {
 		return userBusiness.getUserByOriginalUsername(username);
+	}
+
+	@Override
+	public UserDto createUser(@NotNull UserCreationDto user) {
+		return userBusiness.createUser(user);
 	}
 
 	@Override

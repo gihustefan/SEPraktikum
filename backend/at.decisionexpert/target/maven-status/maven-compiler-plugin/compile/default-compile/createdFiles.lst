@@ -69,6 +69,7 @@ at/decisionexpert/repository/node/decisionguidance/DecisionGuidanceModelAttribut
 at/decisionexpert/business/decisiondocumentation/DecisionDocumentationBusiness.class
 at/decisionexpert/neo4jentity/node/Node.class
 at/decisionexpert/business/coredata/DDMCoreDataBusiness.class
+at/decisionexpert/neo4jentity/dto/user/UserCreationDto.class
 at/decisionexpert/security/CustomPermissionEvaluator.class
 at/decisionexpert/controller/decisionguidance/designoptions/DesignOptionAddressedRequirementControllerImpl.class
 at/decisionexpert/config/SwaggerConfig.class

@@ -1,5 +1,5 @@
 #surefire
-#Mon Oct 10 14:51:37 CEST 2016
+#Tue Oct 11 12:54:48 CEST 2016
 classPathUrl.88=/Users/stefanhaselboeck/.m2/repository/com/sun/jersey/jersey-core/1.19/jersey-core-1.19.jar
 classPathUrl.87=/Users/stefanhaselboeck/.m2/repository/com/sun/jersey/jersey-server/1.19/jersey-server-1.19.jar
 classPathUrl.86=/Users/stefanhaselboeck/.m2/repository/org/eclipse/jetty/jetty-security/9.2.9.v20150224/jetty-security-9.2.9.v20150224.jar
@@ -44,19 +44,19 @@ classPathUrl.52=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-unsafe/2.
 classPathUrl.51=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-primitive-collections/2.3.4/neo4j-primitive-collections-2.3.4.jar
 classPathUrl.50=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-kernel/2.3.4/neo4j-kernel-2.3.4-tests.jar
 classPathUrl.49=/Users/stefanhaselboeck/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar
-classPathUrl.48=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-consistency-check-legacy/2.3.4/neo4j-consistency-check-legacy-2.3.4.jar
-classPathUrl.47=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-consistency-check/2.3.4/neo4j-consistency-check-2.3.4.jar
-classPathUrl.46=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-jmx/2.3.4/neo4j-jmx-2.3.4.jar
-classPathUrl.45=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-graph-matching/2.3.4/neo4j-graph-matching-2.3.4.jar
-classPathUrl.44=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-udc/2.3.4/neo4j-udc-2.3.4.jar
-classPathUrl.43=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-graph-algo/2.3.4/neo4j-graph-algo-2.3.4.jar
+classPathUrl.48=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-consistency-check-legacy/2.3.3/neo4j-consistency-check-legacy-2.3.3.jar
+classPathUrl.47=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-consistency-check/2.3.3/neo4j-consistency-check-2.3.3.jar
+classPathUrl.46=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-jmx/2.3.3/neo4j-jmx-2.3.3.jar
+classPathUrl.45=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-graph-matching/2.3.3/neo4j-graph-matching-2.3.3.jar
+classPathUrl.44=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-udc/2.3.3/neo4j-udc-2.3.3.jar
+classPathUrl.43=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-graph-algo/2.3.3/neo4j-graph-algo-2.3.3.jar
 classPathUrl.42=/Users/stefanhaselboeck/.m2/repository/org/apache/lucene/lucene-core/3.6.2/lucene-core-3.6.2.jar
-classPathUrl.41=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-lucene-index/2.3.4/neo4j-lucene-index-2.3.4.jar
-classPathUrl.40=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j/2.3.4/neo4j-2.3.4.jar
+classPathUrl.41=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-lucene-index/2.3.3/neo4j-lucene-index-2.3.3.jar
+classPathUrl.40=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j/2.3.3/neo4j-2.3.3.jar
 enableAssertions=true
 classPathUrl.39=/Users/stefanhaselboeck/.m2/repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar
-classPathUrl.38=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-ogm-api/2.0.3/neo4j-ogm-api-2.0.3.jar
-classPathUrl.37=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-ogm-embedded-driver/2.0.3/neo4j-ogm-embedded-driver-2.0.3.jar
+classPathUrl.38=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-ogm-api/2.0.1/neo4j-ogm-api-2.0.1.jar
+classPathUrl.37=/Users/stefanhaselboeck/.m2/repository/org/neo4j/neo4j-ogm-embedded-driver/2.0.1/neo4j-ogm-embedded-driver-2.0.1.jar
 classPathUrl.36=/Users/stefanhaselboeck/.m2/repository/org/springframework/data/spring-data-neo4j/4.1.1.RELEASE/spring-data-neo4j-4.1.1.RELEASE-tests.jar
 classPathUrl.35=/Users/stefanhaselboeck/.m2/repository/javax/el/javax.el-api/3.0.0/javax.el-api-3.0.0.jar
 classPathUrl.34=/Users/stefanhaselboeck/.m2/repository/org/springframework/security/spring-security-test/4.1.0.RELEASE/spring-security-test-4.1.0.RELEASE.jar

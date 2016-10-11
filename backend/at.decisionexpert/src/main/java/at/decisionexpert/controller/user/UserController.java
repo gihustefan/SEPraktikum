@@ -2,6 +2,7 @@ package at.decisionexpert.controller.user;
 
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
+import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 
 public interface UserController {
@@ -9,6 +10,8 @@ public interface UserController {
 	Iterable<UserDto> getAllUsers();
 
 	UserDto getUserById(Long userId);
+
+	UserDto createUser(UserCreationDto user);
 
 	/**
 	 * Fetching paginated DecisionGuidanceModels of a user
@@ -27,4 +30,6 @@ public interface UserController {
 	 * @return A List of DecisionDocumentationModels (based on the user)
 	 */
 	DecisionDocumentationModelPageableDto getDecisionDocumentationModelsOfUser(Long idUser, Integer page, Integer size);
+
+
 }
