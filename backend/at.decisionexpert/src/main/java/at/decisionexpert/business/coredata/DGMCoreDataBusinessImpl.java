@@ -6,16 +6,11 @@ import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelR
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.repository.node.AttributeRepository;
-import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelAttributeRepository;
+import at.decisionexpert.repository.node.NodeAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +27,7 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
     private AttributeRepository attributeRepository;
 
     @Autowired
-    DecisionGuidanceModelAttributeRepository coreDataRepository;
+    NodeAttributeRepository nodeAttributeRepository;
 
     @Override
     public <T extends CoreData> List<DecisionGuidanceModelRealtionDto> getCoreData(String titlePartial, Class<T> coreDataClass) {
@@ -41,7 +36,7 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
 
         List<DecisionGuidanceModelRealtionDto> result = new ArrayList<>();
 
-        coreDataRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
+        nodeAttributeRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
             result.add(new DecisionGuidanceModelRealtionDto(core));
         });
 
@@ -54,7 +49,7 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
 
         List<DecisionGuidanceModelRelatedGuidanceModelsDto> result = new ArrayList<>();
 
-        coreDataRepository.findDGMByTitle(titlePartial, DecisionGuidanceModel.class).forEach(node -> {
+        nodeAttributeRepository.findNodeByTitle(titlePartial, DecisionGuidanceModel.class).forEach(node -> {
             result.add(new DecisionGuidanceModelRelatedGuidanceModelsDto(node));
         });
 
