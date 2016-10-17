@@ -20,8 +20,8 @@ public class DesignOptionComponentControllerImpl implements DesignOptionRelation
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public DesignOptionRelationDto create(@PathVariable Long idDesignOption, @RequestBody DesignOptionRelationDto requirement) {
-        return designOptionService.createRelation(idDesignOption, requirement, HasRequiredComponent.class, Component.class);
+    public DesignOptionRelationDto create(@PathVariable Long idDesignOption, @RequestBody DesignOptionRelationDto requiredComponent) {
+        return designOptionService.createRelation(idDesignOption, requiredComponent, HasRequiredComponent.class, Component.class);
     }
 
     @Override

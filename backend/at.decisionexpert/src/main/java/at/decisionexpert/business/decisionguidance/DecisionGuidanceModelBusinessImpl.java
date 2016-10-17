@@ -11,7 +11,7 @@ import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.node.UserAuthority;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels;
-import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelAttributeRepository;
+import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
 import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.DGMAttributeRelationshipRepository;
@@ -45,7 +45,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     private DGMAttributeRelationshipRepository dgmAttributeRelationshipRepository;
 
     @Autowired
-    private DecisionGuidanceModelAttributeRepository decisionGuidanceModelAttributeRepository;
+    private NodeAttributeRepository nodeAttributeRepository;
 
     @Autowired
     private DGMHasGuidanceModelRepository dgmHasGuidanceModelRepository;
@@ -207,7 +207,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         // ArchProfile is not allowed to be null
         Assert.notNull(decisionGuidanceModel);
 
-        A toNode = decisionGuidanceModelAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
+        A toNode = nodeAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)

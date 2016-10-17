@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [17/Oct/2016:14:08:06 +0200] "POST /api/comp/158/technologyoptions HTTP/1.1" 401 1061 http-bio-8080-exec-1 2782
+0:0:0:0:0:0:0:1 - - [17/Oct/2016:14:08:13 +0200] "POST /api/comp/158/technologyoptions HTTP/1.1" 200 109 http-bio-8080-exec-2 7409
+0:0:0:0:0:0:0:1 - - [17/Oct/2016:14:09:28 +0200] "GET /api/to/152 HTTP/1.1" 200 100 http-bio-8080-exec-4 75
+0:0:0:0:0:0:0:1 - - [17/Oct/2016:14:10:07 +0200] "POST /api/to/152/implications HTTP/1.1" 200 130 http-bio-8080-exec-5 129
+0:0:0:0:0:0:0:1 - - [17/Oct/2016:14:11:19 +0200] "DELETE /api/to/152/implications/301 HTTP/1.1" 200 - http-bio-8080-exec-7 140

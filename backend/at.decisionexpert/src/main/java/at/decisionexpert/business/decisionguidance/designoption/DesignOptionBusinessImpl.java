@@ -13,8 +13,8 @@ import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.DOAttributeRelationship;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasEffectedGuidanceModels;
+import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
-import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionAttributeRepository;
 import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOAttributeRelationshipRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOHasEffectedGuidanceModelRepository;
@@ -47,7 +47,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
     private DOHasEffectedGuidanceModelRepository doHasEffectedGuidanceModelRepository;
 
     @Autowired
-    private DesignOptionAttributeRepository designOptionAttributeRepository;
+    private NodeAttributeRepository nodeAttributeRepository;
 
     @Autowired
     private UserBusiness userBusiness;
@@ -127,7 +127,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
         // ArchProfile is not allowed to be null
         Assert.notNull(designOption);
 
-        A toNode = designOptionAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
+        A toNode = nodeAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)

@@ -23,6 +23,12 @@ public interface UserRepository extends GraphRepository<User> {
 
 	@Query("match(n:DecisionDocumentationModel) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
 	User findOwnerOfDecisionDocumentationModel(long profileId);
+
+	@Query("match(n:Component) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
+	User findOwnerOfComponent(long profileId);
+
+	@Query("match(n:TechnologyOption) where id(n) = {0} match (n)-[:HAS_CREATOR]->(u:User) return u")
+	User findOwnerOfTechnologyOption(long profileId);
 	
 	@Query("match (user:User) return id(user) as id, user.originalUsername as username, user.email as email, user.firstName as firstName, user.lastName as lastName")
 	Iterable<UserDto> findAllUserMin();

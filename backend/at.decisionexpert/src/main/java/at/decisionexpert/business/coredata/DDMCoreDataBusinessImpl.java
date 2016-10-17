@@ -5,17 +5,13 @@ import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumenta
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelRelationDto;
 import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.repository.node.AttributeRepository;
+import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.TradeoffRepository;
-import at.decisionexpert.repository.node.decisiondocumentation.DecisionDocumentationModelAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +25,10 @@ public class DDMCoreDataBusinessImpl implements DDMCoreDataBusiness {
     private UserBusiness userBusiness;
 
     @Autowired
-    private AttributeRepository attributeRepository;
-
-    @Autowired
     TradeoffRepository tradeoffRepository;
 
     @Autowired
-    DecisionDocumentationModelAttributeRepository decisionDocumentationModelAttributeRepository;
+    NodeAttributeRepository nodeAttributeRepository;
 
 
     @Override
@@ -45,7 +38,7 @@ public class DDMCoreDataBusinessImpl implements DDMCoreDataBusiness {
 
         List<DecisionDocumentationModelRelationDto> result = new ArrayList<>();
 
-        decisionDocumentationModelAttributeRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
+        nodeAttributeRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
             result.add(new DecisionDocumentationModelRelationDto(core));
         });
 
@@ -58,7 +51,7 @@ public class DDMCoreDataBusinessImpl implements DDMCoreDataBusiness {
 
         List<DecisionDocumentationModelEffectedDocumentationModelDto> result = new ArrayList<>();
 
-        decisionDocumentationModelAttributeRepository.findDDMByTitle(titlePartial, DecisionDocumentationModel.class).forEach(node -> {
+        nodeAttributeRepository.findNodeByTitle(titlePartial, DecisionDocumentationModel.class).forEach(node -> {
             result.add(new DecisionDocumentationModelEffectedDocumentationModelDto(node));
         });
 
@@ -79,10 +72,10 @@ public class DDMCoreDataBusinessImpl implements DDMCoreDataBusiness {
         // If tradeoff does not exist -> create a new one.
         User user = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        TradeoffItem over = decisionDocumentationModelAttributeRepository.findById(idTradeoffItemOver, TradeoffItem.class);
+        TradeoffItem over = nodeAttributeRepository.findById(idTradeoffItemOver, TradeoffItem.class);
         Assert.notNull(over);
 
-        TradeoffItem under = decisionDocumentationModelAttributeRepository.findById(idTradeoffItemUnder, TradeoffItem.class);
+        TradeoffItem under = nodeAttributeRepository.findById(idTradeoffItemUnder, TradeoffItem.class);
         Assert.notNull(under);
 
         return tradeoffRepository.save(new Tradeoff(user, over, under));
