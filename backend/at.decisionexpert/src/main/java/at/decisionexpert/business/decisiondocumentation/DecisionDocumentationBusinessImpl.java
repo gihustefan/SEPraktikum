@@ -10,7 +10,7 @@ import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.DDMAttributeRelationship;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasEffectedDocumentationModel;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasTradeoff;
-import at.decisionexpert.repository.node.decisiondocumentation.DecisionDocumentationModelAttributeRepository;
+import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.decisiondocumentation.DecisionDocumentationRepository;
 import at.decisionexpert.repository.relationship.decisiondocumentation.DDMAttributeRelationshipRepository;
 import at.decisionexpert.repository.relationship.decisiondocumentation.DDMHasEffectedDocumentationRepository;
@@ -42,7 +42,7 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
     private DDMAttributeRelationshipRepository ddmAttributeRelationshipRepository;
 
     @Autowired
-    private DecisionDocumentationModelAttributeRepository decisionDocumentationModelAttributeRepository;
+    private NodeAttributeRepository nodeAttributeRepository;
 
     @Autowired
     private DDMHasEffectedDocumentationRepository ddmHasEffectedDocumentationRepository;
@@ -210,7 +210,7 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
         // DecisionDocumentation is not allowed to be null
         Assert.notNull(decisionDocumentationModel);
 
-        A toNode = decisionDocumentationModelAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
+        A toNode = nodeAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)

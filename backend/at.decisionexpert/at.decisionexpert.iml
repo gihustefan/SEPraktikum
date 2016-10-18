@@ -13,6 +13,7 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
+<<<<<<< HEAD
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/SwaggerConfig.java</file>
@@ -25,6 +26,9 @@
           <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/ValidationConfig.java</file>
         </fileset>
       </configuration>
+=======
+      <configuration />
+>>>>>>> cbe30091dd4faf53a0b980a320606e1d670dd588
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">

@@ -1,7 +1,7 @@
 package at.decisionexpert.controller.decisiondocumentation;
 
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelRelationDto;
-import at.decisionexpert.neo4jentity.node.DesignDecision;
+import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasDesignDecision;
 import at.decisionexpert.service.decisiondocumentation.DecisionDocumentationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class DecisionDocumentationDesignDecisionControllerImpl implements Decisi
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public DecisionDocumentationModelRelationDto create(@PathVariable Long idDecisionDocumentationModel, @RequestBody DecisionDocumentationModelRelationDto decisionDocumentation) {
-        return decisionDocumentationService.createRelation(idDecisionDocumentationModel, decisionDocumentation, HasDesignDecision.class, DesignDecision.class);
+        return decisionDocumentationService.createRelation(idDecisionDocumentationModel, decisionDocumentation, HasDesignDecision.class, DesignOption.class);
     }
 
     @Override

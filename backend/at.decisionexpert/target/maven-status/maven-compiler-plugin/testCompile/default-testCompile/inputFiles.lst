@@ -1,2 +1,7 @@
-/Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/test/java/at/decisionexpert/test/config/MainTestConfig.java
-/Users/stefanhaselboeck/Documents/Arbeit/Diss/SEPraktikum/backend/at.decisionexpert/src/test/java/at/decisionexpert/test/controller/CreateDGM.java
+<<<<<<< HEAD
+C:\Users\Alex\Documents\SEPraktikum\backend\at.decisionexpert\src\test\java\at\decisionexpert\test\config\MainTestConfig.java
+C:\Users\Alex\Documents\SEPraktikum\backend\at.decisionexpert\src\test\java\at\decisionexpert\test\controller\CreateDGM.java
+=======
+/Users/stefanhaselboeck/Documents/Arbeit/Diss/sourceTree/SEPrakikum/backend/at.decisionexpert/src/test/java/at/decisionexpert/test/config/MainTestConfig.java
+/Users/stefanhaselboeck/Documents/Arbeit/Diss/sourceTree/SEPrakikum/backend/at.decisionexpert/src/test/java/at/decisionexpert/test/controller/CreateDGM.java
+>>>>>>> c36567e4c9d1593270fbf3928fd13c27240fafb8

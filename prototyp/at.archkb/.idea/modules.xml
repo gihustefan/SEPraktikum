@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/at.archkb.all.iml" filepath="$PROJECT_DIR$/at.archkb.all.iml" />
+      <module fileurl="file://$PROJECT_DIR$/at.archkb.client.angular/at.archkb.client.angular.iml" filepath="$PROJECT_DIR$/at.archkb.client.angular/at.archkb.client.angular.iml" />
+      <module fileurl="file://$PROJECT_DIR$/at.archkb.client.angular-admin/at.archkb.client.angular-admin.iml" filepath="$PROJECT_DIR$/at.archkb.client.angular-admin/at.archkb.client.angular-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/at.archkb.server/at.archkb.server.iml" filepath="$PROJECT_DIR$/at.archkb.server/at.archkb.server.iml" />
+    </modules>
+  </component>
+</project>

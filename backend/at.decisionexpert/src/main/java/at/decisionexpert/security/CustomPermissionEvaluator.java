@@ -1,9 +1,6 @@
 package at.decisionexpert.security;
 
-import at.decisionexpert.neo4jentity.node.DecisionDocumentationModel;
-import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
-import at.decisionexpert.neo4jentity.node.DesignOption;
-import at.decisionexpert.neo4jentity.node.User;
+import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.queryresult.SensibleUserData;
 import at.decisionexpert.repository.node.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +83,14 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 			return authentication.getName().equals(getDecisionDocumentationModelOwnerFromDb((Long)targetId).getUsername());
 		}
 
+		if ("OWNER".equals(permission.toString()) && Component.class.getName().equals(targetType.toString())) {
+			return authentication.getName().equals(getComponentOwnerFromDb((Long)targetId).getUsername());
+		}
+
+		if ("OWNER".equals(permission.toString()) && TechnologyOption.class.getName().equals(targetType.toString())) {
+			return authentication.getName().equals(getTechnologyOptionOwnerFromDb((Long)targetId).getUsername());
+		}
+
 		return false;
 	}
 
@@ -138,6 +143,44 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 	private User getDecisionDocumentationModelOwnerFromDb(Long id) {
 		// Fetch user from DB -> the given
 		User user = userRepository.findOwnerOfDecisionDocumentationModel(id);
+
+		// given target Domain Object not found in DB, or owner not set
+		if (user == null)
+			return new User();
+
+		return user;
+	}
+
+	/**
+	 * Help method for fetching the ComponentOwner from the DB
+	 *
+	 * @param id
+	 *            ID of the Component
+	 * @return Owner of the Component if Component found, else empty User
+	 *         Object
+	 */
+	private User getComponentOwnerFromDb(Long id) {
+		// Fetch user from DB -> the given
+		User user = userRepository.findOwnerOfComponent(id);
+
+		// given target Domain Object not found in DB, or owner not set
+		if (user == null)
+			return new User();
+
+		return user;
+	}
+
+	/**
+	 * Help method for fetching the TechnologyOptionOwner from the DB
+	 *
+	 * @param id
+	 *            ID of the TechnologyOption
+	 * @return Owner of the TechnologyOption if TechnologyOption found, else empty User
+	 *         Object
+	 */
+	private User getTechnologyOptionOwnerFromDb(Long id) {
+		// Fetch user from DB -> the given
+		User user = userRepository.findOwnerOfTechnologyOption(id);
 
 		// given target Domain Object not found in DB, or owner not set
 		if (user == null)
