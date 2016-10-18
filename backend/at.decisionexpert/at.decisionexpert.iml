@@ -12,6 +12,20 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/SwaggerConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/Neo4JConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/SecurityWebConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/MainConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/SecurityMethodConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/DtoConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/MvcConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/at/decisionexpert/config/ValidationConfig.java</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -24,6 +38,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.springframework:spring-context:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.5.RELEASE" level="project" />
@@ -154,6 +169,5 @@
     <orderEntry type="library" name="Maven: org.modelmapper:modelmapper:0.7.5" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:15.0" level="project" />
-    <orderEntry type="library" name="org.springframework:spring-context:4.2.5.RELEASE" level="project" />
   </component>
 </module>
