@@ -107,9 +107,13 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = getUserByEmail(username);
+		User user = getUserByOriginalUsername(username);
+		//User user = getUserByEmail(username);
 		if(user == null) {
-			throw new UsernameNotFoundException("No user with username '" + username + "' exists.");
+			user = getUserByEmail(username);
+			if (user == null) {
+				throw new UsernameNotFoundException("No user with username '" + username + "' exists.");
+			}
 		}
 		return user;
 	}
@@ -136,8 +140,8 @@ public class UserBusinessImpl implements UserBusiness {
 		creationUser.setOriginalUsername(user.getUsername());
 		creationUser.setFirstName(user.getFirstName());
 		creationUser.setLastName(user.getLastName());
-		creationUser.setPassword(user.getPassword()); // Password encoded at the client
-		//creationUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		//creationUser.setPassword(user.getPassword()); // Password encoded at the client
+		creationUser.setPassword(passwordEncoder.encode(user.getPassword()));
 		creationUser.setMailActivationToken(UUID.randomUUID().toString().replaceAll("-", ""));
 		//Set User Authority
 		UserAuthority auth = userAuthorityRepository.findByAuthority("ROLE_USER");

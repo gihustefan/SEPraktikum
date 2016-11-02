@@ -37,7 +37,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @RequestMapping(value = "create/", method = RequestMethod.POST)
+    @RequestMapping(value = "create", method = RequestMethod.POST)
     public UserDto createUser(@RequestBody UserCreationDto user) {
         return userService.createUser(user);
     }
