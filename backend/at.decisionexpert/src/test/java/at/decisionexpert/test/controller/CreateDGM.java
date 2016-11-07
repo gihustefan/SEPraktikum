@@ -66,7 +66,7 @@ public class CreateDGM {
     public void createUser() {
         UserCreationDto user = new UserCreationDto();
         user.setEmail("john@doe.com");
-        user.setPassword(passwordEncoder.encode("password"));
+        user.setPassword("password");
         user.setUsername("johndoe");
         user.setFirstName("John");
         user.setLastName("Doe");
