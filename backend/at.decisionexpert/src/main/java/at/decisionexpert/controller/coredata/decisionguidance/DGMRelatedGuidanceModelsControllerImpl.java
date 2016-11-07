@@ -3,10 +3,7 @@ package at.decisionexpert.controller.coredata.decisionguidance;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelatedGuidanceModelsDto;
 import at.decisionexpert.service.coredata.DGMCoreDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,7 +11,7 @@ import java.util.List;
  * Created by stefanhaselboeck on 22.08.16.
  */
 @RestController
-@RequestMapping("api/relatedguidancemodels")
+@RequestMapping("api/relatedguidancemodels/{titlePartial}")
 @ResponseBody
 public class DGMRelatedGuidanceModelsControllerImpl implements DGMRelatedGuidanceModelsController {
 
@@ -23,7 +20,7 @@ public class DGMRelatedGuidanceModelsControllerImpl implements DGMRelatedGuidanc
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public List<DecisionGuidanceModelRelatedGuidanceModelsDto> getGuidanceModels(String titlePartial) {
+    public List<DecisionGuidanceModelRelatedGuidanceModelsDto> getGuidanceModels(@PathVariable String titlePartial) {
         return dgmCoreDataService.getRelatedGuidanceModels(titlePartial);
     }
 }
