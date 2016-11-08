@@ -322,7 +322,13 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         DecisionGuidanceModel endDecisionGuidanceModel = decisionGuidanceModelRepository.findOne(guidanceModelInfo.getIdAttribute(), 0);
         Assert.notNull(endDecisionGuidanceModel);
 
-        HasRelatedGuidanceModels hasRelatedGuidanceModels = new HasRelatedGuidanceModels(startDecisionGuidanceModel, endDecisionGuidanceModel, guidanceModelInfo.getDescription(), guidanceModelInfo.getOrdering());
+        HasRelatedGuidanceModels hasRelatedGuidanceModels;
+        if (guidanceModelInfo.getDescription() != null && guidanceModelInfo.getOrdering() != null) {
+            hasRelatedGuidanceModels = new HasRelatedGuidanceModels(startDecisionGuidanceModel, endDecisionGuidanceModel, guidanceModelInfo.getDescription(), guidanceModelInfo.getOrdering());
+        } else {
+            hasRelatedGuidanceModels = new HasRelatedGuidanceModels(startDecisionGuidanceModel, endDecisionGuidanceModel);
+        }
+
         hasRelatedGuidanceModels = dgmHasGuidanceModelRepository.save(hasRelatedGuidanceModels);
 
         // Reordering Relations after adding

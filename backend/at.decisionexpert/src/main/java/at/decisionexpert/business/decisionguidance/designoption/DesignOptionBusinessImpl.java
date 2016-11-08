@@ -242,7 +242,13 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
         DecisionGuidanceModel endDecisionGuidanceModel = decisionGuidanceModelRepository.findOne(guidanceModelInfo.getIdAttribute(), 0);
         Assert.notNull(endDecisionGuidanceModel);
 
-        HasEffectedGuidanceModels hasEffectedGuidanceModels = new HasEffectedGuidanceModels(startDesignOption, endDecisionGuidanceModel, guidanceModelInfo.getDescription(), guidanceModelInfo.getOrdering());
+        HasEffectedGuidanceModels hasEffectedGuidanceModels;
+        if (guidanceModelInfo.getDescription() != null && guidanceModelInfo.getOrdering() != null) {
+            hasEffectedGuidanceModels = new HasEffectedGuidanceModels(startDesignOption, endDecisionGuidanceModel, guidanceModelInfo.getDescription(), guidanceModelInfo.getOrdering());
+        } else {
+            hasEffectedGuidanceModels = new HasEffectedGuidanceModels(startDesignOption, endDecisionGuidanceModel);
+        }
+
         hasEffectedGuidanceModels = doHasEffectedGuidanceModelRepository.save(hasEffectedGuidanceModels);
 
         // Reordering Relations after adding
