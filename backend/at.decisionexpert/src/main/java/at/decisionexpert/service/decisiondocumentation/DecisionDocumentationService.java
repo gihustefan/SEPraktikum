@@ -33,13 +33,13 @@ public interface DecisionDocumentationService {
      */
     DecisionDocumentationModelPageableDto getUserDecisionDocumentationModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size);
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     DecisionDocumentationModelDto createDecisionDocumentationModel(DecisionDocumentationModelChangeRequestDto decisionDocumentationModel);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
     DecisionDocumentationModelDto updateDecisionDocumentationModelProperties(@NotNull Long id, @NotNull DecisionDocumentationModelChangeRequestDto newValues);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
     void deleteDecisionDocumentationModel(@NotNull Long id);
 
     /**
@@ -52,7 +52,7 @@ public interface DecisionDocumentationService {
      * @param <T>                          Type identifier for Relation Class
      * @return a new DecisionDocumentationModelRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
     <T extends DDMAttributeRelationship<A>, A extends CoreData> DecisionDocumentationModelRelationDto createRelation(
             @NotNull Long idDecisionDocumentationModel, DecisionDocumentationModelRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
@@ -69,7 +69,7 @@ public interface DecisionDocumentationService {
      *                                             class information at runtime)
      * @return The updated and already persisted DecisionDocumentationModel Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
     <T extends DDMAttributeRelationship<? extends CoreData>> DecisionDocumentationModelRelationDto updateExistingRelationAttribute(
             @NotNull Long idDecisionDocumentationModel, @NotNull Long idDecisionDocumentationModelRelation, DecisionDocumentationModelRelationDto newValues,
             Class<T> clazz);
@@ -83,7 +83,7 @@ public interface DecisionDocumentationService {
      * @param relationClass                        The neo4j class information of the Type T (needed, because no
      *                                             class information at runtime)
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentationModel, 'at.decisionexpert.neo4jentity.node.DecisionDocumentationModel', 'OWNER')")
     <T extends DDMAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idDecisionDocumentationModel, @NotNull Long idDecisionDocumentationModelRelation, Class<T> relationClass);
 
@@ -94,7 +94,7 @@ public interface DecisionDocumentationService {
      * @param guidanceModelInfo       EffectedDocumentationModel values
      * @return newly created EffectedDocumentationModel Dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     DecisionDocumentationModelEffectedDocumentationModelDto createDocumentationModelRelation(@NotNull Long idDecisionDocumentation, DecisionDocumentationModelEffectedDocumentationModelDto guidanceModelInfo);
 
     /**
@@ -105,7 +105,7 @@ public interface DecisionDocumentationService {
      * @param newValues                       The new Values
      * @return The altered DecisionDocumentation EffectedDocumentationModel Relation dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     DecisionDocumentationModelEffectedDocumentationModelDto updateExistingDocumentationModelRelationAttribute(@NotNull Long idDecisionDocumentation, @NotNull Long idDecisionDocumentationRelation, @NotNull DecisionDocumentationModelEffectedDocumentationModelDto newValues);
 
     /**
@@ -114,7 +114,7 @@ public interface DecisionDocumentationService {
      * @param idDecisionDocumentation         Which DecisionDocumentation
      * @param idDecisionDocumentationRelation Which DecisionDocumentation Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     void deleteDocumentationModelRelationAttribute(@NotNull Long idDecisionDocumentation, @NotNull Long idDecisionDocumentationRelation);
 
     /**
@@ -124,7 +124,7 @@ public interface DecisionDocumentationService {
      * @param tradeoffInfo  Tradeoff values
      * @return newly created Tradeoff Dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     DecisionDocumentationModelTradeoffRelationDto createTradeoffRelation(@NotNull Long idDecisionDocumentation, DecisionDocumentationModelTradeoffRelationDto tradeoffInfo);
     
     /**
@@ -135,7 +135,7 @@ public interface DecisionDocumentationService {
      * @param newValues             The new Values
      * @return The altered DecisionDocumentation Tradeoff Relation dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     DecisionDocumentationModelTradeoffRelationDto updateExistingTradeoffRelationAttribute(@NotNull Long idDecisionDocumentation, @NotNull Long idTradeoffRelation, @NotNull DecisionDocumentationModelTradeoffRelationDto newValues);
 
     /**
@@ -144,6 +144,6 @@ public interface DecisionDocumentationService {
      * @param idDecisionDocumentation                 Which DecisionDocumentation
      * @param idTradeoffRelation Which Tradeoff Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionDocumentation, 'at.decisionexpert.neo4jentity.node.DecisionDocumentation', 'OWNER')")
     void deleteDecisionDocumentationTradeoffRelation(@NotNull Long idDecisionDocumentation, @NotNull Long idTradeoffRelation);
 }

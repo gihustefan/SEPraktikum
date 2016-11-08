@@ -33,13 +33,13 @@ public interface DecisionGuidanceModelService {
      */
     DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size);
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     DecisionGuidanceModelDto createDecisionGuidanceModel(DecisionGuidanceModelChangeRequestDto decisionGuidanceModel);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     DecisionGuidanceModelDto updateDecisionGuidanceModelProperties(@NotNull Long id, @NotNull DecisionGuidanceModelChangeRequestDto newValues);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteDecisionGuidanceModel(@NotNull Long id);
 
     /**
@@ -52,7 +52,7 @@ public interface DecisionGuidanceModelService {
      * @param <T>           Type identifier for Relation Class
      * @return a new DecisionGuidanceModelRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+//    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRealtionDto createRelation(
             @NotNull Long idDecisionGuidanceModel, DecisionGuidanceModelRealtionDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
@@ -69,7 +69,7 @@ public interface DecisionGuidanceModelService {
      *                              class information at runtime)
      * @return The updated and already persisted DecisionGuidanceModel Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    //   @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRealtionDto updateExistingRelationAttribute(
             @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRealtionDto newValues,
             Class<T> clazz);
@@ -83,7 +83,7 @@ public interface DecisionGuidanceModelService {
      * @param relationClass         The neo4j class information of the Type T (needed, because no
      *                              class information at runtime)
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+//    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     <T extends DGMAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, Class<T> relationClass);
 
@@ -95,7 +95,7 @@ public interface DecisionGuidanceModelService {
      * @param guidanceModelInfo  RelatedGuidanceModel values
      * @return newly created RelatedGuidanceModel Dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+//    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     DecisionGuidanceModelRelatedGuidanceModelsDto createGuidanceModelRelation(@NotNull Long idDecisionGuidanceModel, DecisionGuidanceModelRelatedGuidanceModelsDto guidanceModelInfo);
 
     /**
@@ -106,7 +106,7 @@ public interface DecisionGuidanceModelService {
      * @param newValues             The new Values
      * @return The altered DecisionGuidanceModel RelatedGuidanceModel Relation dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+//    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     DecisionGuidanceModelRelatedGuidanceModelsDto updateExistingGuidanceModelRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, @NotNull DecisionGuidanceModelRelatedGuidanceModelsDto newValues);
 
     /**
@@ -115,7 +115,7 @@ public interface DecisionGuidanceModelService {
      * @param idDecisionGuidanceModel                 Which DecisionGuidanceModel
      * @param idDecisionGuidanceModelRelation Which DecisionGuidanceModelRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+//    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteGuidanceModelRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation);
 
 

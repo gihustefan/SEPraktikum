@@ -13,9 +13,9 @@ import java.util.List;
  * Created by stefanhaselboeck on 18.08.16.
  */
 public interface DGMCoreDataService {
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     <T extends CoreData> List<DecisionGuidanceModelRealtionDto> getCoreData(@Size(min = 3) String titlePartial, @NotNull Class<T> coreDataClass);
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     <T extends CoreData> List<DecisionGuidanceModelRelatedGuidanceModelsDto> getRelatedGuidanceModels(@Size(min = 3) String titlePartial);
 }

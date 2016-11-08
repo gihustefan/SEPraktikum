@@ -25,7 +25,7 @@ public interface TechnologyOptionService {
      * @param <T>           Type identifier for Relation Class
      * @return a new TechnologyOptionRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
     <T extends TOAttributeRelationship<A>, A extends CoreData> TechnologyOptionRelationDto createRelation(
             @NotNull Long idTechnologyOption, TechnologyOptionRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
@@ -42,7 +42,7 @@ public interface TechnologyOptionService {
      *                              class information at runtime)
      * @return The updated and already persisted TechnologyOption Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
     <T extends TOAttributeRelationship<? extends CoreData>> TechnologyOptionRelationDto updateExistingRelationAttribute(
             @NotNull Long idTechnologyOption, @NotNull Long idTechnologyOptionRelation, TechnologyOptionRelationDto newValues,
             Class<T> clazz);
@@ -56,7 +56,7 @@ public interface TechnologyOptionService {
      * @param relationClass         The neo4j class information of the Type T (needed, because no
      *                              class information at runtime)
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idTechnologyOption, 'at.decisionexpert.neo4jentity.node.TechnologyOption', 'OWNER')")
     <T extends TOAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idTechnologyOption, @NotNull Long idTechnologyOptionRelation, Class<T> relationClass);
 }

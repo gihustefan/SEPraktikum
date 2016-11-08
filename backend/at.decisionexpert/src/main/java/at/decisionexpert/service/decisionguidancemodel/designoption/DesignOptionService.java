@@ -18,13 +18,13 @@ public interface DesignOptionService {
     DesignOptionDto getDesignOption(@NotNull Long id);
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     DesignOptionDto createDesignOption(DesignOptionChangeRequestDto designOption);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     DesignOptionDto updateDesignOptionProperties(@NotNull Long id, @NotNull DesignOptionChangeRequestDto newValues);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteDesignOption(@NotNull Long id);
 
     /**
@@ -37,7 +37,7 @@ public interface DesignOptionService {
      * @param <T>           Type identifier for Relation Class
      * @return a new DesignOptionRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     <T extends DOAttributeRelationship<A>, A extends CoreData> DesignOptionRelationDto createRelation(
             @NotNull Long idDesignOption, DesignOptionRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
@@ -54,7 +54,7 @@ public interface DesignOptionService {
      *                              class information at runtime)
      * @return The updated and already persisted DesignOption Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     <T extends DOAttributeRelationship<? extends CoreData>> DesignOptionRelationDto updateExistingRelationAttribute(
             @NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, DesignOptionRelationDto newValues,
             Class<T> clazz);
@@ -68,7 +68,7 @@ public interface DesignOptionService {
      * @param relationClass         The neo4j class information of the Type T (needed, because no
      *                              class information at runtime)
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     <T extends DOAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, Class<T> relationClass);
 
@@ -80,7 +80,7 @@ public interface DesignOptionService {
      * @param guidanceModelInfo  EffectedGuidanceModel values
      * @return newly created EffectedGuidanceModel Dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     DesignOptionEffectedGuidanceModelsDto createGuidanceModelRelation(@NotNull Long idDesignOption, DesignOptionEffectedGuidanceModelsDto guidanceModelInfo);
 
     /**
@@ -91,7 +91,7 @@ public interface DesignOptionService {
      * @param newValues             The new Values
      * @return The altered DesignOption EffectedGuidanceModel Relation dto
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     DesignOptionEffectedGuidanceModelsDto updateExistingGuidanceModelRelationAttribute(@NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, @NotNull DesignOptionEffectedGuidanceModelsDto newValues);
 
     /**
@@ -100,6 +100,6 @@ public interface DesignOptionService {
      * @param idDesignOption                 Which DesignOption
      * @param idDesignOptionRelation Which DesignOptionRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
     void deleteGuidanceModelRelationAttribute(@NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation);
 }

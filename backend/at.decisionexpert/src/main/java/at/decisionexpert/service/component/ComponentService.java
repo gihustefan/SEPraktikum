@@ -25,7 +25,7 @@ public interface ComponentService {
      * @param <T>           Type identifier for Relation Class
      * @return a new ComponentRelation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
     <T extends ComponentAttributeRelationship<A>, A extends CoreData> ComponentRelationDto createRelation(
             @NotNull Long idComponent, ComponentRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
@@ -42,7 +42,7 @@ public interface ComponentService {
      *                              class information at runtime)
      * @return The updated and already persisted Component Relation
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
     <T extends ComponentAttributeRelationship<? extends CoreData>> ComponentRelationDto updateExistingRelationAttribute(
             @NotNull Long idComponent, @NotNull Long idComponentRelation, ComponentRelationDto newValues,
             Class<T> clazz);
@@ -56,7 +56,7 @@ public interface ComponentService {
      * @param relationClass         The neo4j class information of the Type T (needed, because no
      *                              class information at runtime)
      */
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
+    //    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idComponent, 'at.decisionexpert.neo4jentity.node.Component', 'OWNER')")
     <T extends ComponentAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idComponent, @NotNull Long idComponentRelation, Class<T> relationClass);
 }

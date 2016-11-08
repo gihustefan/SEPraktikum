@@ -19,26 +19,26 @@ public interface UserService {
 	UserDto createUser(@NotNull UserCreationDto user);
 	
 	// TODO: Evaluate if this is necessary
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	////    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	Iterable<UserDto> getAllUsers();
 
 	// TODO: Evaluate if this is necessary
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	//    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	User getUserById(Long userId);
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	UserActivationDto activateUser(Long userId);
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	UserActivationDto deactivateUser(Long userId);
 	
 	// dateLocked, dateActivated, mailActivationToken, password, email, authorities should not be changed here
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#user, 'NOSENSIBLEDATA')")// TODO allow user to change himself
+	//    @PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#user, 'NOSENSIBLEDATA')")// TODO allow user to change himself
 	User updateUser(User user);
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	AdminUserCreationDto createUserByAdmin(AdminUserCreationDto user);
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	AdminUserCreationDto resetPassword(Long userId);
 }
