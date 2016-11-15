@@ -2,26 +2,37 @@ package at.decisionexpert.neo4jentity.relationship.decisionguidance;
 
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.neo4jentity.node.DesignOption;
+import at.decisionexpert.neo4jentity.relationship.DateRelationship;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 
 /**
  * Created by stefanhaselboeck on 12.08.16.
  */
 @RelationshipEntity(type = "HAS_DESIGNOPTION")
-public class HasDesignOption extends DGMAttributeRelationship<DesignOption> {
+public class HasDesignOption extends DateRelationship<DecisionGuidanceModel, DesignOption> {
 
-    public HasDesignOption(DecisionGuidanceModel startNode, DesignOption endNode, String description, String definition, int ordering) {
-        super(startNode, endNode, description, definition, ordering);
-        // TODO Auto-generated constructor stub
+    @Property
+    private int ordering;
+
+    public HasDesignOption(DecisionGuidanceModel startNode, DesignOption endNode, int ordering) {
+        super(startNode, endNode);
+        this.ordering = ordering;
     }
 
     public HasDesignOption(DecisionGuidanceModel startNode, DesignOption endNode) {
         super(startNode, endNode);
-        // TODO Auto-generated constructor stub
     }
 
     public HasDesignOption() {
         super();
-        // TODO Auto-generated constructor stub
+    }
+
+    public int getOrdering() {
+        return ordering;
+    }
+
+    public void setOrdering(int ordering) {
+        this.ordering = ordering;
     }
 }

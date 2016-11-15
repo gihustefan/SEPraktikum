@@ -12,16 +12,16 @@ import java.util.List;
  */
 public interface DecisionGuidanceModelRepository extends GraphRepository<DecisionGuidanceModel> {
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.title as title, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
     List<DecisionGuidanceModelDto> findPublishedByUserId(Long idUser, Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.title as title, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
     List<DecisionGuidanceModelDto> findAllByUserId(Long idUser, Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.title as title, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
     List<DecisionGuidanceModelDto> findNewestPublishedDecisionGuidanceModels(Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.title as title, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
     List<DecisionGuidanceModelDto> findNewestDecisionGuidanceModels(Integer skip, Integer size);
 
     @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->() RETURN count(dgm)")

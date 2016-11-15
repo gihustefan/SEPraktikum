@@ -1,7 +1,6 @@
 package at.decisionexpert.controller.coredata.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
-import at.decisionexpert.neo4jentity.node.DesignOption;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
 import at.decisionexpert.service.coredata.DGMCoreDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("api/designoptions/{titlePartial}")
 @ResponseBody
-public class DGMDesignOptionsControllerImpl implements DGMCoreDateController{
+public class DGMDesignOptionsControllerImpl implements DGMDesignOptionsController{
     @Autowired
     DGMCoreDataService dgmCoreDataService;
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public List<DecisionGuidanceModelRealtionDto> getCoreData(@PathVariable String titlePartial) {
-        return dgmCoreDataService.getCoreData(titlePartial, DesignOption.class);
+    public List<DecisionGuidanceModelDesignOptionRelationDto> getDesignOptions(@PathVariable String titlePartial) {
+        return dgmCoreDataService.getDesignOptions(titlePartial);
     }
 }

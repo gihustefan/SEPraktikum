@@ -8,18 +8,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DecisionGuidanceModelChangeRequestDto {
 
-    private String title;
+    private String name;
 
     private Boolean published;
 
     private String description;
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getPublished() {

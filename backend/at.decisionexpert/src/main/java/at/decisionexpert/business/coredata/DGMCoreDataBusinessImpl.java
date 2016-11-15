@@ -1,10 +1,12 @@
 package at.decisionexpert.business.coredata;
 
 import at.decisionexpert.business.user.UserBusiness;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelatedGuidanceModelsDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
+import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.repository.node.AttributeRepository;
 import at.decisionexpert.repository.node.NodeAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,14 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
     NodeAttributeRepository nodeAttributeRepository;
 
     @Override
-    public <T extends CoreData> List<DecisionGuidanceModelRealtionDto> getCoreData(String titlePartial, Class<T> coreDataClass) {
+    public <T extends CoreData> List<DecisionGuidanceModelRelationDto> getCoreData(String titlePartial, Class<T> coreDataClass) {
         Assert.notNull(titlePartial);
         Assert.notNull(coreDataClass);
 
-        List<DecisionGuidanceModelRealtionDto> result = new ArrayList<>();
+        List<DecisionGuidanceModelRelationDto> result = new ArrayList<>();
 
         nodeAttributeRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
-            result.add(new DecisionGuidanceModelRealtionDto(core));
+            result.add(new DecisionGuidanceModelRelationDto(core));
         });
 
         return result;
@@ -51,6 +53,19 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
 
         nodeAttributeRepository.findNodeByTitle(titlePartial, DecisionGuidanceModel.class).forEach(node -> {
             result.add(new DecisionGuidanceModelRelatedGuidanceModelsDto(node));
+        });
+
+        return result;
+    }
+
+    @Override
+    public <T extends CoreData> List<DecisionGuidanceModelDesignOptionRelationDto> getDesignOptions(String titlePartial) {
+        Assert.notNull(titlePartial);
+
+        List<DecisionGuidanceModelDesignOptionRelationDto> result = new ArrayList<>();
+
+        nodeAttributeRepository.findNodeByTitle(titlePartial, DesignOption.class).forEach(node -> {
+            result.add(new DecisionGuidanceModelDesignOptionRelationDto(node));
         });
 
         return result;

@@ -10,8 +10,8 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 @RelationshipEntity(type="HAS_REQUIREDCOMPONENT")
 public class HasRequiredComponent extends DOAttributeRelationship<Component> {
 
-    public HasRequiredComponent(DesignOption startNode, Component endNode, String description, String definition, int ordering) {
-        super(startNode, endNode, description, definition, ordering);
+    public HasRequiredComponent(DesignOption startNode, Component endNode, String description, int ordering) {
+        super(startNode, endNode, description, ordering);
         // TODO Auto-generated constructor stub
     }
 

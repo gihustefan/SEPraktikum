@@ -36,7 +36,7 @@ public class DecisionDocumentationModelDto {
 
     private Boolean published;
 
-    private List<DecisionDocumentationModelRelationDto> designDecisions;
+    private List<DecisionDocumenModelDesignDecisionRelationDto> designDecisions;
 
     private List<DecisionDocumentationModelRelationDto> addressedRequirements;
 
@@ -75,7 +75,11 @@ public class DecisionDocumentationModelDto {
         setPublished(decisionDocumentationModel.isPublished());
 
         // Design Decisions
-        setDesignDecisions(getNeo4JRelationDto(decisionDocumentationModel.getDesignDecisions()));
+        List<DecisionDocumenModelDesignDecisionRelationDto> designDecisions = new ArrayList<>();
+        decisionDocumentationModel.getDesignDecisions().forEach(to -> {
+            designDecisions.add(new DecisionDocumenModelDesignDecisionRelationDto(to));
+        });
+        setDesignDecisions(designDecisions);
         // AddressedRequirements
         setAddressedRequirements(getNeo4JRelationDto(decisionDocumentationModel.getAddressedRequirements()));
         // Implications
@@ -188,11 +192,11 @@ public class DecisionDocumentationModelDto {
         this.published = published;
     }
 
-    public List<DecisionDocumentationModelRelationDto> getDesignDecisions() {
+    public List<DecisionDocumenModelDesignDecisionRelationDto> getDesignDecisions() {
         return designDecisions;
     }
 
-    public void setDesignDecisions(List<DecisionDocumentationModelRelationDto> designDecisions) {
+    public void setDesignDecisions(List<DecisionDocumenModelDesignDecisionRelationDto> designDecisions) {
         this.designDecisions = designDecisions;
     }
 

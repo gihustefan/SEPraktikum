@@ -214,7 +214,8 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
+            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 
@@ -263,10 +264,6 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
         // Setting the new value for the description
         if (newValues.getDescription() != null)
             loadedRelation.setDescription(newValues.getDescription());
-
-        // Setting the new value for the definition
-        if (newValues.getDefinition() != null)
-            loadedRelation.setDefinition(newValues.getDefinition());
 
         // Setting the ordering -> must change the ordering values of other AP
         // Relationships as well
@@ -411,7 +408,7 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
         Tradeoff tradeoff = ddmCoreDataBusiness.getTradeoffByTradeoffItems(tradeoffInfo.getIdAttributeOver(), tradeoffInfo.getIdAttributeUnder());
 
         // Creating the new hasTradeoff Relationship
-        HasTradeoff hasTradeoff = new HasTradeoff(decisionDocumentationModel, tradeoff, tradeoffInfo.getDescription(), tradeoffInfo.getOrdering(), tradeoff.getTradeoffItemOver().getDefinition(), tradeoff.getTradeoffItemUnder().getDefinition());
+        HasTradeoff hasTradeoff = new HasTradeoff(decisionDocumentationModel, tradeoff, tradeoffInfo.getOrdering(), tradeoff.getTradeoffItemOver().getDefinition(), tradeoff.getTradeoffItemUnder().getDefinition());
 
         hasTradeoff = ddmHasTradeoffRepository.save(hasTradeoff);
 
@@ -430,19 +427,14 @@ public class DecisionDocumentationBusinessImpl implements DecisionDocumentationB
         HasTradeoff hasTradeoff = ddmHasTradeoffRepository.findOne(idDecisionDocumentationTradeoffRelation);
         Assert.notNull(hasTradeoff);
 
-        // Setting new Description
-        if (newValues.getDescription() != null) {
-            hasTradeoff.setDescription(newValues.getDescription());
-        }
-
         // Setting new Definition Over
-        if (newValues.getDefinitionOver() != null) {
-            hasTradeoff.setDefinitionOver(newValues.getDefinitionOver());
+        if (newValues.getDescriptionOver() != null) {
+            hasTradeoff.setDescriptionOver(newValues.getDescriptionOver());
         }
 
         // Setting new Definition Under
-        if (newValues.getDefinitionUnder() != null) {
-            hasTradeoff.setDefinitionUnder(newValues.getDefinitionUnder());
+        if (newValues.getDescriptionUnder() != null) {
+            hasTradeoff.setDescriptionUnder(newValues.getDescriptionUnder());
         }
 
         if (newValues.getOrdering() != null) {

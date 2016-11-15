@@ -1,5 +1,7 @@
 package at.decisionexpert.neo4jentity.dto.decisionguidance;
 
+import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
+import at.decisionexpert.neo4jentity.dto.vote.VoteRelationDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
@@ -23,7 +25,7 @@ public class DecisionGuidanceModelDto {
 
     private Serializable id;
 
-    private String title;
+    private String name;
 
     private Serializable ownerId;
 
@@ -37,11 +39,15 @@ public class DecisionGuidanceModelDto {
 
     private Boolean published;
 
-    private List<DecisionGuidanceModelRealtionDto> potentialRequirements;
+    private List<DecisionGuidanceModelRelationDto> potentialRequirements;
 
-    private List<DecisionGuidanceModelRelationDesignOptionDto> designOptions;
+    private List<DecisionGuidanceModelDesignOptionRelationDto> designOptions;
 
     private List<DecisionGuidanceModelRelatedGuidanceModelsDto> relatedGuidanceModels;
+
+    private List<CommentRelationDto> comments;
+
+    private List<VoteRelationDto> votes;
 
     public DecisionGuidanceModelDto() {
         super();
@@ -54,7 +60,7 @@ public class DecisionGuidanceModelDto {
      */
     public DecisionGuidanceModelDto(DecisionGuidanceModel decisionGuidanceModel) {
         setId(decisionGuidanceModel.getId());
-        setTitle(decisionGuidanceModel.getTitle());
+        setName(decisionGuidanceModel.getName());
 
         if (decisionGuidanceModel.getCreator() != null) {
             setOwnerId(decisionGuidanceModel.getCreator().getId());
@@ -73,11 +79,10 @@ public class DecisionGuidanceModelDto {
         setPotentialRequirements(getNeo4JRelationDto(decisionGuidanceModel.getPotentialRequirements()));
 
         // Design Options
-        List<DecisionGuidanceModelRelationDesignOptionDto> designOptions = new ArrayList<>();
+        List<DecisionGuidanceModelDesignOptionRelationDto> designOptions = new ArrayList<>();
         decisionGuidanceModel.getDesignOptions().forEach(to -> {
-            designOptions.add(new DecisionGuidanceModelRelationDesignOptionDto(to));
+            designOptions.add(new DecisionGuidanceModelDesignOptionRelationDto(to));
         });
-
         setDesignOptions(designOptions);
 
         // Related Topics
@@ -85,8 +90,21 @@ public class DecisionGuidanceModelDto {
         decisionGuidanceModel.getRelatedGuidanceModels().forEach(to -> {
             relatedGuidanceModels.add(new DecisionGuidanceModelRelatedGuidanceModelsDto(to));
         });
-
         setRelatedGuidanceModels(relatedGuidanceModels);
+
+        //Comments
+        List<CommentRelationDto> comments = new ArrayList<>();
+        decisionGuidanceModel.getComments().forEach(to -> {
+            comments.add(new CommentRelationDto(to));
+        });
+        setComments(comments);
+
+        //Votes
+        List<VoteRelationDto> votes = new ArrayList<>();
+        decisionGuidanceModel.getVotes().forEach(to -> {
+            votes.add(new VoteRelationDto(to));
+        });
+        setVotes(votes);
     }
 
     /**
@@ -97,15 +115,15 @@ public class DecisionGuidanceModelDto {
      * @param collection
      * @return
      */
-    private List<DecisionGuidanceModelRealtionDto> getNeo4JRelationDto(
+    private List<DecisionGuidanceModelRelationDto> getNeo4JRelationDto(
             Collection<? extends DGMAttributeRelationship<? extends CoreData>> collection) {
 
         if (collection == null)
             return null;
 
-        List<DecisionGuidanceModelRealtionDto> result = new ArrayList<>();
+        List<DecisionGuidanceModelRelationDto> result = new ArrayList<>();
         collection.forEach(item -> {
-            result.add(new DecisionGuidanceModelRealtionDto(item));
+            result.add(new DecisionGuidanceModelRelationDto(item));
         });
         return result;
     }
@@ -118,12 +136,12 @@ public class DecisionGuidanceModelDto {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Serializable getOwnerId() {
@@ -174,19 +192,19 @@ public class DecisionGuidanceModelDto {
         this.published = published;
     }
 
-    public List<DecisionGuidanceModelRealtionDto> getPotentialRequirements() {
+    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements() {
         return potentialRequirements;
     }
 
-    public void setPotentialRequirements(List<DecisionGuidanceModelRealtionDto> potentialRequirements) {
+    public void setPotentialRequirements(List<DecisionGuidanceModelRelationDto> potentialRequirements) {
         this.potentialRequirements = potentialRequirements;
     }
 
-    public List<DecisionGuidanceModelRelationDesignOptionDto> getDesignOptions() {
+    public List<DecisionGuidanceModelDesignOptionRelationDto> getDesignOptions() {
         return designOptions;
     }
 
-    public void setDesignOptions(List<DecisionGuidanceModelRelationDesignOptionDto> designOptions) {
+    public void setDesignOptions(List<DecisionGuidanceModelDesignOptionRelationDto> designOptions) {
         this.designOptions = designOptions;
     }
 
@@ -198,6 +216,14 @@ public class DecisionGuidanceModelDto {
         this.relatedGuidanceModels = relatedGuidanceModels;
     }
 
+    public List<CommentRelationDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentRelationDto> comments) {
+        this.comments = comments;
+    }
+
     public void setCreated(Long created) {
         this.created =LocalDateTime.ofInstant(Instant.ofEpochMilli(created),
                 TimeZone.getDefault().toZoneId());
@@ -206,5 +232,13 @@ public class DecisionGuidanceModelDto {
     public void setModified(Long modified) {
         this.modified = LocalDateTime.ofInstant(Instant.ofEpochMilli(modified),
                 TimeZone.getDefault().toZoneId());
+    }
+
+    public List<VoteRelationDto> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VoteRelationDto> votes) {
+        this.votes = votes;
     }
 }

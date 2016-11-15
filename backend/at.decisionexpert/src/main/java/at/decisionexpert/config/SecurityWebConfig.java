@@ -16,6 +16,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -77,4 +78,5 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

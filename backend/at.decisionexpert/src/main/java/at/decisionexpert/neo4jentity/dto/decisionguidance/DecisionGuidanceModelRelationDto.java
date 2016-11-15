@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * Created by stefanhaselboeck on 12.08.16.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DecisionGuidanceModelRealtionDto {
+public class DecisionGuidanceModelRelationDto {
 
     private Long id;
 
@@ -16,28 +16,24 @@ public class DecisionGuidanceModelRealtionDto {
 
     private Long idAttribute;
 
-    private String definition;
-
     private String description;
 
     private Integer ordering;
 
-    public DecisionGuidanceModelRealtionDto() {
+    public DecisionGuidanceModelRelationDto() {
         super();
     }
 
-    public DecisionGuidanceModelRealtionDto(DGMAttributeRelationship <? extends CoreData> dgmRelationship) {
+    public DecisionGuidanceModelRelationDto(DGMAttributeRelationship <? extends CoreData> dgmRelationship) {
         id = dgmRelationship.getId();
         name = dgmRelationship.getEndNode().getName();
         idAttribute = dgmRelationship.getEndNode().getId();
-        definition = dgmRelationship.getDefinition();
         description = dgmRelationship.getDescription();
         ordering = dgmRelationship.getOrdering();
     }
 
-    public DecisionGuidanceModelRealtionDto(CoreData dgmAttribute) {
+    public DecisionGuidanceModelRelationDto(CoreData dgmAttribute) {
         name = dgmAttribute.getName();
-        definition = dgmAttribute.getDefinition();
         idAttribute = dgmAttribute.getId();
     }
 
@@ -63,14 +59,6 @@ public class DecisionGuidanceModelRealtionDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public String getDescription() {

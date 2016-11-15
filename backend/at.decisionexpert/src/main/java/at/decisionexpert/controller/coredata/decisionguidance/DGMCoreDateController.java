@@ -1,6 +1,6 @@
 package at.decisionexpert.controller.coredata.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ public interface DGMCoreDateController {
      *            the partial title of the core data attributes
      * @return a List of core data values filtered by the partial title
      */
-    List<DecisionGuidanceModelRealtionDto> getCoreData(String titlePartial);
+    List<DecisionGuidanceModelRelationDto> getCoreData(String titlePartial);
 }

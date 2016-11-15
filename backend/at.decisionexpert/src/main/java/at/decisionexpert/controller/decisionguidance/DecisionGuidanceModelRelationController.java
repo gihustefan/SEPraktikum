@@ -1,15 +1,15 @@
 package at.decisionexpert.controller.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 
 /**
  * Created by stefanhaselboeck on 17.08.16.
  */
 public interface DecisionGuidanceModelRelationController {
 
-    DecisionGuidanceModelRealtionDto create(Long idDecisionGuidanceModel, DecisionGuidanceModelRealtionDto value);
+    DecisionGuidanceModelRelationDto create(Long idDecisionGuidanceModel, DecisionGuidanceModelRelationDto value);
 
-    DecisionGuidanceModelRealtionDto updateAttributes(Long idDecisionGuidanceModel, Long idRelation, DecisionGuidanceModelRealtionDto newValues);
+    DecisionGuidanceModelRelationDto updateAttributes(Long idDecisionGuidanceModel, Long idRelation, DecisionGuidanceModelRelationDto newValues);
 
     void delete(Long idDecisionGuidanceModel, Long idRelation);
 }

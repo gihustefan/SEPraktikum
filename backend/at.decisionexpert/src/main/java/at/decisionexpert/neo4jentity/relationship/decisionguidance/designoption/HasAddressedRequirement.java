@@ -10,8 +10,8 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 @RelationshipEntity(type="HAS_ADDRESSEDREQUIREMENT")
 public class HasAddressedRequirement extends DOAttributeRelationship<Requirement> {
 
-    public HasAddressedRequirement(DesignOption startNode, Requirement endNode, String description, String definition, int ordering) {
-        super(startNode, endNode, description, definition, ordering);
+    public HasAddressedRequirement(DesignOption startNode, Requirement endNode, String description, int ordering) {
+        super(startNode, endNode, description, ordering);
         // TODO Auto-generated constructor stub
     }
 

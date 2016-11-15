@@ -1,6 +1,6 @@
 package at.decisionexpert.controller.coredata.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 import at.decisionexpert.neo4jentity.node.Requirement;
 import at.decisionexpert.service.coredata.DGMCoreDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class DGMPotentialRequirementsControllerImpl implements DGMCoreDateContro
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public List<DecisionGuidanceModelRealtionDto> getCoreData(@PathVariable String titlePartial) {
+    public List<DecisionGuidanceModelRelationDto> getCoreData(@PathVariable String titlePartial) {
         return dgmCoreDataService.getCoreData(titlePartial, Requirement.class);
     }
 }

@@ -1,7 +1,8 @@
 package at.decisionexpert.controller.decisiondocumentation;
 
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelRelationDto;
-import at.decisionexpert.neo4jentity.node.DesignOption;
+import at.decisionexpert.neo4jentity.node.DesignDecision;
+import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasAddressedRequirement;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasDesignDecision;
 import at.decisionexpert.service.decisiondocumentation.DecisionDocumentationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,18 @@ public class DecisionDocumentationDesignDecisionControllerImpl implements Decisi
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public DecisionDocumentationModelRelationDto create(@PathVariable Long idDecisionDocumentationModel, @RequestBody DecisionDocumentationModelRelationDto decisionDocumentation) {
-        return decisionDocumentationService.createRelation(idDecisionDocumentationModel, decisionDocumentation, HasDesignDecision.class, DesignOption.class);
+        return null; //decisionDocumentationService.createDesignDecisionRelation(idDecisionDocumentationModel, decisionDocumentation);
     }
 
     @Override
     @RequestMapping(value = "/{idDecisionDocumentationDesignDecision}",method = RequestMethod.PATCH)
     public DecisionDocumentationModelRelationDto updateAttributes(@PathVariable Long idDecisionDocumentationModel, @PathVariable Long idDecisionDocumentationDesignDecision, @RequestBody DecisionDocumentationModelRelationDto newValues) {
-        return decisionDocumentationService.updateExistingRelationAttribute(idDecisionDocumentationModel, idDecisionDocumentationDesignDecision, newValues, HasDesignDecision.class);
+        return null; //decisionDocumentationService.updateExistingDesignDecisionRelationAttribute(idDecisionDocumentationModel, idDecisionDocumentationDesignDecision, newValues);
     }
 
     @Override
     @RequestMapping(value = "/{idDecisionDocumentationDesignDecision}",method = RequestMethod.DELETE)
     public void delete(@PathVariable Long idDecisionDocumentationModel, @PathVariable Long idDecisionDocumentationDesignDecision) {
-        decisionDocumentationService.deleteRelationAttribute(idDecisionDocumentationModel, idDecisionDocumentationDesignDecision, HasDesignDecision.class);
+        //decisionDocumentationService.deleteDesignDecisionRelationAttribute(idDecisionDocumentationModel, idDecisionDocumentationDesignDecision);
     }
 }

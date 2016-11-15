@@ -13,17 +13,15 @@ public class DecisionDocumentationModelTradeoffRelationDto {
 
     private String nameOver;
 
-    private String definitionUnder;
+    private String descriptionUnder;
 
-    private String definitionOver;
+    private String descriptionOver;
 
     private Long idAttributeUnder;
 
     private Long idAttributeOver;
 
     private Long id;
-
-    private String description;
 
     private Integer ordering;
 
@@ -45,10 +43,9 @@ public class DecisionDocumentationModelTradeoffRelationDto {
             }
         }
 
-        setDefinitionUnder(hasTradeoff.getDefinitionUnder());
-        setDefinitionOver(hasTradeoff.getDefinitionOver());
+        setDescriptionUnder(hasTradeoff.getDescriptionUnder());
+        setDescriptionOver(hasTradeoff.getDescriptionOver());
         setId(hasTradeoff.getId());
-        setDescription(hasTradeoff.getDescription());
         setOrdering(hasTradeoff.getOrdering());
     }
 
@@ -68,20 +65,20 @@ public class DecisionDocumentationModelTradeoffRelationDto {
         this.nameOver = nameOver;
     }
 
-    public String getDefinitionUnder() {
-        return definitionUnder;
+    public String getDescriptionUnder() {
+        return descriptionUnder;
     }
 
-    public void setDefinitionUnder(String definitionUnder) {
-        this.definitionUnder = definitionUnder;
+    public void setDescriptionUnder(String descriptionUnder) {
+        this.descriptionUnder = descriptionUnder;
     }
 
-    public String getDefinitionOver() {
-        return definitionOver;
+    public String getDescriptionOver() {
+        return descriptionOver;
     }
 
-    public void setDefinitionOver(String definitionOver) {
-        this.definitionOver = definitionOver;
+    public void setDescriptionOver(String descriptionOver) {
+        this.descriptionOver = descriptionOver;
     }
 
     public Long getIdAttributeUnder() {
@@ -106,14 +103,6 @@ public class DecisionDocumentationModelTradeoffRelationDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getOrdering() {

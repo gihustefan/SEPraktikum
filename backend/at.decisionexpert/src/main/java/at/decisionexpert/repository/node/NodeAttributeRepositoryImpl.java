@@ -54,7 +54,7 @@ public class NodeAttributeRepositoryImpl implements NodeAttributeRepository {
         filter.setPropertyName("name");
         // Regular expression for finding partials -> case insensitive (?i)
         //filter.setPropertyValue("(?i)" + partialTitle + ".*");
-        
+
         //if (attributeClass == Implication.class) {
             filter.setPropertyValue("(?i).*" + partialTitle + ".*");
         //}

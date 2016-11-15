@@ -3,6 +3,7 @@ package at.decisionexpert.neo4jentity.dto.decisionguidance;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionEffectedGuidanceModelsDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionRelationDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
+import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.DOAttributeRelationship;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,17 +16,13 @@ import java.util.List;
  * Created by stefanhaselboeck on 12.08.16.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DecisionGuidanceModelRelationDesignOptionDto {
+public class DecisionGuidanceModelDesignOptionRelationDto {
 
     private Long id;
 
     private String name;
 
     private Long idAttribute;
-
-    private String definition;
-
-    private String description;
 
     private Integer ordering;
 
@@ -37,14 +34,13 @@ public class DecisionGuidanceModelRelationDesignOptionDto {
 
     private List<DesignOptionRelationDto> requiredComponents;
 
-    public DecisionGuidanceModelRelationDesignOptionDto() {
+    public DecisionGuidanceModelDesignOptionRelationDto() {
     }
 
-    public DecisionGuidanceModelRelationDesignOptionDto(HasDesignOption hasDesignOption) {
+    public DecisionGuidanceModelDesignOptionRelationDto(HasDesignOption hasDesignOption) {
         setId(hasDesignOption.getId());
         setName(hasDesignOption.getEndNode().getName());
         setIdAttribute(hasDesignOption.getEndNode().getId());
-        setDescription(hasDesignOption.getDescription());
         setOrdering(hasDesignOption.getOrdering());
         setIdAttribute(hasDesignOption.getEndNode().getId());
         setImplications(getNeo4JRelationDto(hasDesignOption.getEndNode().getImplications()));
@@ -58,6 +54,11 @@ public class DecisionGuidanceModelRelationDesignOptionDto {
         });
 
         setEffectedGuidanceModels(effectedGuidanceModels);
+    }
+
+    public DecisionGuidanceModelDesignOptionRelationDto(DesignOption doAttribute) {
+        idAttribute = doAttribute.getId();
+        name = doAttribute.getName();
     }
 
     /**
@@ -103,22 +104,6 @@ public class DecisionGuidanceModelRelationDesignOptionDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getOrdering() {

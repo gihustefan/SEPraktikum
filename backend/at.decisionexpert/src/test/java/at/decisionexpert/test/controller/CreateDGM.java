@@ -1,38 +1,27 @@
 package at.decisionexpert.test.controller;
 
 import at.decisionexpert.business.decisionguidance.DecisionGuidanceModelBusiness;
-import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.config.MainConfig;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelChangeRequestDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDto;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionRelationDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.node.*;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAddressedRequirement;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasImplication;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasRequiredComponent;
-import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
-import at.decisionexpert.service.decisionguidancemodel.designoption.DesignOptionService;
 import at.decisionexpert.service.user.UserService;
-import at.decisionexpert.test.config.MainTestConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import java.util.Set;
 
 /**
  * Created by stefanhaselboeck on 10.10.16.
@@ -77,7 +66,7 @@ public class CreateDGM {
     @Test
     public void createDGM() {
         DecisionGuidanceModelChangeRequestDto dto = new DecisionGuidanceModelChangeRequestDto();
-        dto.setTitle("Service Discovery");
+        dto.setName("Service Discovery");
         dto.setDescription("In order to make a request, the calling microservice has to know the location (IP address and port) of the called microservice. In microservice based systems, where microservice can come and go over time (auto-scaling, failures, updates), it’s hard to use a static configuration as in traditional monolithic systems. Therefore, a function to look up the actual running microservices and the location of them is needed. This function is called Service Discovery.");
 
         //createDecisionGuidanceModel sets published to false per default
@@ -87,12 +76,12 @@ public class CreateDGM {
         dto.setPublished(true);
         decisionGuidanceModelBusiness.updateDecisionGuidanceModelProperties((Long)response.getId(), dto);
 
-        DecisionGuidanceModelRealtionDto potentialRequirement = new DecisionGuidanceModelRealtionDto();
+        DecisionGuidanceModelRelationDto potentialRequirement = new DecisionGuidanceModelRelationDto();
         potentialRequirement.setName("NFR1: Service Discovery is programming language independent");
         decisionGuidanceModelService.createRelation((Long)response.getId(), potentialRequirement, HasPotentialRequirement.class, Requirement.class);
 
-        DecisionGuidanceModelRealtionDto designOption = new DecisionGuidanceModelRealtionDto();
+        DecisionGuidanceModelDesignOptionRelationDto designOption = new DecisionGuidanceModelDesignOptionRelationDto();
         designOption.setName("Server-side discovery");
-        decisionGuidanceModelService.createRelation((Long)response.getId(), designOption, HasDesignOption.class, DesignOption.class);
+        decisionGuidanceModelService.createDesignOptionRelation((Long)response.getId(), designOption);
     }
 }

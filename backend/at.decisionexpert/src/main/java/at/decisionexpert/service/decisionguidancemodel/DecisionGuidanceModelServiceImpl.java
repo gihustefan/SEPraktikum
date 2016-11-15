@@ -51,13 +51,13 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRealtionDto createRelation(@NotNull Long idDecisionGuidanceModel, DecisionGuidanceModelRealtionDto attributeInfo, Class<T> relationClass, Class<A> toNodeType) {
+    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto createRelation(@NotNull Long idDecisionGuidanceModel, DecisionGuidanceModelRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType) {
         return decisionGuidanceModelBusiness.createRelation(idDecisionGuidanceModel, attributeInfo, relationClass, toNodeType);
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRealtionDto updateExistingRelationAttribute(
-            @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRealtionDto newValues, Class<T> clazz) {
+    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
+            @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz) {
         return decisionGuidanceModelBusiness.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRelation, newValues, clazz);
     }
 
@@ -81,5 +81,20 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     @Override
     public void deleteGuidanceModelRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation) {
         decisionGuidanceModelBusiness.deleteGuidanceModelRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRelation);
+    }
+
+    @Override
+    public DecisionGuidanceModelDesignOptionRelationDto createDesignOptionRelation(@NotNull Long idDecisionGuidanceModel, DecisionGuidanceModelDesignOptionRelationDto designOptionInfo) {
+        return decisionGuidanceModelBusiness.createDesignOptionRelation(idDecisionGuidanceModel, designOptionInfo);
+    }
+
+    @Override
+    public DecisionGuidanceModelDesignOptionRelationDto updateExistingDesignOptionRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDesignOptionRelation, @NotNull DecisionGuidanceModelDesignOptionRelationDto newValues) {
+        return decisionGuidanceModelBusiness.updateExistingDesignOptionRelationAttribute(idDecisionGuidanceModel, idDesignOptionRelation, newValues);
+    }
+
+    @Override
+    public void deleteDesignOptionRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDesignOptionRelation) {
+        decisionGuidanceModelBusiness.deleteDesignOptionRelationAttribute(idDecisionGuidanceModel, idDesignOptionRelation);
     }
 }

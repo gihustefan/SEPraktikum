@@ -12,11 +12,9 @@ public class DecisionGuidanceModelRelatedGuidanceModelsDto {
 
     private Long id;
 
-    private String title;
+    private String name;
 
     private Long idAttribute;
-
-    private String definition;
 
     private String description;
 
@@ -27,7 +25,7 @@ public class DecisionGuidanceModelRelatedGuidanceModelsDto {
 
     public DecisionGuidanceModelRelatedGuidanceModelsDto(HasRelatedGuidanceModels hasRelatedGuidanceModels) {
         setId(hasRelatedGuidanceModels.getId());
-        setTitle(hasRelatedGuidanceModels.getEndNode().getTitle());
+        setName(hasRelatedGuidanceModels.getEndNode().getName());
         setIdAttribute(hasRelatedGuidanceModels.getEndNode().getId());
         setDescription(hasRelatedGuidanceModels.getDescription());
         setOrdering(hasRelatedGuidanceModels.getOrdering());
@@ -36,7 +34,7 @@ public class DecisionGuidanceModelRelatedGuidanceModelsDto {
 
     public DecisionGuidanceModelRelatedGuidanceModelsDto(DecisionGuidanceModel dgmAttribute) {
         idAttribute = dgmAttribute.getId();
-        title = dgmAttribute.getTitle();
+        name = dgmAttribute.getName();
     }
 
     public Long getId() {
@@ -47,12 +45,12 @@ public class DecisionGuidanceModelRelatedGuidanceModelsDto {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getIdAttribute() {
@@ -61,14 +59,6 @@ public class DecisionGuidanceModelRelatedGuidanceModelsDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public String getDescription() {

@@ -32,8 +32,8 @@ public interface DecisionGuidanceModelBusiness {
      * @param <T>           Type identifier for Relation Class
      * @return a new DecisionGuidanceModelRelation
      */
-    <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRealtionDto createRelation(
-            Long idDecisionGuidanceModel, DecisionGuidanceModelRealtionDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
+    <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto createRelation(
+            Long idDecisionGuidanceModel, DecisionGuidanceModelRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType);
 
     /**
      * Generic service for updating an existing DecisionGuidanceModel Relationship (e.g.
@@ -49,8 +49,8 @@ public interface DecisionGuidanceModelBusiness {
      *                              class information at runtime)
      * @return The updated and already persisted DecisionGuidanceModel Relation
      */
-    <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRealtionDto updateExistingRelationAttribute(
-            Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRealtionDto newValues,
+    <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
+            Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues,
             Class<T> clazz);
 
     /**
@@ -67,29 +67,58 @@ public interface DecisionGuidanceModelBusiness {
 
 
     /**
-     * Creating A new Tradeoff Relation
+     * Creating A new GuidanceModel Relation
      *
      * @param idDecisionGuidanceModel Which DecisionGuidanceModel
-     * @param guidanceModelInfo  Tradeoff values
-     * @return newly created Tradeoff Dto
+     * @param guidanceModelInfo  GuidanceModel values
+     * @return newly created GuidanceModel Dto
      */
     DecisionGuidanceModelRelatedGuidanceModelsDto createGuidanceModelRelation(Long idDecisionGuidanceModel, DecisionGuidanceModelRelatedGuidanceModelsDto guidanceModelInfo);
 
     /**
-     * Updating existing Tradeoff Relation Attributes
+     * Updating existing GuidanceModel Relation Attributes
      *
      * @param idDecisionGuidanceModel                 Which DecisionGuidanceModel
      * @param idDecisionGuidanceModelRelation Which DecisionGuidanceModel Relation
      * @param newValues                     The new Values
-     * @return The altered DecisionGuidanceModel Tradeoff Relation dto
+     * @return The altered DecisionGuidanceModel GuidanceModel Relation dto
      */
     DecisionGuidanceModelRelatedGuidanceModelsDto updateExistingGuidanceModelRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelatedGuidanceModelsDto newValues);
 
     /**
-     * Deleting an existing Tradeoff Relation
+     * Deleting an existing GuidanceModel Relation
      *
      * @param idDecisionGuidanceModel                 Which DecisionGuidanceModel
      * @param idDecisionGuidanceModelRelation Which DecisionGuidanceModel Relation
      */
     void deleteGuidanceModelRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation);
+
+
+
+    /**
+     * Creating A new DesignOption Relation
+     *
+     * @param idDecisionGuidanceModel Which DecisionGuidanceModel
+     * @param designOptionInfo  DesignOption values
+     * @return newly created DesignOption Dto
+     */
+    DecisionGuidanceModelDesignOptionRelationDto createDesignOptionRelation(Long idDecisionGuidanceModel, DecisionGuidanceModelDesignOptionRelationDto designOptionInfo);
+
+    /**
+     * Updating existing DesignOption Relation Attributes
+     *
+     * @param idDecisionGuidanceModel                 Which DecisionGuidanceModel
+     * @param idDesignOptionRelation Which DesignOption Relation
+     * @param newValues                     The new Values
+     * @return The altered DecisionGuidanceModel DesignOption Relation dto
+     */
+    DecisionGuidanceModelDesignOptionRelationDto updateExistingDesignOptionRelationAttribute(Long idDecisionGuidanceModel, Long idDesignOptionRelation, DecisionGuidanceModelDesignOptionRelationDto newValues);
+
+    /**
+     * Deleting an existing DesignOption Relation
+     *
+     * @param idDecisionGuidanceModel                 Which DecisionGuidanceModel
+     * @param idDesignOptionRelation Which DesignOption Relation
+     */
+    void deleteDesignOptionRelationAttribute(Long idDecisionGuidanceModel, Long idDesignOptionRelation);
 }

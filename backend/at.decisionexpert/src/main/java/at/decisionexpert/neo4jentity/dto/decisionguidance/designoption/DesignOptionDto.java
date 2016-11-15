@@ -1,5 +1,6 @@
 package at.decisionexpert.neo4jentity.dto.decisionguidance.designoption;
 
+import at.decisionexpert.neo4jentity.dto.vote.VoteRelationDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.DOAttributeRelationship;
@@ -20,8 +21,6 @@ public class DesignOptionDto {
 
     private String name;
 
-    private String definition;
-
     private String description;
 
     private List<DesignOptionRelationDto> implications;
@@ -32,6 +31,8 @@ public class DesignOptionDto {
 
     private List<DesignOptionRelationDto> requiredComponents;
 
+    private List<VoteRelationDto> votes;
+
     public DesignOptionDto() {
 
     }
@@ -39,7 +40,6 @@ public class DesignOptionDto {
     public DesignOptionDto(DesignOption designOption) {
         setId(designOption.getId());
         setName(designOption.getName());
-        setDefinition(designOption.getDefinition());
         setDescription(designOption.getDescription());
 
         // Implications
@@ -58,6 +58,13 @@ public class DesignOptionDto {
 
         //RequiredComponents
         setRequiredComponents(getNeo4JRelationDto(designOption.getRequiredComponents()));
+
+        //Votes
+        List<VoteRelationDto> votes = new ArrayList<>();
+        designOption.getVotes().forEach(to -> {
+            votes.add(new VoteRelationDto(to));
+        });
+        setVotes(votes);
     }
 
     /**
@@ -95,14 +102,6 @@ public class DesignOptionDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public String getDescription() {
@@ -143,5 +142,13 @@ public class DesignOptionDto {
 
     public void setRequiredComponents(List<DesignOptionRelationDto> requiredComponents) {
         this.requiredComponents = requiredComponents;
+    }
+
+    public List<VoteRelationDto> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VoteRelationDto> votes) {
+        this.votes = votes;
     }
 }

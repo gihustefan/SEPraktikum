@@ -1,6 +1,6 @@
 package at.decisionexpert.controller.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 import at.decisionexpert.neo4jentity.node.Requirement;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
@@ -21,13 +21,13 @@ public class DecisionGuidanceModelPotentialRequirementControllerImpl implements 
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public DecisionGuidanceModelRealtionDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody DecisionGuidanceModelRealtionDto requirement) {
+    public DecisionGuidanceModelRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody DecisionGuidanceModelRelationDto requirement) {
         return decisionGuidanceModelService.createRelation(idDecisionGuidanceModel, requirement, HasPotentialRequirement.class, Requirement.class);
     }
 
     @Override
     @RequestMapping(value = "/{idDecisionGuidanceModelRequirement}",method = RequestMethod.PATCH)
-    public DecisionGuidanceModelRealtionDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelRequirement, @RequestBody DecisionGuidanceModelRealtionDto newValues) {
+    public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelRequirement, @RequestBody DecisionGuidanceModelRelationDto newValues) {
         return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRequirement, newValues, HasPotentialRequirement.class);
     }
 

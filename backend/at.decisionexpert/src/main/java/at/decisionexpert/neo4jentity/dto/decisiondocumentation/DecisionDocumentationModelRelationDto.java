@@ -16,8 +16,6 @@ public class DecisionDocumentationModelRelationDto {
 
     private Long idAttribute;
 
-    private String definition;
-
     private String description;
 
     private Integer ordering;
@@ -32,7 +30,6 @@ public class DecisionDocumentationModelRelationDto {
         id = ddmAttributeRelationship.getId();
         name = ddmAttributeRelationship.getEndNode().getName();
         // Not fetching the definition from the end node, but from the relationship itself! (copied from end node on creation)
-        definition = ddmAttributeRelationship.getDefinition();
         description = ddmAttributeRelationship.getDescription();
         ordering = ddmAttributeRelationship.getOrdering();
         idAttribute = ddmAttributeRelationship.getEndNode().getId();
@@ -40,7 +37,6 @@ public class DecisionDocumentationModelRelationDto {
 
     public DecisionDocumentationModelRelationDto(CoreData apAttribute) {
         name = apAttribute.getName();
-        definition = apAttribute.getDefinition();
         idAttribute = apAttribute.getId();
     }
 
@@ -66,14 +62,6 @@ public class DecisionDocumentationModelRelationDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public String getDescription() {

@@ -131,7 +131,8 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
+            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 
@@ -146,7 +147,6 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
             newRelationship.setStartNode(designOption);
             newRelationship.setEndNode(toNode);
             // Setting the definition of the Relation to the same as the toNode (than we dont have to worry about changes in the toNode -> users can alter the definition of the properties themselves!)
-            newRelationship.setDefinition(toNode.getDefinition());
             newRelationship.setDescription(attributeInfo.getDescription());
             newRelationship.setDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
@@ -180,10 +180,6 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
         // Setting the new value for the description
         if (newValues.getDescription() != null)
             loadedRelation.setDescription(newValues.getDescription());
-
-        // Setting the new value for the definition
-        if (newValues.getDefinition() != null)
-            loadedRelation.setDefinition(newValues.getDefinition());
 
         // Setting the ordering -> must change the ordering values of other AP
         // Relationships as well
@@ -262,7 +258,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
         Assert.notNull(idDesignOption);
         Assert.notNull(idDesignOptionRelation);
 
-        // Fetching the hasTradeoff from DB
+        // Fetching the hasEffectedGuidanceModels from DB
         HasEffectedGuidanceModels hasEffectedGuidanceModels = doHasEffectedGuidanceModelRepository.findOne(idDesignOptionRelation);
         Assert.notNull(hasEffectedGuidanceModels);
 

@@ -1,8 +1,6 @@
 package at.decisionexpert.controller.decisionguidance;
 
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRealtionDto;
-import at.decisionexpert.neo4jentity.node.DesignOption;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,25 +11,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/dgm/{idDecisionGuidanceModel}/designoptions")
 @ResponseBody
-public class DecisionGuidanceModelDesignOptionControllerImpl implements DecisionGuidanceModelRelationController {
+public class DecisionGuidanceModelDesignOptionControllerImpl implements DecisionGuidanceModelDesignOptionController {
     @Autowired
     private DecisionGuidanceModelService decisionGuidanceModelService;
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public DecisionGuidanceModelRealtionDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody DecisionGuidanceModelRealtionDto designOption) {
-        return decisionGuidanceModelService.createRelation(idDecisionGuidanceModel, designOption, HasDesignOption.class, DesignOption.class);
+    public DecisionGuidanceModelDesignOptionRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody DecisionGuidanceModelDesignOptionRelationDto designOption) {
+        return decisionGuidanceModelService.createDesignOptionRelation(idDecisionGuidanceModel, designOption);
     }
 
     @Override
     @RequestMapping(value = "/{idDecisionGuidanceModelDesignOption}",method = RequestMethod.PATCH)
-    public DecisionGuidanceModelRealtionDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelDesignOption, @RequestBody DecisionGuidanceModelRealtionDto newValues) {
-        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelDesignOption, newValues, HasDesignOption.class);
+    public DecisionGuidanceModelDesignOptionRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelDesignOption, @RequestBody DecisionGuidanceModelDesignOptionRelationDto newValues) {
+        return decisionGuidanceModelService.updateExistingDesignOptionRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelDesignOption, newValues);
     }
 
     @Override
     @RequestMapping(value = "/{idDecisionGuidanceModelDesignOption}",method = RequestMethod.DELETE)
     public void delete(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelDesignOption) {
-        decisionGuidanceModelService.deleteRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelDesignOption, HasDesignOption.class);
+        decisionGuidanceModelService.deleteDesignOptionRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelDesignOption);
     }
 }

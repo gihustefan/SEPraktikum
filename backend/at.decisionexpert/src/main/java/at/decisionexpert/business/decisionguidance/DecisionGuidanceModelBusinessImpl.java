@@ -5,16 +5,16 @@ import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
-import at.decisionexpert.neo4jentity.node.CoreData;
-import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
-import at.decisionexpert.neo4jentity.node.User;
-import at.decisionexpert.neo4jentity.node.UserAuthority;
+import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels;
 import at.decisionexpert.repository.node.NodeAttributeRepository;
+import at.decisionexpert.repository.node.comment.CommentRepository;
 import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
 import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.DGMAttributeRelationshipRepository;
+import at.decisionexpert.repository.relationship.decisionguidance.DGMHasDesignOptionRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.DGMHasGuidanceModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
@@ -42,6 +42,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     private DesignOptionRepository designOptionRepository;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private DGMAttributeRelationshipRepository dgmAttributeRelationshipRepository;
 
     @Autowired
@@ -49,6 +52,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
     @Autowired
     private DGMHasGuidanceModelRepository dgmHasGuidanceModelRepository;
+
+    @Autowired
+    private DGMHasDesignOptionRepository dgmHasDesignOptionRepository;
 
     @Autowired
     private Neo4jOperations neo4jOperations;
@@ -99,6 +105,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         //decisionGuidanceModel.getTradeoffs().forEach(hasTradeoff -> hasTradeoff.setEndNode(neo4jOperations.load(Tradeoff.class, hasTradeoff.getEndNode().getId(), 1)));
 
         decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOne(hasDesignOption.getEndNode().getId(), 1)));
+        decisionGuidanceModel.getComments().forEach(hasComment -> hasComment.setEndNode(commentRepository.findOne(hasComment.getEndNode().getId(), 1)));
 
         return new DecisionGuidanceModelDto(decisionGuidanceModel);
     }
@@ -113,7 +120,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         DecisionGuidanceModel newDecisionGuidanceModel = new DecisionGuidanceModel(user);
 
         if (decisionGuidanceModel != null) {
-            newDecisionGuidanceModel.setTitle(decisionGuidanceModel.getTitle());
+            newDecisionGuidanceModel.setName(decisionGuidanceModel.getName());
             newDecisionGuidanceModel.setDescription(decisionGuidanceModel.getDescription());
         }
 
@@ -128,8 +135,8 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         DecisionGuidanceModel loaded = decisionGuidanceModelRepository.findOne(id);
         Assert.notNull(loaded);
 
-        if (newValues.getTitle() != null) {
-            loaded.setTitle(newValues.getTitle());
+        if (newValues.getName() != null) {
+            loaded.setName(newValues.getName());
         }
 
         if (newValues.getDescription() != null) {
@@ -192,7 +199,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRealtionDto createRelation(Long idDecisionGuidanceModel, DecisionGuidanceModelRealtionDto attributeInfo, Class<T> relationClass, Class<A> toNodeType) {
+    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto createRelation(Long idDecisionGuidanceModel, DecisionGuidanceModelRelationDto attributeInfo, Class<T> relationClass, Class<A> toNodeType) {
         Assert.notNull(idDecisionGuidanceModel);
         Assert.notNull(relationClass);
 
@@ -204,14 +211,15 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
         DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(idDecisionGuidanceModel, 0);
 
-        // ArchProfile is not allowed to be null
+        // DecisionGuidanceModel is not allowed to be null
         Assert.notNull(decisionGuidanceModel);
 
         A toNode = nodeAttributeRepository.findById(attributeInfo.getIdAttribute(), toNodeType);
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
 
         try {
 
@@ -226,7 +234,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             newRelationship.setStartNode(decisionGuidanceModel);
             newRelationship.setEndNode(toNode);
             // Setting the definition of the Relation to the same as the toNode (than we dont have to worry about changes in the toNode -> users can alter the definition of the properties themselves!)
-            newRelationship.setDefinition(toNode.getDefinition());
             newRelationship.setDescription(attributeInfo.getDescription());
             newRelationship.setDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
@@ -236,7 +243,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             // Reorder all the other relations -> property ordering must be applied correctly!
             // TODO REorder
 
-            return new DecisionGuidanceModelRealtionDto(newRelationship);
+            return new DecisionGuidanceModelRelationDto(newRelationship);
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -252,7 +259,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRealtionDto updateExistingRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRealtionDto newValues, Class<T> clazz) {
+    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz) {
         // Fetch AP Relation from Graph DB
         T loadedRelation = dgmAttributeRelationshipRepository.findById(clazz, idDecisionGuidanceModelRelation);
         Assert.notNull(loadedRelation);
@@ -260,10 +267,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         // Setting the new value for the description
         if (newValues.getDescription() != null)
             loadedRelation.setDescription(newValues.getDescription());
-
-        // Setting the new value for the definition
-        if (newValues.getDefinition() != null)
-            loadedRelation.setDefinition(newValues.getDefinition());
 
         // Setting the ordering -> must change the ordering values of other AP
         // Relationships as well
@@ -280,7 +283,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
 
         // Persist the new Values
-        return new DecisionGuidanceModelRealtionDto(loadedRelation);
+        return new DecisionGuidanceModelRelationDto(loadedRelation);
     }
 
     @Override
@@ -380,6 +383,97 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             return;
 
         dgmHasGuidanceModelRepository.delete(hasRelatedGuidanceModels);
+
+        // TODO Reorder
+    }
+
+
+
+    @Override
+    public DecisionGuidanceModelDesignOptionRelationDto createDesignOptionRelation(Long idDecisionGuidanceModel, DecisionGuidanceModelDesignOptionRelationDto designOptionInfo) {
+        Assert.notNull(idDecisionGuidanceModel);
+        Assert.notNull(designOptionInfo);
+
+        // Fetching the current user -> that wants to create the new Tradeoff
+        User user = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Assert.notNull(user);
+
+        // Means that an existing tradeoff relation was altered
+        // must delete this one and create a new one based on the given information!
+        if (designOptionInfo.getId() != null) {
+            dgmHasDesignOptionRepository.delete(designOptionInfo.getId());
+        }
+
+        // Fetching DecisionGuidanceModel
+        DecisionGuidanceModel startDecisionGuidanceModel = decisionGuidanceModelRepository.findOne(idDecisionGuidanceModel, 0);
+        Assert.notNull(startDecisionGuidanceModel);
+
+        DesignOption endDesignOption = null;
+        if (designOptionInfo.getIdAttribute() != null) {
+            endDesignOption = designOptionRepository.findOne(designOptionInfo.getIdAttribute(), 0);
+        }
+        if (endDesignOption == null) {
+            DesignOption designOption = new DesignOption();
+            designOption.setName(designOptionInfo.getName());
+            designOption.setCreationDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+            designOption.setLastModified(designOption.getCreationDate());
+            designOption.setCreator(userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+            endDesignOption = designOptionRepository.save(designOption);
+        }
+
+        HasDesignOption hasDesignOption;
+        if (designOptionInfo.getOrdering() != null) {
+            hasDesignOption = new HasDesignOption(startDecisionGuidanceModel, endDesignOption, designOptionInfo.getOrdering());
+        } else {
+            hasDesignOption = new HasDesignOption(startDecisionGuidanceModel, endDesignOption);
+        }
+
+        hasDesignOption = dgmHasDesignOptionRepository.save(hasDesignOption);
+
+        // Reordering Relations after adding
+        // TODO REORDER
+
+        return new DecisionGuidanceModelDesignOptionRelationDto(hasDesignOption);
+    }
+
+    @Override
+    public DecisionGuidanceModelDesignOptionRelationDto updateExistingDesignOptionRelationAttribute(Long idDecisionGuidanceModel, Long idDesignOptionRelation, DecisionGuidanceModelDesignOptionRelationDto newValues) {
+        Assert.notNull(idDecisionGuidanceModel);
+        Assert.notNull(idDesignOptionRelation);
+
+        // Fetching the hasTradeoff from DB
+        HasDesignOption hasDesignOption = dgmHasDesignOptionRepository.findOne(idDesignOptionRelation);
+        Assert.notNull(hasDesignOption);
+
+        if (newValues.getOrdering() != null) {
+
+            HasDesignOption designOptionRelationSameOrdering = dgmHasDesignOptionRepository.findByOrdering(idDecisionGuidanceModel, newValues.getOrdering());
+
+            if (designOptionRelationSameOrdering == null)
+                return null;
+
+            // Switching places between the two relations (setting ordering).
+            designOptionRelationSameOrdering.setOrdering(hasDesignOption.getOrdering());
+            hasDesignOption.setOrdering(newValues.getOrdering());
+
+            // TODO REorder
+        }
+
+        return new DecisionGuidanceModelDesignOptionRelationDto(hasDesignOption);
+    }
+
+    @Override
+    public void deleteDesignOptionRelationAttribute(Long idDecisionGuidanceModel, Long idDesignOptionRelation) {
+        Assert.notNull(idDecisionGuidanceModel);
+        Assert.notNull(idDesignOptionRelation);
+
+        // Fetch the relation that should be deleted
+        HasDesignOption hasDesignOption = dgmHasDesignOptionRepository.findOne(idDesignOptionRelation);
+
+        if (hasDesignOption == null)
+            return;
+
+        dgmHasDesignOptionRepository.delete(hasDesignOption);
 
         // TODO Reorder
     }

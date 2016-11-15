@@ -12,11 +12,9 @@ public class DesignOptionEffectedGuidanceModelsDto {
 
     private Long id;
 
-    private String title;
+    private String name;
 
     private Long idAttribute;
-
-    private String definition;
 
     private String description;
 
@@ -27,7 +25,7 @@ public class DesignOptionEffectedGuidanceModelsDto {
 
     public DesignOptionEffectedGuidanceModelsDto(HasEffectedGuidanceModels hasEffectedGuidanceModels) {
         setId(hasEffectedGuidanceModels.getId());
-        setTitle(hasEffectedGuidanceModels.getEndNode().getTitle());
+        setName(hasEffectedGuidanceModels.getEndNode().getName());
         setIdAttribute(hasEffectedGuidanceModels.getEndNode().getId());
         setDescription(hasEffectedGuidanceModels.getDescription());
         setOrdering(hasEffectedGuidanceModels.getOrdering());
@@ -37,7 +35,7 @@ public class DesignOptionEffectedGuidanceModelsDto {
 
     public DesignOptionEffectedGuidanceModelsDto(DecisionGuidanceModel dgmAttribute) {
         idAttribute = dgmAttribute.getId();
-        title = dgmAttribute.getTitle();
+        name = dgmAttribute.getName();
     }
 
     public Long getId() {
@@ -48,12 +46,12 @@ public class DesignOptionEffectedGuidanceModelsDto {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getIdAttribute() {
@@ -62,14 +60,6 @@ public class DesignOptionEffectedGuidanceModelsDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public String getDescription() {

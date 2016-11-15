@@ -1,5 +1,7 @@
 package at.decisionexpert.neo4jentity.node;
 
+import at.decisionexpert.neo4jentity.relationship.HasComment;
+import at.decisionexpert.neo4jentity.relationship.HasVote;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels;
@@ -24,7 +26,13 @@ public class DecisionGuidanceModel extends Node {
     @Relationship(type = "HAS_RELATEDGUIDANCEMODEL", direction = Relationship.OUTGOING)
     private Set<HasRelatedGuidanceModels> relatedGuidanceModels = new HashSet<>(0);
 
-    private String title;
+    @Relationship(type = "HAS_COMMENT", direction = Relationship.OUTGOING)
+    private Set<HasComment> comments = new HashSet<>(0);
+
+    @Relationship(type = "HAS_VOTE", direction = Relationship.OUTGOING)
+    private Set<HasVote> votes = new HashSet<>(0);
+
+    private String name;
 
     private String description;
 
@@ -62,12 +70,20 @@ public class DecisionGuidanceModel extends Node {
         this.relatedGuidanceModels = relatedGuidanceModels;
     }
 
-    public String getTitle() {
-        return title;
+    public Set<HasComment> getComments() {
+        return comments;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setComments(Set<HasComment> comments) {
+        this.comments = comments;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -84,5 +100,13 @@ public class DecisionGuidanceModel extends Node {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public Set<HasVote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<HasVote> votes) {
+        this.votes = votes;
     }
 }

@@ -10,8 +10,8 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 @RelationshipEntity(type="HAS_POTENTIALREQUIREMENT")
 public class HasPotentialRequirement extends DGMAttributeRelationship<Requirement>{
 
-    public HasPotentialRequirement(DecisionGuidanceModel startNode, Requirement endNode, String description, String definition, int ordering) {
-        super(startNode, endNode, description, definition, ordering);
+    public HasPotentialRequirement(DecisionGuidanceModel startNode, Requirement endNode, String description, int ordering) {
+        super(startNode, endNode, description, ordering);
         // TODO Auto-generated constructor stub
     }
 

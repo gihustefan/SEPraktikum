@@ -6,8 +6,6 @@ public abstract class CoreData extends Node {
 
 	private String definition;
 	
-	private long coreAdded;
-
 	public CoreData(User creator, String name, String definition) {
 		super(creator);
 		this.name = name;
@@ -39,18 +37,5 @@ public abstract class CoreData extends Node {
 	public void setDefinition(String definition) {
 		this.definition = definition;
 	}
-
-	public long getCoreAdded() {
-		return coreAdded;
-	}
-
-	public void setCoreAdded(long coreAdded) {
-		this.coreAdded = coreAdded;
-	}
-	
-	
-	
-	
-	
 
 }

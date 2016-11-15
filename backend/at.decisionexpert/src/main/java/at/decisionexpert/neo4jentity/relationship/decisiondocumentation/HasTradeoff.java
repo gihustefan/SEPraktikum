@@ -13,22 +13,19 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 public class HasTradeoff extends DateRelationship<DecisionDocumentationModel, Tradeoff> {
 
     @Property
-    private String description;
-    @Property
     private int ordering;
 
     @Property
-    private String definitionOver;
+    private String descriptionOver;
 
     @Property
-    private String definitionUnder;
+    private String descriptionUnder;
 
-    public HasTradeoff(DecisionDocumentationModel startNode, Tradeoff endNode, String description, int ordering, String definitionOver, String definitionUnder) {
+    public HasTradeoff(DecisionDocumentationModel startNode, Tradeoff endNode, int ordering, String descriptionOver, String descriptionUnder) {
         super(startNode, endNode);
-        this.description = description;
         this.ordering = ordering;
-        this.definitionOver = definitionOver;
-        this.definitionUnder = definitionUnder;
+        this.descriptionOver = descriptionOver;
+        this.descriptionUnder = descriptionUnder;
     }
 
     public HasTradeoff(DecisionDocumentationModel startNode, Tradeoff endNode) {
@@ -41,14 +38,6 @@ public class HasTradeoff extends DateRelationship<DecisionDocumentationModel, Tr
         // TODO Auto-generated constructor stub
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getOrdering() {
         return ordering;
     }
@@ -57,19 +46,19 @@ public class HasTradeoff extends DateRelationship<DecisionDocumentationModel, Tr
         this.ordering = ordering;
     }
 
-    public String getDefinitionOver() {
-        return definitionOver;
+    public String getDescriptionOver() {
+        return descriptionOver;
     }
 
-    public void setDefinitionOver(String definitionOver) {
-        this.definitionOver = definitionOver;
+    public void setDescriptionOver(String descriptionOver) {
+        this.descriptionOver = descriptionOver;
     }
 
-    public String getDefinitionUnder() {
-        return definitionUnder;
+    public String getDescriptionUnder() {
+        return descriptionUnder;
     }
 
-    public void setDefinitionUnder(String definitionUnder) {
-        this.definitionUnder = definitionUnder;
+    public void setDescriptionUnder(String descriptionUnder) {
+        this.descriptionUnder = descriptionUnder;
     }
 }

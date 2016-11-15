@@ -15,8 +15,8 @@ public class HasImplication extends DOAttributeRelationship<Implication> {
         // TODO Auto-generated constructor stub
     }
 
-    public HasImplication(DesignOption startNode, Implication endNode, String description, String definition, int ordering) {
-        super(startNode, endNode, description, definition, ordering);
+    public HasImplication(DesignOption startNode, Implication endNode, String description, int ordering) {
+        super(startNode, endNode, description, ordering);
         // TODO Auto-generated constructor stub
     }
 

@@ -13,18 +13,15 @@ public abstract class DGMAttributeRelationship <V extends CoreData> extends Date
     @Property
     private String description;
     @Property
-    private String definition;
-    @Property
     private int ordering;
 
     public DGMAttributeRelationship(DecisionGuidanceModel startNode, V endNode) {
         super(startNode, endNode);
     }
 
-    public DGMAttributeRelationship(DecisionGuidanceModel startNode, V endNode, String description, String definition, int ordering) {
+    public DGMAttributeRelationship(DecisionGuidanceModel startNode, V endNode, String description, int ordering) {
         super(startNode, endNode);
         this.description = description;
-        this.definition = definition;
         this.ordering = ordering;
     }
 
@@ -38,14 +35,6 @@ public abstract class DGMAttributeRelationship <V extends CoreData> extends Date
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
     }
 
     public int getOrdering() {

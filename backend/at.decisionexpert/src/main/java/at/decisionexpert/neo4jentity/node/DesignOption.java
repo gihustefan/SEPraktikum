@@ -1,5 +1,6 @@
 package at.decisionexpert.neo4jentity.node;
 
+import at.decisionexpert.neo4jentity.relationship.HasVote;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAddressedRequirement;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasEffectedGuidanceModels;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasImplication;
@@ -14,7 +15,7 @@ import java.util.Set;
  * Created by stefanhaselboeck on 12.08.16.
  */
 @NodeEntity
-public class DesignOption extends CoreData {
+public class DesignOption extends Node {
 
     @Relationship(type = "HAS_IMPLICATION", direction = Relationship.OUTGOING)
     private Set<HasImplication> implications = new HashSet<>(0);
@@ -28,20 +29,35 @@ public class DesignOption extends CoreData {
     @Relationship(type = "HAS_REQUIREDCOMPONENT", direction = Relationship.OUTGOING)
     private Set<HasRequiredComponent> requiredComponents = new HashSet<>(0);
 
+    @Relationship(type = "HAS_VOTE", direction = Relationship.OUTGOING)
+    private Set<HasVote> votes = new HashSet<>(0);
+
+    private String name;
+
     private String description;
 
-    public DesignOption(User creator, String name, String definition) {
-        super(creator, name, definition);
-        // TODO Auto-generated constructor stub
+    public DesignOption(User creator, String name, String description) {
+        super(creator);
+        this.name = name;
+        this.description = description;
     }
 
-    public DesignOption(String name, String definition) {
-        super(name, definition);
-        // TODO Auto-generated constructor stub
+    public DesignOption(String name, String description) {
+        super();
+        this.name = name;
+        this.description = description;
     }
 
     public DesignOption () {
         super();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -82,5 +98,13 @@ public class DesignOption extends CoreData {
 
     public void setRequiredComponents(Set<HasRequiredComponent> requiredComponents) {
         this.requiredComponents = requiredComponents;
+    }
+
+    public Set<HasVote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<HasVote> votes) {
+        this.votes = votes;
     }
 }
