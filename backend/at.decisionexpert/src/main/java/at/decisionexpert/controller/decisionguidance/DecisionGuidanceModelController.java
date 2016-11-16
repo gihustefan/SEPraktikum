@@ -54,6 +54,6 @@ public interface DecisionGuidanceModelController {
     void deleteDecisionGuidanceModel(Long idDecisionGuidanceModel);
 
     enum DecisionGuidanceModelType {
-        NEWEST, FEATURED, ACTIVE
+        NEWEST, ALPHABET, RATING
     }
 }

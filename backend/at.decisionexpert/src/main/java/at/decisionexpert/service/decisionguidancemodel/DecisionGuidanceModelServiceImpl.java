@@ -1,6 +1,7 @@
 package at.decisionexpert.service.decisionguidancemodel;
 
 import at.decisionexpert.business.decisionguidance.DecisionGuidanceModelBusiness;
+import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
@@ -26,13 +27,13 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getNewestDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size) {
-        return decisionGuidanceModelBusiness.getNewestDecisionGuidanceModels(page, size, SecurityUtils.hasRole("ROLE_ADMIN", SecurityContextHolder.getContext().getAuthentication()));
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
+        return decisionGuidanceModelBusiness.getDecisionGuidanceModels(page, size, SecurityUtils.hasRole("ROLE_ADMIN", SecurityContextHolder.getContext().getAuthentication()), type);
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size) {
-        return decisionGuidanceModelBusiness.getUserDecisionGuidanceModels(idUser, page, size);
+    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
+        return decisionGuidanceModelBusiness.getUserDecisionGuidanceModels(idUser, page, size, type);
     }
 
     @Override

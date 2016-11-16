@@ -39,6 +39,10 @@ public class DecisionGuidanceModelDto {
 
     private Boolean published;
 
+    private int voteTrue;
+
+    private int voteFalse;
+
     private List<DecisionGuidanceModelRelationDto> potentialRequirements;
 
     private List<DecisionGuidanceModelDesignOptionRelationDto> designOptions;
@@ -72,8 +76,6 @@ public class DecisionGuidanceModelDto {
                 TimeZone.getDefault().toZoneId()));
         setModified(LocalDateTime.ofInstant(Instant.ofEpochMilli(decisionGuidanceModel.getLastModified()),
                 TimeZone.getDefault().toZoneId()));
-
-        setPublished(decisionGuidanceModel.isPublished());
 
         // Requirements
         setPotentialRequirements(getNeo4JRelationDto(decisionGuidanceModel.getPotentialRequirements()));
@@ -225,7 +227,7 @@ public class DecisionGuidanceModelDto {
     }
 
     public void setCreated(Long created) {
-        this.created =LocalDateTime.ofInstant(Instant.ofEpochMilli(created),
+        this.created = LocalDateTime.ofInstant(Instant.ofEpochMilli(created),
                 TimeZone.getDefault().toZoneId());
     }
 
@@ -240,5 +242,21 @@ public class DecisionGuidanceModelDto {
 
     public void setVotes(List<VoteRelationDto> votes) {
         this.votes = votes;
+    }
+
+    public int getVoteTrue() {
+        return voteTrue;
+    }
+
+    public void setVoteTrue(int voteTrue) {
+        this.voteTrue = voteTrue;
+    }
+
+    public int getVoteFalse() {
+        return voteFalse;
+    }
+
+    public void setVoteFalse(int voteFalse) {
+        this.voteFalse = voteFalse;
     }
 }

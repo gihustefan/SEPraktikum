@@ -1,5 +1,6 @@
 package at.decisionexpert.service.decisionguidancemodel;
 
+import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
@@ -21,7 +22,7 @@ public interface DecisionGuidanceModelService {
      * @param size how many items per page
      * @return The list of the newest DecisionGuidanceModels
      */
-    DecisionGuidanceModelPageableDto getNewestDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size);
+    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
     /**
      * Getting the DecisionGuidanceModels of a specific user
@@ -31,7 +32,7 @@ public interface DecisionGuidanceModelService {
      * @param size   how many items per page
      * @return The list of the newest DecisionGuidanceModels
      */
-    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size);
+    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
     @PreAuthorize("hasRole('ROLE_USER')")
     DecisionGuidanceModelDto createDecisionGuidanceModel(DecisionGuidanceModelChangeRequestDto decisionGuidanceModel);

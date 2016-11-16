@@ -1,5 +1,6 @@
 package at.decisionexpert.business.decisionguidance;
 
+import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
 import at.decisionexpert.neo4jentity.node.CoreData;
@@ -18,9 +19,9 @@ public interface DecisionGuidanceModelBusiness {
 
     void deleteDecisionGuidanceModel(Long id);
 
-    DecisionGuidanceModelPageableDto getNewestDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished);
+    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
-    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size);
+    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
     /**
      * Adding an empty relation attribute for a given DecisionGuidanceModel

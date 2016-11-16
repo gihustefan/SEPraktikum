@@ -12,17 +12,54 @@ import java.util.List;
  */
 public interface DecisionGuidanceModelRepository extends GraphRepository<DecisionGuidanceModel> {
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
-    List<DecisionGuidanceModelDto> findPublishedByUserId(Long idUser, Integer skip, Integer size);
+    //Models of the User, ordered by creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findNewestPublishedByUserId(Long idUser, Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
-    List<DecisionGuidanceModelDto> findAllByUserId(Long idUser, Integer skip, Integer size);
+    //Models of the User, ordered by creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findNewestAllByUserId(Long idUser, Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE dgm.published = true WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    //Models of the User, ordered by title and creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.name ASC, dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findAlphabetPublishedByUserId(Long idUser, Integer skip, Integer size);
+
+    //Models of the User, ordered by title and creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.name ASC, dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findAlphabetAllByUserId(Long idUser, Integer skip, Integer size);
+
+    //Models of the User, ordered by + ratings and creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} AND dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY voteTrue DESC, dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findRatingPublishedByUserId(Long idUser, Integer skip, Integer size);
+
+    //Models of the User, ordered by + ratings and  creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WHERE id(user) = {0} optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY voteTrue DESC, dgm.creationDate DESC SKIP {1} LIMIT {2} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findRatingAllByUserId(Long idUser, Integer skip, Integer size);
+
+
+    //Order by creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) where dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
     List<DecisionGuidanceModelDto> findNewestPublishedDecisionGuidanceModels(Integer skip, Integer size);
 
-    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) WITH dgm, user ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName")
+    //Order by creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
     List<DecisionGuidanceModelDto> findNewestDecisionGuidanceModels(Integer skip, Integer size);
+
+    //Order by title and creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) where dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.name ASC, dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findAlphabetPublishedDecisionGuidanceModels(Integer skip, Integer size);
+
+    //Order by title and creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY dgm.name ASC, dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findAlphabetDecisionGuidanceModels(Integer skip, Integer size);
+
+    //Order by + rating creation date, only published
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) where dgm.published = true optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY voteTrue DESC, dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findRatingPublishedDecisionGuidanceModels(Integer skip, Integer size);
+
+    //Order by + rating and creation date
+    @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->(user:User) optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false WITH dgm, user, count(v) as voteTrue, count(w) as voteFalse ORDER BY voteTrue DESC, dgm.creationDate DESC SKIP {0} LIMIT {1} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, voteTrue, voteFalse")
+    List<DecisionGuidanceModelDto> findRatingDecisionGuidanceModels(Integer skip, Integer size);
 
     @Query("MATCH (dgm:DecisionGuidanceModel)-[:HAS_CREATOR]->() RETURN count(dgm)")
     Long countDecisionGuidanceModels();

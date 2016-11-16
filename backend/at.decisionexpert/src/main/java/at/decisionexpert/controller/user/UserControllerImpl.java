@@ -1,5 +1,6 @@
 package at.decisionexpert.controller.user;
 
+import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
@@ -44,8 +45,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @RequestMapping(value = "/{idUser}/decisionguidancemodels", method = RequestMethod.GET)
-    public DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size) {
-        return decisionGuidanceModelService.getUserDecisionGuidanceModel(idUser, page, size);
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) DecisionGuidanceModelController.DecisionGuidanceModelType type) {
+        return decisionGuidanceModelService.getUserDecisionGuidanceModel(idUser, page, size, type);
     }
 
     @Override

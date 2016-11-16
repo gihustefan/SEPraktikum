@@ -2,6 +2,7 @@ package at.decisionexpert.business.decisionguidance;
 
 import at.decisionexpert.business.coredata.CreateCoreDataImpl;
 import at.decisionexpert.business.user.UserBusiness;
+import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
@@ -157,14 +158,26 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
     @Override
     @Transactional(readOnly = true)
-    public DecisionGuidanceModelPageableDto getNewestDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished) {
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
         Assert.notNull(page);
         Assert.notNull(size);
 
         int skip = page * size;
 
         // Fetching the Objects
-        List<DecisionGuidanceModelDto> decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findNewestDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findNewestPublishedDecisionGuidanceModels(skip, size);
+
+        List<DecisionGuidanceModelDto> decisionGuidanceModelPage = null;
+        if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findAlphabetDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findAlphabetPublishedDecisionGuidanceModels(skip, size);
+        } else if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findRatingDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findRatingPublishedDecisionGuidanceModels(skip, size);
+        } else { //default DecisionGuidanceModelType.NEWEST
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findNewestDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findNewestPublishedDecisionGuidanceModels(skip, size);
+        }
+
+        if (decisionGuidanceModelPage == null || decisionGuidanceModelPage.size() == 0) {
+            return new DecisionGuidanceModelPageableDto();
+        }
 
         // Fetching total Count
         Long totalCount = withUnpublished ? decisionGuidanceModelRepository.countDecisionGuidanceModels() : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModels();
@@ -173,7 +186,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size) {
+    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
         Assert.notNull(idUser);
         Assert.notNull(page);
         Assert.notNull(size);
@@ -186,7 +199,14 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         boolean withUnpublished = authenticatedUser == null ? false : authenticatedUser.getId().equals(idUser) || authenticatedUser.getAuthorities().contains(new UserAuthority("ROLE_ADMIN"));
 
         // If the authenticated User requests his own ArchProfiles => also load the unpublished ones!
-        List<DecisionGuidanceModelDto> decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findPublishedByUserId(idUser, page * size, size);
+        List<DecisionGuidanceModelDto> decisionGuidanceModels = null;
+        if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
+            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findAlphabetAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findAlphabetPublishedByUserId(idUser, page * size, size);
+        } else if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
+            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findRatingAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findRatingPublishedByUserId(idUser, page * size, size);
+        } else { //default DecisionGuidanceModelType.NEWEST
+            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findNewestAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findNewestPublishedByUserId(idUser, page * size, size);
+        }
 
         if (decisionGuidanceModels == null || decisionGuidanceModels.size() == 0) {
             return new DecisionGuidanceModelPageableDto();
