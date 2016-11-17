@@ -25,6 +25,12 @@ public class GroupControllerImpl implements GroupController {
     }
 
     @Override
+    @RequestMapping(value = "/{idGroup}", method = RequestMethod.GET)
+    public GroupDto getGroup(@PathVariable Long idGroup) {
+        return groupService.getGroup(idGroup);
+    }
+
+    @Override
     @RequestMapping(value = "/{idGroup}/{idUser}",method = RequestMethod.POST)
     public GroupRelationDto createGroupRelation(@PathVariable Long idGroup, @PathVariable Long idUser) {
         return groupService.createGroupRelation(idGroup, idUser);

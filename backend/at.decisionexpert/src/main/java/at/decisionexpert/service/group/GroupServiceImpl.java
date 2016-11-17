@@ -23,6 +23,11 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
+    public GroupDto getGroup(@NotNull Long idGroup) {
+        return groupBusiness.getGroup(idGroup);
+    }
+
+    @Override
     public GroupRelationDto createGroupRelation(@NotNull Long idGroup, @NotNull Long idUser) {
         return groupBusiness.createGroupRelation(idGroup, idUser);
     }

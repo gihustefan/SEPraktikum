@@ -11,6 +11,8 @@ public interface GroupController {
 
     GroupDto createGroup(GroupChangeRequestDto groupValues);
 
+    GroupDto getGroup(Long idGroup);
+
     GroupRelationDto createGroupRelation(Long idGroup, Long idUser);
 
     void deleteGroupRelationAttribute(Long idGroupRelation);

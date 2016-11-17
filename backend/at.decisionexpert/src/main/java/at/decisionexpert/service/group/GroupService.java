@@ -15,6 +15,9 @@ public interface GroupService {
     GroupDto createGroup(GroupChangeRequestDto groupValues);
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    GroupDto getGroup(@NotNull Long idGroup);
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     GroupRelationDto createGroupRelation(@NotNull Long idGroup, @NotNull Long idUser);
 
     @PreAuthorize("hasRole('ROLE_USER')")
