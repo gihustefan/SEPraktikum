@@ -26,6 +26,10 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
 
     private Integer ordering;
 
+    private int voteTrue;
+
+    private int voteFalse;
+
     private List<DesignOptionRelationDto> implications;
 
     private List<DesignOptionRelationDto> addressedRequirements;
@@ -42,6 +46,8 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
         setName(hasDesignOption.getEndNode().getName());
         setIdAttribute(hasDesignOption.getEndNode().getId());
         setOrdering(hasDesignOption.getOrdering());
+        setVoteTrue(hasDesignOption.getEndNode().getVoteTrue());
+        setVoteFalse(hasDesignOption.getEndNode().getVoteFalse());
         setIdAttribute(hasDesignOption.getEndNode().getId());
         setImplications(getNeo4JRelationDto(hasDesignOption.getEndNode().getImplications()));
         setAddressedRequirements(getNeo4JRelationDto(hasDesignOption.getEndNode().getAddressedRequirements()));
@@ -144,5 +150,21 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
 
     public void setRequiredComponents(List<DesignOptionRelationDto> requiredComponents) {
         this.requiredComponents = requiredComponents;
+    }
+
+    public int getVoteTrue() {
+        return voteTrue;
+    }
+
+    public void setVoteTrue(int voteTrue) {
+        this.voteTrue = voteTrue;
+    }
+
+    public int getVoteFalse() {
+        return voteFalse;
+    }
+
+    public void setVoteFalse(int voteFalse) {
+        this.voteFalse = voteFalse;
     }
 }

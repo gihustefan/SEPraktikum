@@ -7,6 +7,7 @@ import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasRequiredComponent;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 /**
  * Created by stefanhaselboeck on 12.08.16.
  */
+@QueryResult
 @NodeEntity
 public class DesignOption extends Node {
 
@@ -36,6 +38,10 @@ public class DesignOption extends Node {
 
     private String description;
 
+    private int voteTrue;
+
+    private int voteFalse;
+
     public DesignOption(User creator, String name, String description) {
         super(creator);
         this.name = name;
@@ -46,6 +52,21 @@ public class DesignOption extends Node {
         super();
         this.name = name;
         this.description = description;
+    }
+
+    public DesignOption(User creator, String name, String description, int voteTrue, int voteFalse) {
+        super(creator);
+        this.name = name;
+        this.description = description;
+        this.voteTrue = voteTrue;
+        this.voteFalse = voteFalse;
+    }
+
+    public DesignOption(String name, String description, int voteTrue, int voteFalse) {
+        this.name = name;
+        this.description = description;
+        this.voteTrue = voteTrue;
+        this.voteFalse = voteFalse;
     }
 
     public DesignOption () {
@@ -106,5 +127,21 @@ public class DesignOption extends Node {
 
     public void setVotes(Set<HasVote> votes) {
         this.votes = votes;
+    }
+
+    public int getVoteTrue() {
+        return voteTrue;
+    }
+
+    public void setVoteTrue(int voteTrue) {
+        this.voteTrue = voteTrue;
+    }
+
+    public int getVoteFalse() {
+        return voteFalse;
+    }
+
+    public void setVoteFalse(int voteFalse) {
+        this.voteFalse = voteFalse;
     }
 }

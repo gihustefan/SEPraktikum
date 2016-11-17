@@ -5,6 +5,7 @@ import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.DOAttributeRelationship;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by stefanhaselboeck on 12.08.16.
  */
+@QueryResult
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DesignOptionDto {
 
@@ -32,6 +34,10 @@ public class DesignOptionDto {
     private List<DesignOptionRelationDto> requiredComponents;
 
     private List<VoteRelationDto> votes;
+
+    private int voteTrue;
+
+    private int voteFalse;
 
     public DesignOptionDto() {
 
@@ -150,5 +156,21 @@ public class DesignOptionDto {
 
     public void setVotes(List<VoteRelationDto> votes) {
         this.votes = votes;
+    }
+
+    public int getVoteTrue() {
+        return voteTrue;
+    }
+
+    public void setVoteTrue(int voteTrue) {
+        this.voteTrue = voteTrue;
+    }
+
+    public int getVoteFalse() {
+        return voteFalse;
+    }
+
+    public void setVoteFalse(int voteFalse) {
+        this.voteFalse = voteFalse;
     }
 }

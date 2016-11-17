@@ -6,6 +6,7 @@ import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelContro
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionDto;
 import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
@@ -69,8 +70,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     @Override
     @Transactional(readOnly = true)
     public DecisionGuidanceModelDto getDecisionGuidanceModel(Long id) {
-        // TODO: check other "unvalid" values
-        // return empty DecisionGuidanceModel
         if (id < 0) {
             throw new DecisionGuidanceModelNotFoundException();
         }
@@ -102,10 +101,8 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         if (!canSee)
             throw new DecisionGuidanceModelNotPermittedException();
 
-        // Additionally must add the tradeoffs as well (would be level 2)
         //decisionGuidanceModel.getTradeoffs().forEach(hasTradeoff -> hasTradeoff.setEndNode(neo4jOperations.load(Tradeoff.class, hasTradeoff.getEndNode().getId(), 1)));
-
-        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOne(hasDesignOption.getEndNode().getId(), 1)));
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOneDO(hasDesignOption.getEndNode().getId())));
         decisionGuidanceModel.getComments().forEach(hasComment -> hasComment.setEndNode(commentRepository.findOne(hasComment.getEndNode().getId(), 1)));
 
         return new DecisionGuidanceModelDto(decisionGuidanceModel);
