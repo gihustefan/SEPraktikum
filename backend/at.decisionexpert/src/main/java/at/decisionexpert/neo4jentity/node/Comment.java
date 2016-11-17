@@ -18,7 +18,6 @@ public class Comment extends Node {
 
 	public Comment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getText() {

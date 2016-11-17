@@ -1,0 +1,34 @@
+package at.decisionexpert.service.group;
+
+import at.decisionexpert.business.group.GroupBusiness;
+import at.decisionexpert.neo4jentity.dto.group.GroupChangeRequestDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupRelationDto;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Created by stefanhaselboeck on 17.11.16.
+ */
+@Service
+public class GroupServiceImpl implements GroupService{
+
+    @Autowired
+    private GroupBusiness groupBusiness;
+
+    @Override
+    public GroupDto createGroup(GroupChangeRequestDto groupValues) {
+        return groupBusiness.createGroup(groupValues);
+    }
+
+    @Override
+    public GroupRelationDto createGroupRelation(@NotNull Long idGroup, @NotNull Long idUser) {
+        return groupBusiness.createGroupRelation(idGroup, idUser);
+    }
+
+    @Override
+    public void deleteGroupRelationAttribute(@NotNull Long idGroupRelation) {
+        groupBusiness.deleteGroupRelationAttribute(idGroupRelation);
+    }
+}
