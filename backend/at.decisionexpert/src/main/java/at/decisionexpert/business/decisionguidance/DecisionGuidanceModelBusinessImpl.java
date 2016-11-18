@@ -102,7 +102,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             throw new DecisionGuidanceModelNotPermittedException();
 
         //decisionGuidanceModel.getTradeoffs().forEach(hasTradeoff -> hasTradeoff.setEndNode(neo4jOperations.load(Tradeoff.class, hasTradeoff.getEndNode().getId(), 1)));
-        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOneDO(hasDesignOption.getEndNode().getId())));
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOne(hasDesignOption.getEndNode().getId(), 1)));
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.getEndNode().setVoteTrue(designOptionRepository.getVoteTrueForDO(hasDesignOption.getEndNode().getId())));
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.getEndNode().setVoteFalse(designOptionRepository.getVoteFalseForDO(hasDesignOption.getEndNode().getId())));
         decisionGuidanceModel.getComments().forEach(hasComment -> hasComment.setEndNode(commentRepository.findOne(hasComment.getEndNode().getId(), 1)));
 
         return new DecisionGuidanceModelDto(decisionGuidanceModel);
