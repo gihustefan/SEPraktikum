@@ -106,6 +106,11 @@ public class DecisionGuidanceModelDto {
         List<VoteRelationDto> votes = new ArrayList<>();
         decisionGuidanceModel.getVotes().forEach(to -> {
             votes.add(new VoteRelationDto(to));
+            if (to.isVote()) {
+                setVoteTrue(getVoteTrue()+1);
+            } else {
+                setVoteFalse(getVoteFalse()+1);
+            }
         });
         setVotes(votes);
     }
