@@ -76,6 +76,7 @@ public class DecisionGuidanceModelDto {
                 TimeZone.getDefault().toZoneId()));
         setModified(LocalDateTime.ofInstant(Instant.ofEpochMilli(decisionGuidanceModel.getLastModified()),
                 TimeZone.getDefault().toZoneId()));
+        setPublished(decisionGuidanceModel.isPublished());
 
         // Requirements
         setPotentialRequirements(getNeo4JRelationDto(decisionGuidanceModel.getPotentialRequirements()));
