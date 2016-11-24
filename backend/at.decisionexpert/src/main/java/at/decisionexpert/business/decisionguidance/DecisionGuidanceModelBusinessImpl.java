@@ -6,7 +6,6 @@ import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelContro
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionDto;
 import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +66,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     private CreateCoreDataImpl createCoreDataImpl;
 
     @Override
-    @Transactional(readOnly = true)
     public DecisionGuidanceModelDto getDecisionGuidanceModel(Long id) {
         if (id < 0) {
             throw new DecisionGuidanceModelNotFoundException();
@@ -111,7 +108,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    @Transactional
     public DecisionGuidanceModelDto createDecisionGuidanceModel(DecisionGuidanceModelChangeRequestDto decisionGuidanceModel) {
         // Setting the owner of the decisionGuidanceModel -> the authenticated user
         User user = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -125,7 +121,12 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
 
         // On creation the New DecisionGuidanceModel must be unpublished
-        newDecisionGuidanceModel.setPublished(false);
+        if (decisionGuidanceModel.getPublished() != null) {
+            newDecisionGuidanceModel.setPublished(decisionGuidanceModel.getPublished());
+        }
+        else {
+            newDecisionGuidanceModel.setPublished(false);
+        }
 
         return new DecisionGuidanceModelDto(decisionGuidanceModelRepository.save(newDecisionGuidanceModel));
     }
@@ -156,7 +157,6 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    @Transactional(readOnly = true)
     public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
         Assert.notNull(page);
         Assert.notNull(size);
