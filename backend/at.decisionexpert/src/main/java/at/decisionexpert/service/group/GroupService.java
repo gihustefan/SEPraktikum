@@ -1,7 +1,9 @@
 package at.decisionexpert.service.group;
 
+import at.decisionexpert.controller.user.UserController;
 import at.decisionexpert.neo4jentity.dto.group.GroupChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupPageableDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupRelationDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,4 +25,6 @@ public interface GroupService {
     @PreAuthorize("hasRole('ROLE_USER')")
     void deleteGroupRelationAttribute(@NotNull Long idGroupRelation);
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    GroupPageableDto getGroupsOfUser(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, @NotNull UserController.GroupType type);
 }

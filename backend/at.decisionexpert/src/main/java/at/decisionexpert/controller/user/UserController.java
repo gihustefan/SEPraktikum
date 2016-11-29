@@ -3,6 +3,7 @@ package at.decisionexpert.controller.user;
 import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupPageableDto;
 import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 
@@ -14,23 +15,13 @@ public interface UserController {
 
 	UserDto createUser(UserCreationDto user);
 
-	/**
-	 * Fetching paginated DecisionGuidanceModels of a user
-	 * @param idUser Which user
-	 * @param page Which page
-	 * @param size How many items per page
-	 * @return A List of DecisionGuidanceModels (based on the user)
-	 */
 	DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
-	/**
-	 * Fetching paginated DecisionDocumentationModels of a user
-	 * @param idUser Which user
-	 * @param page Which page
-	 * @param size How many items per page
-	 * @return A List of DecisionDocumentationModels (based on the user)
-	 */
 	DecisionDocumentationModelPageableDto getDecisionDocumentationModelsOfUser(Long idUser, Integer page, Integer size);
 
+	GroupPageableDto getGroupsOfUser(Long idUser, Integer page, Integer size, GroupType type);
 
+	enum GroupType {
+		MEMBER, CREATOR
+	}
 }

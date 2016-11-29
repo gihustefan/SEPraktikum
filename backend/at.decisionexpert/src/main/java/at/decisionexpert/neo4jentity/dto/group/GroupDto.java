@@ -15,7 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupDto {
 
-    private Serializable id;
+    private long id;
 
     private String name;
 
@@ -38,11 +38,11 @@ public class GroupDto {
 
     public GroupDto () {}
 
-    public Serializable getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Serializable id) {
+    public void setId(long id) {
         this.id = id;
     }
 

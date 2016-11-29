@@ -2,10 +2,12 @@ package at.decisionexpert.neo4jentity.dto.group;
 
 import at.decisionexpert.neo4jentity.relationship.HasMember;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 /**
  * Created by stefanhaselboeck on 17.11.16.
  */
+@QueryResult
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupRelationDto {
 

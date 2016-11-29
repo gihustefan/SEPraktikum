@@ -3,10 +3,12 @@ package at.decisionexpert.controller.user;
 import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.neo4jentity.dto.decisiondocumentation.DecisionDocumentationModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupPageableDto;
 import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.service.decisiondocumentation.DecisionDocumentationService;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
+import at.decisionexpert.service.group.GroupService;
 import at.decisionexpert.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class UserControllerImpl implements UserController {
 
     @Autowired
     private DecisionDocumentationService decisionDocumentationService;
+
+    @Autowired
+    private GroupService groupService;
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
@@ -53,5 +58,11 @@ public class UserControllerImpl implements UserController {
     @RequestMapping(value = "/{idUser}/decisiondocumentationmodels", method = RequestMethod.GET)
     public DecisionDocumentationModelPageableDto getDecisionDocumentationModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size) {
         return decisionDocumentationService.getUserDecisionDocumentationModel(idUser, page, size);
+    }
+
+    @Override
+    @RequestMapping(value = "/{idUser}/groups", method = RequestMethod.GET)
+    public GroupPageableDto getGroupsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size, @RequestParam GroupType type) {
+        return groupService.getGroupsOfUser(idUser, page, size, type);
     }
 }

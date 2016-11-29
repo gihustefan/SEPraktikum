@@ -1,11 +1,14 @@
 package at.decisionexpert.business.group;
 
 import at.decisionexpert.business.user.UserBusiness;
+import at.decisionexpert.controller.user.UserController;
 import at.decisionexpert.exception.GroupNotFoundException;
 import at.decisionexpert.exception.GroupNotPermittedException;
 import at.decisionexpert.neo4jentity.dto.group.GroupChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupPageableDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupRelationDto;
+import at.decisionexpert.neo4jentity.dto.user.UserDto;
 import at.decisionexpert.neo4jentity.node.Group;
 import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.node.UserAuthority;
@@ -17,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by stefanhaselboeck on 17.11.16.
@@ -115,5 +121,30 @@ public class GroupBusinessImpl implements GroupBusiness {
             return;
 
         hasMemberRepository.delete(hasMember);
+    }
+
+    @Override
+    public GroupPageableDto getGroupsOfUser(Long idUser, Integer page, Integer size, UserController.GroupType type) {
+        Assert.notNull(idUser);
+        Assert.notNull(page);
+        Assert.notNull(size);
+        Assert.notNull(type);
+
+        List<GroupDto> groups = null;
+        Long countGroups = null;
+        if (type == UserController.GroupType.MEMBER) {
+            groups = groupRepository.findAllMemberByUserId(idUser, page * size, size);
+            countGroups = groupRepository.countAllMemberGroupsOfUser(idUser);
+        } else if (type == UserController.GroupType.CREATOR) {
+            groups = groupRepository.findAllCreatedByUserId(idUser, page * size, size);
+            countGroups = groupRepository.countAllCreatedGroupsOfUser(idUser);
+        }
+
+        if (groups == null || groups.size() == 0) {
+            return new GroupPageableDto();
+        }
+
+        groups.forEach(groupDto -> groupDto.setMembers(hasMemberRepository.findMembersOfGroup(groupDto.getId())));
+        return new GroupPageableDto(groups, countGroups);
     }
 }

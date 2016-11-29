@@ -1,8 +1,10 @@
 package at.decisionexpert.service.group;
 
 import at.decisionexpert.business.group.GroupBusiness;
+import at.decisionexpert.controller.user.UserController;
 import at.decisionexpert.neo4jentity.dto.group.GroupChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupDto;
+import at.decisionexpert.neo4jentity.dto.group.GroupPageableDto;
 import at.decisionexpert.neo4jentity.dto.group.GroupRelationDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,10 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public void deleteGroupRelationAttribute(@NotNull Long idGroupRelation) {
         groupBusiness.deleteGroupRelationAttribute(idGroupRelation);
+    }
+
+    @Override
+    public GroupPageableDto getGroupsOfUser(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, @NotNull UserController.GroupType type) {
+        return groupBusiness.getGroupsOfUser(idUser, page, size, type);
     }
 }
