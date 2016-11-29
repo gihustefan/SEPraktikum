@@ -57,6 +57,18 @@ public class GroupBusinessImpl implements GroupBusiness {
     }
 
     @Override
+    public void deleteGroup(Long idGroup) {
+        Assert.notNull(idGroup);
+
+        Group group = groupRepository.findOne(idGroup);
+
+        if (group == null)
+            return;
+
+        groupRepository.delete(group);
+    }
+
+    @Override
     public GroupDto getGroup(Long idGroup) {
         if (idGroup < 0) {
             throw new GroupNotFoundException();

@@ -25,6 +25,12 @@ public class GroupControllerImpl implements GroupController {
     }
 
     @Override
+    @RequestMapping(value = "/{idGroup}",method = RequestMethod.DELETE)
+    public void deleteGroup(@PathVariable Long idGroup) {
+        groupService.deleteGroup(idGroup);
+    }
+
+    @Override
     @RequestMapping(value = "/{idGroup}", method = RequestMethod.GET)
     public GroupDto getGroup(@PathVariable Long idGroup) {
         return groupService.getGroup(idGroup);
@@ -37,7 +43,7 @@ public class GroupControllerImpl implements GroupController {
     }
 
     @Override
-    @RequestMapping(value = "/{idGroupRelation}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{idGroupRelation}",method = RequestMethod.DELETE)
     public void deleteGroupRelationAttribute(@PathVariable Long idGroupRelation) {
         groupService.deleteGroupRelationAttribute(idGroupRelation);
     }

@@ -25,6 +25,11 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
+    public void deleteGroup(@NotNull Long idGroup) {
+        groupBusiness.deleteGroup(idGroup);
+    }
+
+    @Override
     public GroupDto getGroup(@NotNull Long idGroup) {
         return groupBusiness.getGroup(idGroup);
     }
