@@ -22,6 +22,8 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
 
     private String name;
 
+    private String description;
+
     private Long idAttribute;
 
     private Integer ordering;
@@ -44,6 +46,7 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
     public DecisionGuidanceModelDesignOptionRelationDto(HasDesignOption hasDesignOption) {
         setId(hasDesignOption.getId());
         setName(hasDesignOption.getEndNode().getName());
+        setDescription(hasDesignOption.getEndNode().getDescription());
         setIdAttribute(hasDesignOption.getEndNode().getId());
         setOrdering(hasDesignOption.getOrdering());
         setVoteTrue(hasDesignOption.getEndNode().getVoteTrue());
@@ -65,6 +68,7 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
     public DecisionGuidanceModelDesignOptionRelationDto(DesignOption doAttribute) {
         idAttribute = doAttribute.getId();
         name = doAttribute.getName();
+        description = doAttribute.getDescription();
     }
 
     /**
@@ -102,6 +106,14 @@ public class DecisionGuidanceModelDesignOptionRelationDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getIdAttribute() {
