@@ -131,8 +131,8 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness{
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
-            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
 
         try {
 

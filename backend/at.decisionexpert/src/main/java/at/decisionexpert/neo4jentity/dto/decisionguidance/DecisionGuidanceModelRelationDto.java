@@ -16,6 +16,8 @@ public class DecisionGuidanceModelRelationDto {
 
     private Long idAttribute;
 
+    private String definition;
+
     private String description;
 
     private Integer ordering;
@@ -28,12 +30,14 @@ public class DecisionGuidanceModelRelationDto {
         id = dgmRelationship.getId();
         name = dgmRelationship.getEndNode().getName();
         idAttribute = dgmRelationship.getEndNode().getId();
+        definition = dgmRelationship.getEndNode().getDefinition();
         description = dgmRelationship.getDescription();
         ordering = dgmRelationship.getOrdering();
     }
 
     public DecisionGuidanceModelRelationDto(CoreData dgmAttribute) {
         name = dgmAttribute.getName();
+        definition = dgmAttribute.getDefinition();
         idAttribute = dgmAttribute.getId();
     }
 
@@ -59,6 +63,14 @@ public class DecisionGuidanceModelRelationDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
 
     public String getDescription() {

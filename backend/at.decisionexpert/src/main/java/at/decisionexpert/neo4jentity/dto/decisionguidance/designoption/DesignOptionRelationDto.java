@@ -16,6 +16,8 @@ public class DesignOptionRelationDto {
 
     private Long idAttribute;
 
+    private String definition;
+
     private String description;
 
     private Integer ordering;
@@ -28,12 +30,14 @@ public class DesignOptionRelationDto {
         id = doRelationship.getId();
         name = doRelationship.getEndNode().getName();
         idAttribute = doRelationship.getEndNode().getId();
+        definition = doRelationship.getEndNode().getDefinition();
         description = doRelationship.getDescription();
         ordering = doRelationship.getOrdering();
     }
 
     public DesignOptionRelationDto(CoreData doAttribute) {
         name = doAttribute.getName();
+        definition = doAttribute.getDefinition();
         idAttribute = doAttribute.getId();
     }
 
@@ -59,6 +63,14 @@ public class DesignOptionRelationDto {
 
     public void setIdAttribute(Long idAttribute) {
         this.idAttribute = idAttribute;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
 
     public String getDescription() {

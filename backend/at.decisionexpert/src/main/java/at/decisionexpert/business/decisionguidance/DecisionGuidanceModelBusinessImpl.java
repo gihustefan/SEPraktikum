@@ -237,11 +237,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
         // If toNode does not exist -> create a new one and use this one!
         if (toNode == null)
-            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
-            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
-
+            toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), attributeInfo.getDefinition(), toNodeType);
+            //toNode = createCoreDataImpl.createCoreData(attributeInfo.getName(), "", toNodeType);
         try {
-
             Constructor constructor = relationClass.getDeclaredConstructor();
             constructor.setAccessible(true);
 
@@ -287,6 +285,14 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         if (newValues.getDescription() != null)
             loadedRelation.setDescription(newValues.getDescription());
 
+        // Setting the new value for the name of the requirement
+        if (newValues.getName() != null)
+            loadedRelation.getEndNode().setName(newValues.getName());
+
+        // Setting the new value for the definition of the requirement
+        if (newValues.getDescription() != null)
+            loadedRelation.getEndNode().setDefinition(newValues.getDefinition());
+
         // Setting the ordering -> must change the ordering values of other AP
         // Relationships as well
         if (newValues.getOrdering() != null) {
@@ -302,7 +308,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
 
         // Persist the new Values
-        return new DecisionGuidanceModelRelationDto(loadedRelation);
+        return new DecisionGuidanceModelRelationDto(dgmAttributeRelationshipRepository.save(loadedRelation));
     }
 
     @Override
@@ -387,7 +393,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             // TODO REorder
         }
 
-        return new DecisionGuidanceModelRelatedGuidanceModelsDto(hasRelatedGuidanceModels);
+        return new DecisionGuidanceModelRelatedGuidanceModelsDto(dgmHasGuidanceModelRepository.save(hasRelatedGuidanceModels));
     }
 
     @Override
@@ -478,7 +484,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             // TODO REorder
         }
 
-        return new DecisionGuidanceModelDesignOptionRelationDto(hasDesignOption);
+        return new DecisionGuidanceModelDesignOptionRelationDto(dgmHasDesignOptionRepository.save(hasDesignOption));
     }
 
     @Override

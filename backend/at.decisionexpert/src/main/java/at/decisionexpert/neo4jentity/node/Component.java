@@ -1,6 +1,6 @@
 package at.decisionexpert.neo4jentity.node;
 
-import at.decisionexpert.neo4jentity.relationship.component.HasPotentialRequirement;
+import at.decisionexpert.neo4jentity.relationship.component.ComponentHasPotentialRequirement;
 import at.decisionexpert.neo4jentity.relationship.component.HasTechnologyOption;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class Component extends CoreData {
 
     @Relationship(type = "HAS_POTENTIALREQUIREMENT", direction = Relationship.OUTGOING)
-    private Set<HasPotentialRequirement> potentialRequirements = new HashSet<>(0);
+    private Set<ComponentHasPotentialRequirement> potentialRequirements = new HashSet<>(0);
 
     @Relationship(type = "HAS_TECHNOLOGYOPTION", direction = Relationship.OUTGOING)
     private Set<HasTechnologyOption> technologyOptions = new HashSet<>(0);
@@ -44,11 +44,11 @@ public class Component extends CoreData {
         this.description = description;
     }
 
-    public Set<HasPotentialRequirement> getPotentialRequirements() {
+    public Set<ComponentHasPotentialRequirement> getPotentialRequirements() {
         return potentialRequirements;
     }
 
-    public void setPotentialRequirements(Set<HasPotentialRequirement> potentialRequirements) {
+    public void setPotentialRequirements(Set<ComponentHasPotentialRequirement> potentialRequirements) {
         this.potentialRequirements = potentialRequirements;
     }
 

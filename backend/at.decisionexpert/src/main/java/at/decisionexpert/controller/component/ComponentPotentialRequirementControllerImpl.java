@@ -2,7 +2,7 @@ package at.decisionexpert.controller.component;
 
 import at.decisionexpert.neo4jentity.dto.component.ComponentRelationDto;
 import at.decisionexpert.neo4jentity.node.Requirement;
-import at.decisionexpert.neo4jentity.relationship.component.HasPotentialRequirement;
+import at.decisionexpert.neo4jentity.relationship.component.ComponentHasPotentialRequirement;
 import at.decisionexpert.service.component.ComponentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,18 +21,18 @@ public class ComponentPotentialRequirementControllerImpl implements ComponentRel
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public ComponentRelationDto create(@PathVariable Long idComponent, @RequestBody ComponentRelationDto requirement) {
-        return componentService.createRelation(idComponent, requirement, HasPotentialRequirement.class, Requirement.class);
+        return componentService.createRelation(idComponent, requirement, ComponentHasPotentialRequirement.class, Requirement.class);
     }
 
     @Override
     @RequestMapping(value = "/{idComponentPotentialRequirement}",method = RequestMethod.PATCH)
     public ComponentRelationDto updateAttributes(@PathVariable Long idComponent,@PathVariable Long idComponentPotentialRequirement, ComponentRelationDto newValues) {
-        return componentService.updateExistingRelationAttribute(idComponent, idComponentPotentialRequirement, newValues, HasPotentialRequirement.class);
+        return componentService.updateExistingRelationAttribute(idComponent, idComponentPotentialRequirement, newValues, ComponentHasPotentialRequirement.class);
     }
 
     @Override
     @RequestMapping(value = "/{idComponentPotentialRequirement}",method = RequestMethod.DELETE)
     public void delete(@PathVariable Long idComponent,@PathVariable Long idComponentPotentialRequirement) {
-        componentService.deleteRelationAttribute(idComponent, idComponentPotentialRequirement, HasPotentialRequirement.class);
+        componentService.deleteRelationAttribute(idComponent, idComponentPotentialRequirement, ComponentHasPotentialRequirement.class);
     }
 }
