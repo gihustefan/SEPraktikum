@@ -440,6 +440,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         if (endDesignOption == null) {
             DesignOption designOption = new DesignOption();
             designOption.setName(designOptionInfo.getName());
+            designOption.setDescription(designOptionInfo.getDescription());
             designOption.setCreationDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             designOption.setLastModified(designOption.getCreationDate());
             designOption.setCreator(userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -466,9 +467,16 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         Assert.notNull(idDecisionGuidanceModel);
         Assert.notNull(idDesignOptionRelation);
 
-        // Fetching the hasTradeoff from DB
         HasDesignOption hasDesignOption = dgmHasDesignOptionRepository.findOne(idDesignOptionRelation);
         Assert.notNull(hasDesignOption);
+
+        // Setting the new value for the name of the Design Option
+        if (newValues.getName() != null)
+            hasDesignOption.getEndNode().setName(newValues.getName());
+
+        // Setting the new value for the description of the Design Option
+        if (newValues.getDescription() != null)
+            hasDesignOption.getEndNode().setDescription(newValues.getDescription());
 
         if (newValues.getOrdering() != null) {
 
