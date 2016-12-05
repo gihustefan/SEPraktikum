@@ -33,7 +33,7 @@ public interface DecisionGuidanceModelService {
      * @param size   how many items per page
      * @return The list of the newest DecisionGuidanceModels
      */
-    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
+    DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type, DecisionGuidanceModelController.ModelState modelState);
 
 
     @PreAuthorize("hasRole('ROLE_USER')")

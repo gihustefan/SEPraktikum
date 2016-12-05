@@ -15,7 +15,7 @@ public interface UserController {
 
 	UserDto createUser(UserCreationDto user);
 
-	DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
+	DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType ordering, DecisionGuidanceModelController.ModelState modelState);
 
 	DecisionDocumentationModelPageableDto getDecisionDocumentationModelsOfUser(Long idUser, Integer page, Integer size);
 

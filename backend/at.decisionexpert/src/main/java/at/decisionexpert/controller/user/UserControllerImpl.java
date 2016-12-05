@@ -50,8 +50,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @RequestMapping(value = "/{idUser}/decisionguidancemodels", method = RequestMethod.GET)
-    public DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) DecisionGuidanceModelController.DecisionGuidanceModelType type) {
-        return decisionGuidanceModelService.getUserDecisionGuidanceModel(idUser, page, size, type);
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModelsOfUser(@PathVariable Long idUser, @RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) DecisionGuidanceModelController.DecisionGuidanceModelType ordering, @RequestParam(required = false)DecisionGuidanceModelController.ModelState modelState) {
+        return decisionGuidanceModelService.getUserDecisionGuidanceModel(idUser, page, size, ordering, modelState);
     }
 
     @Override

@@ -33,8 +33,8 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
-        return decisionGuidanceModelBusiness.getUserDecisionGuidanceModels(idUser, page, size, type);
+    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType ordering, DecisionGuidanceModelController.ModelState modelState) {
+        return decisionGuidanceModelBusiness.getUserDecisionGuidanceModels(idUser, page, size, ordering, modelState);
     }
 
     @Override

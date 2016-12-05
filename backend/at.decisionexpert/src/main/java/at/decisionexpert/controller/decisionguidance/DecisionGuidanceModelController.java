@@ -56,4 +56,8 @@ public interface DecisionGuidanceModelController {
     enum DecisionGuidanceModelType {
         NEWEST, ALPHABET, RATING
     }
+
+    enum ModelState {
+        PUBLISH, UNPUBLISHED
+    }
 }
