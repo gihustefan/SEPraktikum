@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by stefanhaselboeck on 12.08.16.
@@ -49,6 +50,11 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     @Override
     public void deleteDecisionGuidanceModel(@NotNull Long id) {
         decisionGuidanceModelBusiness.deleteDecisionGuidanceModel(id);
+    }
+
+    @Override
+    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@NotNull Long idDecisionGuidanceModel) {
+        return decisionGuidanceModelBusiness.getPotentialRequirements(idDecisionGuidanceModel);
     }
 
     @Override

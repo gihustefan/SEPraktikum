@@ -27,6 +27,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             throw new DecisionGuidanceModelNotFoundException();
         }
 
-        DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(id, 1);
+        DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(id, 2);
 
         // When not found -> just return an empty DecisionGuidanceModel POJO
         if (decisionGuidanceModel == null) {
@@ -215,6 +216,25 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         Long countUserProfiles = withUnpublished ? decisionGuidanceModelRepository.countAllDecisionGuidanceModelsOfUser(idUser) : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModelsOfUser(idUser);
 
         return new DecisionGuidanceModelPageableDto(countUserProfiles, decisionGuidanceModels);
+    }
+
+    @Override
+    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(Long idDecisionGuidanceModel) {
+        Assert.notNull(idDecisionGuidanceModel);
+
+        List<DecisionGuidanceModelRelationDto> result = new ArrayList<>();
+
+        DecisionGuidanceModel dgm = decisionGuidanceModelRepository.findOne(idDecisionGuidanceModel, 2);
+
+        if (dgm == null) {
+            throw new DecisionGuidanceModelNotFoundException();
+        }
+
+        dgm.getPotentialRequirements().forEach(rq -> {
+            result.add(new DecisionGuidanceModelRelationDto(rq));
+        });
+
+        return result;
     }
 
     @Override

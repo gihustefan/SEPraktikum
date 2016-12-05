@@ -12,15 +12,15 @@ import java.util.List;
  * Created by stefanhaselboeck on 18.08.16.
  */
 @RestController
-@RequestMapping("api/potentialrequirements/{titlePartial}")
+@RequestMapping("api/potentialrequirements/")
 @ResponseBody
-public class DGMPotentialRequirementsControllerImpl implements DGMCoreDateController {
+public class DGMPotentialRequirementsControllerImpl implements DGMCoreDataController {
 
     @Autowired
     DGMCoreDataService dgmCoreDataService;
 
     @Override
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/{titlePartial}", method = RequestMethod.GET)
     public List<DecisionGuidanceModelRelationDto> getCoreData(@PathVariable String titlePartial) {
         return dgmCoreDataService.getCoreData(titlePartial, Requirement.class);
     }

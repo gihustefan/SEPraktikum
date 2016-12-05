@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by stefanhaselboeck on 18.08.16.
  */
-public interface DGMCoreDateController {
+public interface DGMCoreDataController {
 
     /**
      * Getting a list of core data Values based on a partial title

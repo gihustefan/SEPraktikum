@@ -7,6 +7,7 @@ import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeR
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by stefanhaselboeck on 12.08.16.
@@ -34,6 +35,7 @@ public interface DecisionGuidanceModelService {
      */
     DecisionGuidanceModelPageableDto getUserDecisionGuidanceModel(@NotNull Long idUser, @NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
+
     @PreAuthorize("hasRole('ROLE_USER')")
     DecisionGuidanceModelDto createDecisionGuidanceModel(DecisionGuidanceModelChangeRequestDto decisionGuidanceModel);
 
@@ -42,6 +44,9 @@ public interface DecisionGuidanceModelService {
 
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteDecisionGuidanceModel(@NotNull Long id);
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@NotNull Long idDecisionGuidanceModel);
 
     /**
      * Adding an empty relation attribute for a given DecisionGuidanceModel
@@ -119,8 +124,6 @@ public interface DecisionGuidanceModelService {
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteGuidanceModelRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation);
 
-
-
     /**
      * Creating A new DesignOption Relation
      *
@@ -150,4 +153,6 @@ public interface DecisionGuidanceModelService {
      */
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     void deleteDesignOptionRelationAttribute(@NotNull Long idDecisionGuidanceModel, @NotNull Long idDesignOptionRelation);
+
+
 }

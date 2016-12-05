@@ -6,6 +6,8 @@ import at.decisionexpert.neo4jentity.dto.decisionguidance.*;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
 
+import java.util.List;
+
 /**
  * Created by stefanhaselboeck on 12.08.16.
  */
@@ -22,6 +24,8 @@ public interface DecisionGuidanceModelBusiness {
     DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type);
 
     DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
+
+    List<DecisionGuidanceModelRelationDto> getPotentialRequirements(Long idDecisionGuidanceModel);
 
     /**
      * Adding an empty relation attribute for a given DecisionGuidanceModel
