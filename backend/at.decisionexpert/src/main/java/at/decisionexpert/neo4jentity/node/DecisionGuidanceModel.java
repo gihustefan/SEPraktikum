@@ -1,5 +1,6 @@
 package at.decisionexpert.neo4jentity.node;
 
+import at.decisionexpert.neo4jentity.relationship.HasBelonging;
 import at.decisionexpert.neo4jentity.relationship.HasComment;
 import at.decisionexpert.neo4jentity.relationship.HasVote;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
@@ -31,6 +32,9 @@ public class DecisionGuidanceModel extends Node {
 
     @Relationship(type = "HAS_VOTE", direction = Relationship.OUTGOING)
     private Set<HasVote> votes = new HashSet<>(0);
+
+    @Relationship(type = "HAS_BELONGING", direction = Relationship.OUTGOING)
+    private HasBelonging belonging;
 
     private String name;
 
@@ -108,5 +112,13 @@ public class DecisionGuidanceModel extends Node {
 
     public void setVotes(Set<HasVote> votes) {
         this.votes = votes;
+    }
+
+    public HasBelonging getBelonging() {
+        return belonging;
+    }
+
+    public void setBelonging(HasBelonging belonging) {
+        this.belonging = belonging;
     }
 }

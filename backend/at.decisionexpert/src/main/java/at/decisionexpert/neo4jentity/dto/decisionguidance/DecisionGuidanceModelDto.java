@@ -1,5 +1,6 @@
 package at.decisionexpert.neo4jentity.dto.decisionguidance;
 
+import at.decisionexpert.neo4jentity.dto.belonging.BelongingRelationDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
 import at.decisionexpert.neo4jentity.dto.vote.VoteRelationDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
@@ -52,6 +53,8 @@ public class DecisionGuidanceModelDto {
     private List<CommentRelationDto> comments;
 
     private List<VoteRelationDto> votes;
+
+    private BelongingRelationDto belonging;
 
     public DecisionGuidanceModelDto() {
         super();
@@ -113,6 +116,11 @@ public class DecisionGuidanceModelDto {
             }
         });
         setVotes(votes);
+
+        //Belonging
+        if (decisionGuidanceModel.getBelonging() != null) {
+            setBelonging(new BelongingRelationDto(decisionGuidanceModel.getBelonging()));
+        }
     }
 
     /**
@@ -264,5 +272,13 @@ public class DecisionGuidanceModelDto {
 
     public void setVoteFalse(int voteFalse) {
         this.voteFalse = voteFalse;
+    }
+
+    public BelongingRelationDto getBelonging() {
+        return belonging;
+    }
+
+    public void setBelonging(BelongingRelationDto belonging) {
+        this.belonging = belonging;
     }
 }

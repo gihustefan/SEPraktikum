@@ -45,9 +45,6 @@ public class CommentBusinessImpl implements CommentBusiness {
         Assert.notNull(idModel);
         Assert.notNull(commentValue);
 
-        User user = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        Assert.notNull(user);
-
         A startModel = null;
         if (toNodeType == DecisionGuidanceModel.class) {
             startModel = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
