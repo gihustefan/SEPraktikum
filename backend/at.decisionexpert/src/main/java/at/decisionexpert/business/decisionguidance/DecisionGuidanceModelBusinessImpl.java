@@ -27,6 +27,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             throw new DecisionGuidanceModelNotFoundException();
         }
 
-        DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(id, 1);
+        DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(id, 2);
 
         // When not found -> just return an empty DecisionGuidanceModel POJO
         if (decisionGuidanceModel == null) {
@@ -185,7 +186,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
+    public DecisionGuidanceModelPageableDto getUserDecisionGuidanceModels(Long idUser, Integer page, Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType ordering, DecisionGuidanceModelController.ModelState modelState) {
         Assert.notNull(idUser);
         Assert.notNull(page);
         Assert.notNull(size);
@@ -196,15 +197,43 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         // Determine if the unpublished are fetched as well
         // e.g. when user is owner or user is admin
         boolean withUnpublished = authenticatedUser == null ? false : authenticatedUser.getId().equals(idUser) || authenticatedUser.getAuthorities().contains(new UserAuthority("ROLE_ADMIN"));
+        //by default published, and unpublished(if the user has the needed premission) are returned
+        boolean published = true;
+        boolean unpublished = withUnpublished;
+        if (modelState == DecisionGuidanceModelController.ModelState.PUBLISH) {
+            published = true;
+            unpublished = false;
+        } else if (modelState == DecisionGuidanceModelController.ModelState.UNPUBLISHED) {
+            published = false;
+            unpublished = true;
+        }
 
         // If the authenticated User requests his own ArchProfiles => also load the unpublished ones!
         List<DecisionGuidanceModelDto> decisionGuidanceModels = null;
-        if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
-            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findAlphabetAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findAlphabetPublishedByUserId(idUser, page * size, size);
-        } else if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
-            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findRatingAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findRatingPublishedByUserId(idUser, page * size, size);
+        if (ordering == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
+            if (published && unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findAlphabetAllByUserId(idUser, page * size, size);
+            } else if (published && !unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findAlphabetPublishedByUserId(idUser, page * size, size);
+            } else {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findAlphabetUnpublishedByUserId(idUser, page * size, size);
+            }
+        } else if (ordering == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
+            if (published && unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findRatingAllByUserId(idUser, page * size, size);
+            } else if (published && !unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findRatingPublishedByUserId(idUser, page * size, size);
+            } else {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findRatingUnpublishedByUserId(idUser, page * size, size);
+            }
         } else { //default DecisionGuidanceModelType.NEWEST
-            decisionGuidanceModels = withUnpublished ? decisionGuidanceModelRepository.findNewestAllByUserId(idUser, page * size, size) : decisionGuidanceModelRepository.findNewestPublishedByUserId(idUser, page * size, size);
+            if (published && unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findNewestAllByUserId(idUser, page * size, size);
+            } else if (published && !unpublished) {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findNewestPublishedByUserId(idUser, page * size, size);
+            } else {
+                decisionGuidanceModels = decisionGuidanceModelRepository.findNewestUnpublishedByUserId(idUser, page * size, size);
+            }
         }
 
         if (decisionGuidanceModels == null || decisionGuidanceModels.size() == 0) {
@@ -212,9 +241,34 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
 
         // If the authenticated User requests his own ArchProfiles => also load the unpublished ones!
-        Long countUserProfiles = withUnpublished ? decisionGuidanceModelRepository.countAllDecisionGuidanceModelsOfUser(idUser) : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModelsOfUser(idUser);
+        Long countUserProfiles = decisionGuidanceModelRepository.countAllDecisionGuidanceModelsOfUser(idUser);
+        if (published && !unpublished) {
+            countUserProfiles = decisionGuidanceModelRepository.countPublishedDecisionGuidanceModelsOfUser(idUser);
+        } else if (!published && unpublished) {
+            countUserProfiles = decisionGuidanceModelRepository.countUnpublishedDecisionGuidanceModelsOfUser(idUser);
+        }
+
 
         return new DecisionGuidanceModelPageableDto(countUserProfiles, decisionGuidanceModels);
+    }
+
+    @Override
+    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(Long idDecisionGuidanceModel) {
+        Assert.notNull(idDecisionGuidanceModel);
+
+        List<DecisionGuidanceModelRelationDto> result = new ArrayList<>();
+
+        DecisionGuidanceModel dgm = decisionGuidanceModelRepository.findOne(idDecisionGuidanceModel, 2);
+
+        if (dgm == null) {
+            throw new DecisionGuidanceModelNotFoundException();
+        }
+
+        dgm.getPotentialRequirements().forEach(rq -> {
+            result.add(new DecisionGuidanceModelRelationDto(rq));
+        });
+
+        return result;
     }
 
     @Override

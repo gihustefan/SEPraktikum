@@ -7,6 +7,8 @@ import at.decisionexpert.service.decisionguidancemodel.designoption.DesignOption
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by stefanhaselboeck on 07.09.16.
  */

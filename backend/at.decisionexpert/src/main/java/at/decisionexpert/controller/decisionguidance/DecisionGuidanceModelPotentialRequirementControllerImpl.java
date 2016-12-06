@@ -7,6 +7,8 @@ import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by stefanhaselboeck on 17.08.16.
  */
@@ -18,6 +20,10 @@ public class DecisionGuidanceModelPotentialRequirementControllerImpl implements 
     @Autowired
     private DecisionGuidanceModelService decisionGuidanceModelService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@PathVariable Long idDecisionGuidanceModel) {
+        return decisionGuidanceModelService.getPotentialRequirements(idDecisionGuidanceModel);
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
