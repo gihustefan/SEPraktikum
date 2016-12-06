@@ -31,11 +31,16 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addRedirectViewController("/admin", "/admin/index.html");
     }
 
-    @Override
+    /*@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
-    }
+    }*/
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedMethods("PUT", "DELETE", "GET", "OPTIONS", "POST", "PATCH");
+    }
 
     /**
      * Configuring a Multiplart Resolver (needed for uploading files)
