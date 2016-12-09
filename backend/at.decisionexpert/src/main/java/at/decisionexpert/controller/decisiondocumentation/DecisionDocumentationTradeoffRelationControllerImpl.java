@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by stefanhaselboeck on 06.10.16.
- */
+
 @RestController
 @RequestMapping("api/ddm/{idDecisionDocumentationModel}/tradeoffs")
-@ResponseBody
+@ResponseBody */
 public class DecisionDocumentationTradeoffRelationControllerImpl implements DecisionDocumentationTradeoffRelationController {
 
 

@@ -20,11 +20,6 @@ public class DecisionGuidanceModelPotentialRequirementControllerImpl implements 
     @Autowired
     private DecisionGuidanceModelService decisionGuidanceModelService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@PathVariable Long idDecisionGuidanceModel) {
-        return decisionGuidanceModelService.getPotentialRequirements(idDecisionGuidanceModel);
-    }
-
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public DecisionGuidanceModelRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody DecisionGuidanceModelRelationDto requirement) {
@@ -32,14 +27,14 @@ public class DecisionGuidanceModelPotentialRequirementControllerImpl implements 
     }
 
     @Override
-    @RequestMapping(value = "/{idDecisionGuidanceModelRequirementRelationID}",method = RequestMethod.PATCH)
-    public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelRequirementRelationID, @RequestBody DecisionGuidanceModelRelationDto newValues) {
-        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRequirementRelationID, newValues, HasPotentialRequirement.class);
+    @RequestMapping(value = "/{idRequirementRelation}",method = RequestMethod.PATCH)
+    public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idRequirementRelation, @RequestBody DecisionGuidanceModelRelationDto newValues) {
+        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idRequirementRelation, newValues, HasPotentialRequirement.class);
     }
 
     @Override
-    @RequestMapping(value = "/{idDecisionGuidanceModelRequirementRelationID}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDecisionGuidanceModelRequirementRelationID) {
-        decisionGuidanceModelService.deleteRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRequirementRelationID, HasPotentialRequirement.class);
+    @RequestMapping(value = "/{idRequirementRelation}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idRequirementRelation) {
+        decisionGuidanceModelService.deleteRelationAttribute(idDecisionGuidanceModel, idRequirementRelation, HasPotentialRequirement.class);
     }
 }

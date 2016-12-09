@@ -61,9 +61,7 @@ public class BelongingBusinessImpl implements BelongingBusiness {
         Assert.notNull(idBelongingRelation);
 
         HasBelonging hasBelonging = hasBelongingRepository.findOne(idBelongingRelation);
-
-        if (hasBelonging == null)
-            return;
+        Assert.notNull(hasBelonging);
 
         hasBelongingRepository.delete(hasBelonging);
     }

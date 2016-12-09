@@ -1,9 +1,9 @@
 package at.decisionexpert.neo4jentity.node;
 
-import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasAddressedRequirement;
+import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.DDMHasAddressedRequirement;
 import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasEffectedDocumentationModel;
-import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasImplication;
-import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.HasRequiredComponent;
+import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.DDMHasImplication;
+import at.decisionexpert.neo4jentity.relationship.decisiondocumentation.DDMHasRequiredComponent;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
@@ -17,16 +17,16 @@ import java.util.Set;
 public class DesignDecision extends Node{
 
     @Relationship(type = "HAS_IMPLICATION", direction = Relationship.OUTGOING)
-    private Set<HasImplication> implications = new HashSet<>(0);
+    private Set<DDMHasImplication> implications = new HashSet<>(0);
 
     @Relationship(type = "HAS_ADDRESSEDREQUIREMENT", direction = Relationship.OUTGOING)
-    private Set<HasAddressedRequirement> addressedRequirements = new HashSet<>(0);
+    private Set<DDMHasAddressedRequirement> addressedRequirements = new HashSet<>(0);
 
     @Relationship(type = "HAS_EFFECTEDDOCUMENTATIONMODEL", direction = Relationship.OUTGOING)
     private Set<HasEffectedDocumentationModel> effectedDocumentationModels = new HashSet<>(0);
 
     @Relationship(type = "HAS_REQUIREDCOMPONENT", direction = Relationship.OUTGOING)
-    private Set<HasRequiredComponent> requiredComponents = new HashSet<>(0);
+    private Set<DDMHasRequiredComponent> requiredComponents = new HashSet<>(0);
 
     private String name;
 
@@ -46,19 +46,19 @@ public class DesignDecision extends Node{
         this.description = description;
     }
 
-    public Set<HasImplication> getImplications() {
+    public Set<DDMHasImplication> getImplications() {
         return implications;
     }
 
-    public void setImplications(Set<HasImplication> implications) {
+    public void setImplications(Set<DDMHasImplication> implications) {
         this.implications = implications;
     }
 
-    public Set<HasAddressedRequirement> getAddressedRequirements() {
+    public Set<DDMHasAddressedRequirement> getAddressedRequirements() {
         return addressedRequirements;
     }
 
-    public void setAddressedRequirements(Set<HasAddressedRequirement> addressedRequirements) {
+    public void setAddressedRequirements(Set<DDMHasAddressedRequirement> addressedRequirements) {
         this.addressedRequirements = addressedRequirements;
     }
 
@@ -70,11 +70,11 @@ public class DesignDecision extends Node{
         this.effectedDocumentationModels = effectedDocumentationModels;
     }
 
-    public Set<HasRequiredComponent> getRequiredComponents() {
+    public Set<DDMHasRequiredComponent> getRequiredComponents() {
         return requiredComponents;
     }
 
-    public void setRequiredComponents(Set<HasRequiredComponent> requiredComponents) {
+    public void setRequiredComponents(Set<DDMHasRequiredComponent> requiredComponents) {
         this.requiredComponents = requiredComponents;
     }
 

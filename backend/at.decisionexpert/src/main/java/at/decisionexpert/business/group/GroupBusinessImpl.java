@@ -47,9 +47,22 @@ public class GroupBusinessImpl implements GroupBusiness {
         User user = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Assert.notNull(user);
 
-        Group group = new Group(user);
-        if (group != null) {
+        Group group = new Group(user, groupValues.getName(), groupValues.getDescription());
+
+        return new GroupDto(groupRepository.save(group));
+    }
+
+    @Override
+    public GroupDto updateGroup(Long idGroup, GroupChangeRequestDto groupValues) {
+        Assert.notNull(idGroup);
+        Group group = groupRepository.findOne(idGroup);
+        Assert.notNull(group);
+
+        if (groupValues.getName() != null) {
             group.setName(groupValues.getName());
+        }
+
+        if (groupValues.getDescription() != null) {
             group.setDescription(groupValues.getDescription());
         }
 
@@ -128,9 +141,7 @@ public class GroupBusinessImpl implements GroupBusiness {
         Assert.notNull(idGroupRelation);
 
         HasMember hasMember = hasMemberRepository.findOne(idGroupRelation);
-
-        if (hasMember == null)
-            return;
+        Assert.notNull(hasMember);
 
         hasMemberRepository.delete(hasMember);
     }

@@ -14,9 +14,9 @@ public interface CommentService {
     @PreAuthorize("hasRole('ROLE_USER')")
     <A extends Node> CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull Class<A> toNodeType);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     CommentRelationDto updateExistingCommentRelationAttribute(@NotNull Long idModel, @NotNull Long idCommentRelation, @NotNull CommentRelationChangeRequestDto newValues);
 
-    @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#id, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     void deleteCommentRelationAttribute(@NotNull Long idModel, @NotNull Long idCommentRelation);
 }

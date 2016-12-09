@@ -11,9 +11,7 @@ import org.neo4j.ogm.annotation.Property;
 public abstract class ComponentAttributeRelationship<V extends CoreData> extends DateRelationship<Component, V> {
 
     @Property
-    private String description;
-    @Property
-    private String definition;
+    private String rationale;
     @Property
     private int ordering;
 
@@ -21,10 +19,9 @@ public abstract class ComponentAttributeRelationship<V extends CoreData> extends
         super(startNode, endNode);
     }
 
-    public ComponentAttributeRelationship(Component startNode, V endNode, String description, String definition, int ordering) {
+    public ComponentAttributeRelationship(Component startNode, V endNode, String rationale, int ordering) {
         super(startNode, endNode);
-        this.description = description;
-        this.definition = definition;
+        this.rationale = rationale;
         this.ordering = ordering;
     }
 
@@ -32,20 +29,12 @@ public abstract class ComponentAttributeRelationship<V extends CoreData> extends
         super();
     }
 
-    public String getDescription() {
-        return description;
+    public String getRationale() {
+        return rationale;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
+    public void setRationale(String rationale) {
+        this.rationale = rationale;
     }
 
     public int getOrdering() {

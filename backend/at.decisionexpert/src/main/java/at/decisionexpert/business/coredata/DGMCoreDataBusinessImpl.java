@@ -1,9 +1,7 @@
 package at.decisionexpert.business.coredata;
 
 import at.decisionexpert.business.user.UserBusiness;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelatedGuidanceModelsDto;
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.neo4jentity.node.DesignOption;
@@ -40,32 +38,6 @@ public class DGMCoreDataBusinessImpl implements DGMCoreDataBusiness{
 
         nodeAttributeRepository.findAllByTitle(titlePartial, coreDataClass).forEach(core -> {
             result.add(new DecisionGuidanceModelRelationDto(core));
-        });
-
-        return result;
-    }
-
-    @Override
-    public <T extends CoreData> List<DecisionGuidanceModelRelatedGuidanceModelsDto> getRelatedGuidanceModels(String titlePartial) {
-        Assert.notNull(titlePartial);
-
-        List<DecisionGuidanceModelRelatedGuidanceModelsDto> result = new ArrayList<>();
-
-        nodeAttributeRepository.findNodeByTitle(titlePartial, DecisionGuidanceModel.class).forEach(node -> {
-            result.add(new DecisionGuidanceModelRelatedGuidanceModelsDto(node));
-        });
-
-        return result;
-    }
-
-    @Override
-    public <T extends CoreData> List<DecisionGuidanceModelDesignOptionRelationDto> getDesignOptions(String titlePartial) {
-        Assert.notNull(titlePartial);
-
-        List<DecisionGuidanceModelDesignOptionRelationDto> result = new ArrayList<>();
-
-        nodeAttributeRepository.findNodeByTitle(titlePartial, DesignOption.class).forEach(node -> {
-            result.add(new DecisionGuidanceModelDesignOptionRelationDto(node));
         });
 
         return result;

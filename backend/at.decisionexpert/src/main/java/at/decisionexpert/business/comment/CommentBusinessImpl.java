@@ -94,5 +94,6 @@ public class CommentBusinessImpl implements CommentBusiness {
             return;
 
         hasCommentRepository.delete(hasComment);
+        commentRepository.delete(hasComment.getEndNode().getId());
     }
 }

@@ -1,6 +1,7 @@
 package at.decisionexpert.neo4jentity.node;
 
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 @NodeEntity
 public class Comment extends Node {

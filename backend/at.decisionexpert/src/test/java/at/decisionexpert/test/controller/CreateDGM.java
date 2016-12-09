@@ -3,11 +3,11 @@ package at.decisionexpert.test.controller;
 import at.decisionexpert.business.decisionguidance.DecisionGuidanceModelBusiness;
 import at.decisionexpert.config.MainConfig;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelChangeRequestDto;
-import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDesignOptionRelationDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
 import at.decisionexpert.neo4jentity.dto.user.UserCreationDto;
 import at.decisionexpert.neo4jentity.node.*;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
 import at.decisionexpert.service.decisionguidancemodel.DecisionGuidanceModelService;
 import at.decisionexpert.service.user.UserService;
@@ -80,8 +80,8 @@ public class CreateDGM {
         potentialRequirement.setName("NFR1: Service Discovery is programming language independent");
         decisionGuidanceModelService.createRelation((Long)response.getId(), potentialRequirement, HasPotentialRequirement.class, Requirement.class);
 
-        DecisionGuidanceModelDesignOptionRelationDto designOption = new DecisionGuidanceModelDesignOptionRelationDto();
+        DecisionGuidanceModelRelationDto designOption = new DecisionGuidanceModelRelationDto();
         designOption.setName("Server-side discovery");
-        decisionGuidanceModelService.createDesignOptionRelation((Long)response.getId(), designOption);
+        decisionGuidanceModelService.createRelation((Long)response.getId(), designOption, HasDesignOption.class, DesignOption.class);
     }
 }
