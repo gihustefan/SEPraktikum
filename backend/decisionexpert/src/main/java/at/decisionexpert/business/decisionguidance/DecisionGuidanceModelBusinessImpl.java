@@ -116,6 +116,8 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
         decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.getEndNode().setVotePositive(designOptionRepository.getVotePositiveForDO(hasDesignOption.getEndNode().getId())));
         decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.getEndNode().setVoteNegative(designOptionRepository.getVoteNegativeForDO(hasDesignOption.getEndNode().getId())));
+        //Add Design Option with all further connections, e.g., implications
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> hasDesignOption.setEndNode(designOptionRepository.findOne(hasDesignOption.getEndNode().getId(), 1)));
 
         return new DecisionGuidanceModelDto(decisionGuidanceModel);
     }

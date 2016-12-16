@@ -46,7 +46,7 @@ public class DecisionGuidanceModelDto {
 
     private List<DecisionGuidanceModelRelationDto> potentialRequirements;
 
-    private List<DecisionGuidanceModelRelationDto> designOptions;
+    private List<DecisionGuidanceModelRelationDesignOptionDto> designOptions;
 
     private List<DecisionGuidanceModelRelationDto> relatedGuidanceModels;
 
@@ -85,7 +85,11 @@ public class DecisionGuidanceModelDto {
         setPotentialRequirements(getNeo4JRelationDto(decisionGuidanceModel.getPotentialRequirements()));
 
         // Design Options
-        setDesignOptions(getNeo4JRelationDto(decisionGuidanceModel.getDesignOptions()));
+        List<DecisionGuidanceModelRelationDesignOptionDto> designOptions = new ArrayList<>();
+        decisionGuidanceModel.getDesignOptions().forEach(to -> {
+            designOptions.add(new DecisionGuidanceModelRelationDesignOptionDto(to));
+        });
+        setDesignOptions(designOptions);
 
         // Related Topics
         setRelatedGuidanceModels(getNeo4JRelationDto(decisionGuidanceModel.getRelatedGuidanceModels()));
@@ -208,11 +212,11 @@ public class DecisionGuidanceModelDto {
         this.potentialRequirements = potentialRequirements;
     }
 
-    public List<DecisionGuidanceModelRelationDto> getDesignOptions() {
+    public List<DecisionGuidanceModelRelationDesignOptionDto> getDesignOptions() {
         return designOptions;
     }
 
-    public void setDesignOptions(List<DecisionGuidanceModelRelationDto> designOptions) {
+    public void setDesignOptions(List<DecisionGuidanceModelRelationDesignOptionDto> designOptions) {
         this.designOptions = designOptions;
     }
 
