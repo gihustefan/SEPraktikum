@@ -79,9 +79,9 @@ public interface DecisionGuidanceModelService {
      * @return The updated and already persisted DecisionGuidanceModel Relation
      */
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
-    <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
+    <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
             @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues,
-            Class<T> clazz);
+            Class<T> clazz, Class<A> toNodeType);
 
     /**
      * Generic service for deleting an existing DecisionGuidanceModel Relationship (e.g.

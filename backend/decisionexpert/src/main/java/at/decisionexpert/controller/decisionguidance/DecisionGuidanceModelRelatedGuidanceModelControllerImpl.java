@@ -27,7 +27,7 @@ public class DecisionGuidanceModelRelatedGuidanceModelControllerImpl implements 
     @Override
     @RequestMapping(value = "/{idRelatedGuidanceModelRelation}",method = RequestMethod.PATCH)
     public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idRelatedGuidanceModelRelation, @RequestBody DecisionGuidanceModelRelationDto newValues) {
-        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idRelatedGuidanceModelRelation, newValues, HasRelatedGuidanceModels.class);
+        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idRelatedGuidanceModelRelation, newValues, HasRelatedGuidanceModels.class, DecisionGuidanceModel.class);
     }
 
     @Override

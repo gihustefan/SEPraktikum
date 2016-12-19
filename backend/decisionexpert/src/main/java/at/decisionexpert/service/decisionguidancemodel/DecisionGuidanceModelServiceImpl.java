@@ -66,9 +66,9 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
-            @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz) {
-        return decisionGuidanceModelBusiness.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRelation, newValues, clazz);
+    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
+            @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz, Class<A> toNodeType) {
+        return decisionGuidanceModelBusiness.updateExistingRelationAttribute(idDecisionGuidanceModel, idDecisionGuidanceModelRelation, newValues, clazz, toNodeType);
     }
 
     @Override

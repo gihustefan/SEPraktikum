@@ -5,6 +5,7 @@ import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
 import at.decisionexpert.exception.DecisionGuidanceModelNotPermittedException;
+import at.decisionexpert.exception.RelationToGuidanceModelAlreadyExists;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
@@ -289,6 +290,13 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         Assert.notNull(idDecisionGuidanceModel);
         Assert.notNull(relationClass);
 
+        //Check if RelatedGuidanceModelRelation already exists
+        if (relationClass.getName() == "at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels") {
+            Assert.notNull(attributeInfo.getIdAttribute());
+            if (dgmAttributeRelationshipRepository.findRelationByStartNodeEndNode(relationClass, idDecisionGuidanceModel, attributeInfo.getIdAttribute()).iterator().hasNext())
+                throw new RelationToGuidanceModelAlreadyExists();
+        }
+
         // Means that an existing relation was altered!
         // We have to delete this relation and create a new one!
         if (attributeInfo.getId() != null) {
@@ -343,10 +351,17 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz) {
+    public <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues, Class<T> clazz, Class<A> toNodeType) {
         // Fetch AP Relation from Graph DB
         T loadedRelation = dgmAttributeRelationshipRepository.findById(clazz, idDecisionGuidanceModelRelation);
         Assert.notNull(loadedRelation);
+
+        //Change Endnode
+        if (newValues.getIdAttribute() != null) {
+            if (nodeAttributeRepository.findById(newValues.getIdAttribute(), loadedRelation.getEndNode().getClass()) != null) {
+                loadedRelation.setEndNode(nodeAttributeRepository.findById(newValues.getIdAttribute(), toNodeType));
+            }
+        }
 
         // Setting the new value for the rationale
         if (newValues.getRationale() != null)
@@ -359,6 +374,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         // Setting the new value for the definition of the requirement
         if (newValues.getDescription() != null)
             loadedRelation.getEndNode().setDescription(newValues.getDescription());
+
 
         // Setting the ordering -> must change the ordering values of other AP
         // Relationships as well

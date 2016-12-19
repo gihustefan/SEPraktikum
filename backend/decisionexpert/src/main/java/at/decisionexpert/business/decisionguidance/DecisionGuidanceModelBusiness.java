@@ -55,11 +55,12 @@ public interface DecisionGuidanceModelBusiness {
      *                              stored in a model
      * @param clazz                 The neo4j class information of the Type T (needed, because no
      *                              class information at runtime)
+     * @param toNodeType            To which node type
      * @return The updated and already persisted DecisionGuidanceModel Relation
      */
-    <T extends DGMAttributeRelationship<? extends CoreData>> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
+    <T extends DGMAttributeRelationship<A>, A extends CoreData> DecisionGuidanceModelRelationDto updateExistingRelationAttribute(
             Long idDecisionGuidanceModel, Long idDecisionGuidanceModelRelation, DecisionGuidanceModelRelationDto newValues,
-            Class<T> clazz);
+            Class<T> clazz, Class<A> toNodeType);
 
     /**
      * Generic service for deleting an existing DecisionGuidanceModel Relationship (e.g.

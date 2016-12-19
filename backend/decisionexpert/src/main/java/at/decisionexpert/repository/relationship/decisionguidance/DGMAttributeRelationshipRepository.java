@@ -30,6 +30,9 @@ public interface DGMAttributeRelationshipRepository {
     <T extends DGMAttributeRelationship<? extends CoreData>> T findByOrdering(Class<T> clazz,
                                                                               Long idDecisionGuidanceModel, Integer ordering);
 
+    <T extends DGMAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz,
+                                                                              Long idStartNode, Long idEndNode);
+
     /**
      * Delete a Relation Attribute
      *

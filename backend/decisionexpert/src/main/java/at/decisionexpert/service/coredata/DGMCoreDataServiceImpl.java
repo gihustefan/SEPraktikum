@@ -6,8 +6,8 @@ import at.decisionexpert.neo4jentity.node.CoreData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ public class DGMCoreDataServiceImpl implements DGMCoreDataService {
     DGMCoreDataBusiness dgmCoreDataBusiness;
 
     @Override
-    public <T extends CoreData> List<DecisionGuidanceModelRelationDto> getCoreData(@Size(min = 3) String titlePartial, @NotNull Class<T> coreDataClass) {
+    public <T extends CoreData> List<DecisionGuidanceModelRelationDto> getCoreData(@Size(min = 3, message = "min 3 chars") String titlePartial, @NotNull Class<T> coreDataClass) {
         return dgmCoreDataBusiness.getCoreData(titlePartial, coreDataClass);
     }
 

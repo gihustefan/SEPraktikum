@@ -27,7 +27,7 @@ public class DecisionGuidanceModelDesignOptionControllerImpl implements Decision
     @Override
     @RequestMapping(value = "/{idDesignOptionRelation}",method = RequestMethod.PATCH)
     public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idDesignOptionRelation, @RequestBody DecisionGuidanceModelRelationDto newValues) {
-        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idDesignOptionRelation, newValues, HasDesignOption.class);
+        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idDesignOptionRelation, newValues, HasDesignOption.class, DesignOption.class);
     }
 
     @Override

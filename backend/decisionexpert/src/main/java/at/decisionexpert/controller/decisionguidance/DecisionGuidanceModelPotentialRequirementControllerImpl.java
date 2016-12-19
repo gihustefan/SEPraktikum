@@ -29,7 +29,7 @@ public class DecisionGuidanceModelPotentialRequirementControllerImpl implements 
     @Override
     @RequestMapping(value = "/{idRequirementRelation}",method = RequestMethod.PATCH)
     public DecisionGuidanceModelRelationDto updateAttributes(@PathVariable Long idDecisionGuidanceModel, @PathVariable Long idRequirementRelation, @RequestBody DecisionGuidanceModelRelationDto newValues) {
-        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idRequirementRelation, newValues, HasPotentialRequirement.class);
+        return decisionGuidanceModelService.updateExistingRelationAttribute(idDecisionGuidanceModel, idRequirementRelation, newValues, HasPotentialRequirement.class, Requirement.class);
     }
 
     @Override
