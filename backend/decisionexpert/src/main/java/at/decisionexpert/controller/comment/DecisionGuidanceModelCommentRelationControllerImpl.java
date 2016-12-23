@@ -20,12 +20,6 @@ public class DecisionGuidanceModelCommentRelationControllerImpl implements Comme
     private CommentService commentService;
 
     @Override
-    @RequestMapping(value = "/{idComment}", method = RequestMethod.GET)
-    public CommentDto getDecisionGuidanceModel(@PathVariable Long idComment) {
-        return commentService.getDecisionGuidanceModel(idComment);
-    }
-
-    @Override
     @RequestMapping(method = RequestMethod.POST)
     public CommentRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody CommentRelationChangeRequestDto commentValue) {
         return commentService.createCommentRelation(idDecisionGuidanceModel, commentValue, DecisionGuidanceModel.class);

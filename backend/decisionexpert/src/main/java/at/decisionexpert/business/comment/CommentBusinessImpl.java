@@ -45,12 +45,12 @@ public class CommentBusinessImpl implements CommentBusiness {
 
 
     @Override
-    public CommentDto getDecisionGuidanceModel(Long idComment) throws CommentNotFoundException {
+    public CommentDto getComment(Long idComment) throws CommentNotFoundException {
         if (idComment < 0) {
             throw new CommentNotFoundException();
         }
 
-        Comment comment = commentRepository.findOne(idComment, 1);
+        Comment comment = commentRepository.findOne(idComment, 4);
         if (comment == null) {
             throw new CommentNotFoundException();
         }
@@ -68,6 +68,8 @@ public class CommentBusinessImpl implements CommentBusiness {
             startModel = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
         } else if (toNodeType == DecisionDocumentationModel.class) {
             startModel = (A) decisionDocumentationRepository.findOne(idModel, 0);
+        } else if (toNodeType == Comment.class) {
+            startModel = (A) commentRepository.findOne(idModel, 0);
         }
         Assert.notNull(startModel);
 

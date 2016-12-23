@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public interface CommentService {
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    CommentDto getDecisionGuidanceModel(@NotNull Long idComment);
+    CommentDto getComment(@NotNull Long idComment);
 
     @PreAuthorize("hasRole('ROLE_USER')")
     <A extends Node> CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull Class<A> toNodeType);

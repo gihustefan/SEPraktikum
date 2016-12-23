@@ -9,8 +9,6 @@ import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
  */
 public interface CommentRelationController {
 
-    CommentDto getDecisionGuidanceModel(Long idComment);
-
     CommentRelationDto create(Long idModel, CommentRelationChangeRequestDto commentValue);
 
     CommentRelationDto updateAttributes(Long idModel, Long idCommentRelation, CommentRelationChangeRequestDto newCommentValue);

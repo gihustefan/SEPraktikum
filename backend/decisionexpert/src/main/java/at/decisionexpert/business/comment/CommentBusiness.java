@@ -11,7 +11,7 @@ import at.decisionexpert.neo4jentity.node.Node;
  */
 public interface CommentBusiness {
 
-    CommentDto getDecisionGuidanceModel(Long idComment) throws CommentNotFoundException;
+    CommentDto getComment(Long idComment) throws CommentNotFoundException;
 
     <A extends Node> CommentRelationDto createCommentRelation(Long idModel, CommentRelationChangeRequestDto commentValue, Class<A> toNodeType);
 

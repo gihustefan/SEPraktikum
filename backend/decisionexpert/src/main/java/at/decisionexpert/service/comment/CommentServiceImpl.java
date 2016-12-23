@@ -20,8 +20,8 @@ public class CommentServiceImpl implements CommentService{
     private CommentBusiness commentBusiness;
 
     @Override
-    public CommentDto getDecisionGuidanceModel(@NotNull Long idComment) {
-        return commentBusiness.getDecisionGuidanceModel(idComment);
+    public CommentDto getComment(@NotNull Long idComment) {
+        return commentBusiness.getComment(idComment);
     }
 
     @Override

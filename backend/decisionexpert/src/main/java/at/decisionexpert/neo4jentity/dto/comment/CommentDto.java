@@ -5,6 +5,8 @@ import at.decisionexpert.neo4jentity.node.Comment;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -12,17 +14,19 @@ import java.util.TimeZone;
  */
 public class CommentDto {
 
-    private Serializable id;
+    private Long id;
 
     private String text;
 
-    private Serializable ownerId;
+    private Long ownerId;
 
     private String ownerName;
 
     private LocalDateTime created;
 
     private LocalDateTime modified;
+
+    private List<CommentRelationDto> comments;
 
     public CommentDto() {
         super();
@@ -38,13 +42,20 @@ public class CommentDto {
                 TimeZone.getDefault().toZoneId()));
         setModified(LocalDateTime.ofInstant(Instant.ofEpochMilli(comment.getLastModified()),
                 TimeZone.getDefault().toZoneId()));
+
+        //Comments
+        List<CommentRelationDto> comments = new ArrayList<>();
+        comment.getComments().forEach(to -> {
+            comments.add(new CommentRelationDto(to));
+        });
+        setComments(comments);
     }
 
-    public Serializable getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Serializable id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +67,11 @@ public class CommentDto {
         this.text = text;
     }
 
-    public Serializable getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Serializable ownerId) {
+    public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -86,5 +97,13 @@ public class CommentDto {
 
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
+    }
+
+    public List<CommentRelationDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentRelationDto> comments) {
+        this.comments = comments;
     }
 }
