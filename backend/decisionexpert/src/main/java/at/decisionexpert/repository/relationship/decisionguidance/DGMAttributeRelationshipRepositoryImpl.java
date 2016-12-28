@@ -39,7 +39,7 @@ public class DGMAttributeRelationshipRepositoryImpl implements DGMAttributeRelat
 
     @Override
     public <T extends DGMAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz, Long idStartNode, Long idEndNode) {
-        String query = "MATCH (start:DecisionGuidanceModel)-[rel:HAS_RELATEDGUIDANCEMODEL]->(end:DecisionGuidanceModel) WHERE id(start) = 334 AND id(end) = 339 RETURN rel";
+        String query = "MATCH (start:DecisionGuidanceModel)-[rel:HAS_RELATEDGUIDANCEMODEL]->(end:DecisionGuidanceModel) WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel";
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idStartNode", idStartNode);

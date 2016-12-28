@@ -359,6 +359,10 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         //Change Endnode
         if (newValues.getIdAttribute() != null) {
             if (nodeAttributeRepository.findById(newValues.getIdAttribute(), loadedRelation.getEndNode().getClass()) != null) {
+                if (dgmAttributeRelationshipRepository.findRelationByStartNodeEndNode(clazz, idDecisionGuidanceModel, newValues.getIdAttribute()).iterator().hasNext())
+                    throw new RelationToGuidanceModelAlreadyExists();
+                dgmAttributeRelationshipRepository.delete(loadedRelation);
+                loadedRelation.setId(null);
                 loadedRelation.setEndNode(nodeAttributeRepository.findById(newValues.getIdAttribute(), toNodeType));
             }
         }

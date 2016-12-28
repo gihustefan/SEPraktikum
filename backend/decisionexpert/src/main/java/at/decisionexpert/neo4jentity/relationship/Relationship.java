@@ -42,6 +42,9 @@ public abstract class Relationship <K extends Node, V extends Node> {
 	public Long getId() {
 		return id;
 	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		ObjectMapper mapper = new ObjectMapper();
