@@ -30,8 +30,8 @@ public class DesignOptionRelationDto {
         id = doRelationship.getId();
         name = doRelationship.getEndNode().getName();
         idAttribute = doRelationship.getEndNode().getId();
-        description = doRelationship.getEndNode().getDescription();
-        rationale = doRelationship.getRationale();
+        description = doRelationship.getEndNode().getDescription() != null ? doRelationship.getEndNode().getDescription() : "";
+        rationale = doRelationship.getRationale() != null ? doRelationship.getRationale() : "";
         ordering = doRelationship.getOrdering();
     }
 

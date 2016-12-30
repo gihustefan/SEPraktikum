@@ -43,8 +43,8 @@ public class DecisionGuidanceModelRelationDesignOptionDto {
         setId(hasDesignOption.getId());
         setName(hasDesignOption.getEndNode().getName());
         setIdAttribute(hasDesignOption.getEndNode().getId());
-        setDescription(hasDesignOption.getEndNode().getDescription());
-        setRationale(hasDesignOption.getRationale());
+        setDescription(hasDesignOption.getEndNode().getDescription() != null ? hasDesignOption.getEndNode().getDescription() : "");
+        setRationale(hasDesignOption.getRationale()); // != null ? hasDesignOption.getRationale() : "");
         setOrdering(hasDesignOption.getOrdering());
         setImplications(getNeo4JRelationDto(hasDesignOption.getEndNode().getImplications()));
         setAddressedRequirements(getNeo4JRelationDto(hasDesignOption.getEndNode().getAddressedRequirements()));

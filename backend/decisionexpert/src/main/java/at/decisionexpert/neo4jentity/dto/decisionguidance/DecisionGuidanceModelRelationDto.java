@@ -30,8 +30,8 @@ public class DecisionGuidanceModelRelationDto {
         id = dgmRelationship.getId();
         name = dgmRelationship.getEndNode().getName();
         idAttribute = dgmRelationship.getEndNode().getId();
-        description = dgmRelationship.getEndNode().getDescription();
-        rationale = dgmRelationship.getRationale();
+        description = dgmRelationship.getEndNode().getDescription() != null ? dgmRelationship.getEndNode().getDescription() : "";
+        rationale = dgmRelationship.getRationale() != null ? dgmRelationship.getRationale() : "";
         ordering = dgmRelationship.getOrdering();
     }
 
