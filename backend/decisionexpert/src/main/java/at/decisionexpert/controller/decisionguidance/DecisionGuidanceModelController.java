@@ -44,7 +44,7 @@ public interface DecisionGuidanceModelController {
      * @param type What type (e.g. newest, featured, active, ...)
      * @return A List of DecisionGuidanceModelDtos restricted on the given parameters
      */
-    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, DecisionGuidanceModelType type);
+    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, DecisionGuidanceModelType type, String searchText, Long groupId);
 
     /**
      * Deleting an DecisionGuidanceModel

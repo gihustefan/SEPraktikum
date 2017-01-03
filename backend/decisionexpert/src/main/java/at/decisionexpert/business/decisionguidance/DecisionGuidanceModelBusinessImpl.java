@@ -167,21 +167,25 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     }
 
     @Override
-    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type) {
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, boolean withUnpublished, DecisionGuidanceModelController.DecisionGuidanceModelType type, String searchText, Long groupId) {
         Assert.notNull(page);
         Assert.notNull(size);
 
-        int skip = page * size;
+        if (searchText == null) {
+            searchText = "";
+        } else {
+            searchText = "(?i).*" + searchText + ".*";
+        }
 
-        // Fetching the Objects
+        int skip = page * size;
 
         List<DecisionGuidanceModelDto> decisionGuidanceModelPage = null;
         if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findAlphabetDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findAlphabetPublishedDecisionGuidanceModels(skip, size);
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findAlphabetDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findAlphabetPublishedDecisionGuidanceModels(skip, size, searchText);
         } else if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findRatingDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findRatingPublishedDecisionGuidanceModels(skip, size);
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findRatingDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findRatingPublishedDecisionGuidanceModels(skip, size, searchText);
         } else { //default DecisionGuidanceModelType.NEWEST
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findNewestDecisionGuidanceModels(skip, size) : decisionGuidanceModelRepository.findNewestPublishedDecisionGuidanceModels(skip, size);
+            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findNewestDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findNewestPublishedDecisionGuidanceModels(skip, size, searchText);
         }
 
         if (decisionGuidanceModelPage == null || decisionGuidanceModelPage.size() == 0) {
@@ -189,7 +193,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         }
 
         // Fetching total Count
-        Long totalCount = withUnpublished ? decisionGuidanceModelRepository.countDecisionGuidanceModels() : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModels();
+        Long totalCount = withUnpublished ? decisionGuidanceModelRepository.countDecisionGuidanceModels(searchText) : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModels(searchText);
 
         return new DecisionGuidanceModelPageableDto(totalCount, decisionGuidanceModelPage);
     }

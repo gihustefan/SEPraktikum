@@ -26,7 +26,7 @@ public interface DecisionGuidanceModelService {
      * @param size how many items per page
      * @return The list of the newest DecisionGuidanceModels
      */
-    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type);
+    DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@NotNull Integer page, @NotNull Integer size, DecisionGuidanceModelController.DecisionGuidanceModelType type, String searchText, Long groupId);
 
     /**
      * Getting the DecisionGuidanceModels of a specific user

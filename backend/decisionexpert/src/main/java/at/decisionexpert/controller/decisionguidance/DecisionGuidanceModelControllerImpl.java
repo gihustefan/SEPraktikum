@@ -38,8 +38,8 @@ public class DecisionGuidanceModelControllerImpl implements DecisionGuidanceMode
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) DecisionGuidanceModelType type) {
-        return decisionGuidanceModelService.getDecisionGuidanceModels(page, size, type);
+    public DecisionGuidanceModelPageableDto getDecisionGuidanceModels(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) DecisionGuidanceModelType type, @RequestParam(required = false) String searchText, @RequestParam(required = false) Long groupId) {
+        return decisionGuidanceModelService.getDecisionGuidanceModels(page, size, type, searchText, groupId);
     }
 
     @Override
