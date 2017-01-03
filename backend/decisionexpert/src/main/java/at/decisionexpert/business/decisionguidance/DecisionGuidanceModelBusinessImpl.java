@@ -32,10 +32,10 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by stefanhaselboeck on 12.08.16.
@@ -171,31 +171,94 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         Assert.notNull(page);
         Assert.notNull(size);
 
+        StringBuilder builder = new StringBuilder();
+        HashMap<String, Object> parameters = new HashMap<String, Object>();
+
+        builder.append("MATCH (user:User)<-[:HAS_CREATOR]-(dgm:DecisionGuidanceModel)");
+        //groupId
+        if (groupId != null) {
+            builder.append("-[:HAS_BELONGING]->(g:Group) where id(g) = {groupId} AND ");
+            parameters.put("groupId", groupId);
+        } else {
+            builder.append(" where ");
+        }
+        //withUnpublished
+        if (!withUnpublished)
+            builder.append("dgm.published = true AND ");
+        //searchText
         if (searchText == null) {
             searchText = "(?i).*.*";
         } else {
             searchText = "(?i).*" + searchText + ".*";
         }
-
-        int skip = page * size;
-
-        List<DecisionGuidanceModelDto> decisionGuidanceModelPage = null;
+        builder.append("dgm.name =~ {searchText} ");
+        parameters.put("searchText", searchText);
+        //voting
+        builder.append("optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true ");
+        builder.append("optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false ");
+        builder.append("WITH dgm, user, count(v) as votePositive, count(w) as voteNegative ");
+        //order
         if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findAlphabetDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findAlphabetPublishedDecisionGuidanceModels(skip, size, searchText);
+            builder.append("ORDER BY dgm.name ASC, dgm.creationDate DESC ");
         } else if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.RATING) {
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findRatingDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findRatingPublishedDecisionGuidanceModels(skip, size, searchText);
+            builder.append("ORDER BY votePositive DESC, dgm.creationDate DESC ");
         } else { //default DecisionGuidanceModelType.NEWEST
-            decisionGuidanceModelPage = withUnpublished ? decisionGuidanceModelRepository.findNewestDecisionGuidanceModels(skip, size, searchText) : decisionGuidanceModelRepository.findNewestPublishedDecisionGuidanceModels(skip, size, searchText);
+            builder.append("ORDER BY dgm.creationDate DESC ");
         }
 
-        if (decisionGuidanceModelPage == null || decisionGuidanceModelPage.size() == 0) {
-            return new DecisionGuidanceModelPageableDto();
+        int skip = page * size;
+        builder.append("SKIP {skip} LIMIT {size} RETURN id(dgm) as id, dgm.published as published, dgm.name as name, dgm.description as description, dgm.creationDate as created, dgm.lastModified as modified, user.originalUsername as ownerName, votePositive, voteNegative");
+        parameters.put("skip", skip);
+        parameters.put("size", size);
+
+        Iterator<Map<String, Object>> it = neo4jOperations.query(builder.toString(), parameters, true).iterator();
+        ArrayList<DecisionGuidanceModelDto> decisionGuidanceModelDtos = new ArrayList<DecisionGuidanceModelDto>();
+
+        while(it.hasNext()){
+            Map<String, Object> decisionGuidanceModelDto = it.next();
+            DecisionGuidanceModelDto dto = new DecisionGuidanceModelDto();
+            dto.setId(Long.parseLong(decisionGuidanceModelDto.get("id").toString()));
+            dto.setPublished((Boolean)decisionGuidanceModelDto.get("published"));
+            dto.setName((String)decisionGuidanceModelDto.get("name"));
+            dto.setDescription((String)decisionGuidanceModelDto.get("description"));
+            dto.setCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli((long)decisionGuidanceModelDto.get("created")), TimeZone.getDefault().toZoneId()));
+            dto.setModified(LocalDateTime.ofInstant(Instant.ofEpochMilli((long)decisionGuidanceModelDto.get("modified")), TimeZone.getDefault().toZoneId()));
+            dto.setOwnerName((String)decisionGuidanceModelDto.get("ownerName"));
+            dto.setVotePositive((int)decisionGuidanceModelDto.get("votePositive"));
+            dto.setVoteNegative((int)decisionGuidanceModelDto.get("voteNegative"));
+            decisionGuidanceModelDtos.add(dto);
         }
 
         // Fetching total Count
-        Long totalCount = withUnpublished ? decisionGuidanceModelRepository.countDecisionGuidanceModels(searchText) : decisionGuidanceModelRepository.countPublishedDecisionGuidanceModels(searchText);
+        StringBuilder builderCount = new StringBuilder();
+        HashMap<String, Object> parametersCount = new HashMap<String, Object>();
+        builderCount.append("MATCH ()<-[:HAS_CREATOR]-(dgm:DecisionGuidanceModel) ");
 
-        return new DecisionGuidanceModelPageableDto(totalCount, decisionGuidanceModelPage);
+        //groupId
+        if (groupId != null) {
+            builderCount.append("-[:HAS_BELONGING]->(g:Group) where id(g) = {groupId} AND ");
+            parametersCount.put("groupId", groupId);
+        } else {
+            builderCount.append(" WHERE ");
+        }
+
+        //searchText
+        builderCount.append("dgm.name =~ {searchText} ");
+        parametersCount.put("searchText", searchText);
+
+        //withUnpublished
+        if (!withUnpublished)
+            builderCount.append("AND dgm.published = true ");
+
+        builderCount.append("RETURN count(dgm) as countDGM");
+        Iterator<Map<String, Object>> itCount = neo4jOperations.query(builderCount.toString(), parametersCount, true).iterator();
+        Long totalCount = Long.valueOf(0);
+        if (itCount.hasNext()) {
+            Map<String, Object> count = itCount.next();
+            totalCount = Long.parseLong(count.get("countDGM").toString());
+        }
+
+        return new DecisionGuidanceModelPageableDto(totalCount, decisionGuidanceModelDtos);
     }
 
     @Override
