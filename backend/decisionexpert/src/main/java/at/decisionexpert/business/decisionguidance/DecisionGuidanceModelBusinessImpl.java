@@ -172,7 +172,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         Assert.notNull(size);
 
         if (searchText == null) {
-            searchText = "";
+            searchText = "(?i).*.*";
         } else {
             searchText = "(?i).*" + searchText + ".*";
         }
