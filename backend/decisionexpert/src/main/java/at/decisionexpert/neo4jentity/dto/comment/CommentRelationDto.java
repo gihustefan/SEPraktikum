@@ -1,6 +1,7 @@
 package at.decisionexpert.neo4jentity.dto.comment;
 
 import at.decisionexpert.neo4jentity.node.Node;
+import at.decisionexpert.neo4jentity.node.User;
 import at.decisionexpert.neo4jentity.relationship.HasComment;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -19,6 +20,8 @@ public class CommentRelationDto<V extends Node> {
 
     private Long idAttribute;
 
+    private User creator;
+
     private List<CommentRelationDto> comments;
 
     public CommentRelationDto() {
@@ -29,6 +32,7 @@ public class CommentRelationDto<V extends Node> {
         id = hasComment.getId();
         text = hasComment.getEndNode().getText();
         idAttribute = hasComment.getEndNode().getId();
+        creator = hasComment.getEndNode().getCreator();
 
         //Comments
         List<CommentRelationDto> comments = new ArrayList<>();
@@ -68,5 +72,13 @@ public class CommentRelationDto<V extends Node> {
 
     public void setComments(List<CommentRelationDto> comments) {
         this.comments = comments;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 }
