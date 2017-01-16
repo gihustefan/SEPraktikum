@@ -180,7 +180,7 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
             builder.append("-[:HAS_BELONGING]->(g:Group) where id(g) = {groupId} AND ");
             parameters.put("groupId", groupId);
         } else {
-            builder.append(" where ");
+            builder.append(" where not ((dgm)-[:HAS_BELONGING]->(:Group)) AND ");
         }
         //withUnpublished
         if (!withUnpublished)
