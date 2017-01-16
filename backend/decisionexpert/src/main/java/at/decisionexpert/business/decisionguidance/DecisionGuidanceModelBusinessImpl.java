@@ -195,8 +195,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
         parameters.put("searchText", searchText);
         //voting
         builder.append("optional Match (dgm)-[v:HAS_VOTE]->(:User) where v.vote=true ");
+        builder.append("WITH dgm, user, count(v) as votePositive ");
         builder.append("optional Match (dgm)-[w:HAS_VOTE]->(:User) where w.vote=false ");
-        builder.append("WITH dgm, user, count(v) as votePositive, count(w) as voteNegative ");
+        builder.append("WITH dgm, user, votePositive, count(w) as voteNegative ");
         //order
         if (type == DecisionGuidanceModelController.DecisionGuidanceModelType.ALPHABET) {
             builder.append("ORDER BY dgm.name ASC, dgm.creationDate DESC ");
