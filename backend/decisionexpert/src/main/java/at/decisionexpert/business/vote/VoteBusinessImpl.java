@@ -1,6 +1,7 @@
 package at.decisionexpert.business.vote;
 
 import at.decisionexpert.business.user.UserBusiness;
+import at.decisionexpert.exception.UserHasAlreadyVotedException;
 import at.decisionexpert.neo4jentity.dto.vote.VoteRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.vote.VoteRelationDto;
 import at.decisionexpert.neo4jentity.node.*;
@@ -8,6 +9,7 @@ import at.decisionexpert.neo4jentity.relationship.HasVote;
 import at.decisionexpert.repository.node.decisiondocumentation.DecisionDocumentationRepository;
 import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
 import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionRepository;
+import at.decisionexpert.repository.relationship.decisionguidance.DGMAttributeRelationshipRepository;
 import at.decisionexpert.repository.relationship.vote.HasVoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +37,7 @@ public class VoteBusinessImpl implements VoteBusiness {
     @Autowired
     private UserBusiness userBusiness;
 
+
     @Override
     public <A extends Node> VoteRelationDto createVoteRelation(Long idModel, VoteRelationChangeRequestDto voteValue, Class<A> toNodeType) {
         Assert.notNull(idModel);
@@ -46,6 +49,8 @@ public class VoteBusinessImpl implements VoteBusiness {
         A startModel = null;
         if (toNodeType == DecisionGuidanceModel.class) {
             startModel = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
+            if (hasVoteRepository.dgmVoteAlreadyExists(idModel, user.getId()) > 0)
+                throw new UserHasAlreadyVotedException();
         } else if (toNodeType == DesignOption.class) {
             startModel = (A) designOptionRepository.findOne(idModel, 0);
         } else if (toNodeType == DecisionDocumentationModel.class) {
