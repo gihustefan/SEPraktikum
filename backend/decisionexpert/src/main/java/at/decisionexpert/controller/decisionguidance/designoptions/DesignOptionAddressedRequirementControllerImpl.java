@@ -27,7 +27,7 @@ public class DesignOptionAddressedRequirementControllerImpl implements DesignOpt
     @Override
     @RequestMapping(value = "/{idDesginOptionRequirement}",method = RequestMethod.PATCH)
     public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionRequirement, @RequestBody DesignOptionRelationDto newValues) {
-        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionRequirement, newValues, HasAddressedRequirement.class);
+        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionRequirement, newValues, HasAddressedRequirement.class, Requirement.class);
     }
 
     @Override

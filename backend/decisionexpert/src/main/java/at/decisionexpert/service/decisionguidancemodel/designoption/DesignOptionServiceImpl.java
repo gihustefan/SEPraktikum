@@ -46,8 +46,8 @@ public class DesignOptionServiceImpl implements DesignOptionService {
     }
 
     @Override
-    public <T extends DOAttributeRelationship<? extends CoreData>> DesignOptionRelationDto updateExistingRelationAttribute(@NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, DesignOptionRelationDto newValues, Class<T> clazz) {
-        return designOptionBusiness.updateExistingRelationAttribute(idDesignOption, idDesignOptionRelation, newValues, clazz);
+    public <T extends DOAttributeRelationship<A>, A extends CoreData> DesignOptionRelationDto updateExistingRelationAttribute(@NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, DesignOptionRelationDto newValues, Class<T> clazz, Class<A> toNodeType) {
+        return designOptionBusiness.updateExistingRelationAttribute(idDesignOption, idDesignOptionRelation, newValues, clazz, toNodeType);
     }
 
     @Override

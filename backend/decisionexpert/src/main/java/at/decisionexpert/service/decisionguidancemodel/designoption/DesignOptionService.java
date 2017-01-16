@@ -54,9 +54,9 @@ public interface DesignOptionService {
      * @return The updated and already persisted DesignOption Relation
      */
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDesignOption, 'at.decisionexpert.neo4jentity.node.DesignOption', 'OWNER')")
-    <T extends DOAttributeRelationship<? extends CoreData>> DesignOptionRelationDto updateExistingRelationAttribute(
+    <T extends DOAttributeRelationship<A>, A extends CoreData> DesignOptionRelationDto updateExistingRelationAttribute(
             @NotNull Long idDesignOption, @NotNull Long idDesignOptionRelation, DesignOptionRelationDto newValues,
-            Class<T> clazz);
+            Class<T> clazz, Class<A> toNodeType);
 
     /**
      * Generic service for deleting an existing DesignOption Relationship (e.g.

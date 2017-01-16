@@ -29,6 +29,8 @@ public interface DOAttributeRelationshipRepository {
     <T extends DOAttributeRelationship<? extends CoreData>> T findByOrdering(Class<T> clazz,
                                                                              Long idDesignOption, Integer ordering);
 
+    <T extends DOAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz, Long idStartNode, Long idEndNode);
+
     /**
      * Delete a Relation Attribute
      *

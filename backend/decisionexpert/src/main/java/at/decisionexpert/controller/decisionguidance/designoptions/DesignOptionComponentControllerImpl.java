@@ -27,7 +27,7 @@ public class DesignOptionComponentControllerImpl implements DesignOptionRelation
     @Override
     @RequestMapping(value = "/{idDesginOptionComponent}",method = RequestMethod.PATCH)
     public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesignOption, @PathVariable Long idDesginOptionComponent, @RequestBody DesignOptionRelationDto newValues) {
-        return designOptionService.updateExistingRelationAttribute(idDesignOption, idDesginOptionComponent, newValues, HasRequiredComponent.class);
+        return designOptionService.updateExistingRelationAttribute(idDesignOption, idDesginOptionComponent, newValues, HasRequiredComponent.class, Component.class);
     }
 
     @Override

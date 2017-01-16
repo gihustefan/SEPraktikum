@@ -2,7 +2,7 @@ package at.decisionexpert.neo4jentity.node;
 
 import at.decisionexpert.neo4jentity.relationship.HasVote;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAddressedRequirement;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasEffectedGuidanceModels;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAffectedGuidanceModels;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasImplication;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasRequiredComponent;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -26,7 +26,7 @@ public class DesignOption extends CoreData {
     private Set<HasAddressedRequirement> addressedRequirements = new HashSet<>(0);
 
     @Relationship(type = "HAS_EFFECTEDGUIDANCEMODEL", direction = Relationship.OUTGOING)
-    private Set<HasEffectedGuidanceModels> effectedGuidanceModels = new HashSet<>(0);
+    private Set<HasAffectedGuidanceModels> effectedGuidanceModels = new HashSet<>(0);
 
     @Relationship(type = "HAS_REQUIREDCOMPONENT", direction = Relationship.OUTGOING)
     private Set<HasRequiredComponent> requiredComponents = new HashSet<>(0);
@@ -78,11 +78,11 @@ public class DesignOption extends CoreData {
         this.addressedRequirements = addressedRequirements;
     }
 
-    public Set<HasEffectedGuidanceModels> getEffectedGuidanceModels() {
+    public Set<HasAffectedGuidanceModels> getEffectedGuidanceModels() {
         return effectedGuidanceModels;
     }
 
-    public void setEffectedGuidanceModels(Set<HasEffectedGuidanceModels> effectedGuidanceModels) {
+    public void setEffectedGuidanceModels(Set<HasAffectedGuidanceModels> effectedGuidanceModels) {
         this.effectedGuidanceModels = effectedGuidanceModels;
     }
 

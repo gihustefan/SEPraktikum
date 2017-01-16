@@ -7,18 +7,18 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 /**
  * Created by stefanhaselboeck on 12.08.16.
  */
-@RelationshipEntity(type="HAS_EFFECTEDGUIDANCEMODEL")
-public class HasEffectedGuidanceModels extends DOAttributeRelationship<DecisionGuidanceModel> {
+@RelationshipEntity(type="HAS_AFFECTEDGUIDANCEMODEL")
+public class HasAffectedGuidanceModels extends DOAttributeRelationship<DecisionGuidanceModel> {
 
-    public HasEffectedGuidanceModels(DesignOption startNode, DecisionGuidanceModel endNode, String rationale, int ordering) {
+    public HasAffectedGuidanceModels(DesignOption startNode, DecisionGuidanceModel endNode, String rationale, int ordering) {
         super(startNode, endNode, rationale, ordering);
     }
 
-    public HasEffectedGuidanceModels(DesignOption startNode, DecisionGuidanceModel endNode) {
+    public HasAffectedGuidanceModels(DesignOption startNode, DecisionGuidanceModel endNode) {
         super(startNode, endNode);
     }
 
-    public HasEffectedGuidanceModels() {
+    public HasAffectedGuidanceModels() {
         super();
     }
 }

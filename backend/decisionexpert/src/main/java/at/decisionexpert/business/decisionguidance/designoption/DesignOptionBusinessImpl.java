@@ -3,6 +3,7 @@ package at.decisionexpert.business.decisionguidance.designoption;
 import at.decisionexpert.business.coredata.CreateCoreDataImpl;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.exception.DesignOptionNotFoundException;
+import at.decisionexpert.exception.RelationToDesignOptionAlreadyExists;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionRelationDto;
@@ -13,7 +14,7 @@ import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.decisionguidance.DecisionGuidanceModelRepository;
 import at.decisionexpert.repository.node.decisionguidance.designoption.DesignOptionRepository;
 import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOAttributeRelationshipRepository;
-import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOHasEffectedGuidanceModelRepository;
+import at.decisionexpert.repository.relationship.decisionguidance.designoption.DOHasAffectedGuidanceModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -39,7 +40,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness {
     private DOAttributeRelationshipRepository doAttributeRelationshipRepository;
 
     @Autowired
-    private DOHasEffectedGuidanceModelRepository doHasEffectedGuidanceModelRepository;
+    private DOHasAffectedGuidanceModelRepository doHasEffectedGuidanceModelRepository;
 
     @Autowired
     private NodeAttributeRepository nodeAttributeRepository;
@@ -169,10 +170,22 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness {
     }
 
     @Override
-    public <T extends DOAttributeRelationship<? extends CoreData>> DesignOptionRelationDto updateExistingRelationAttribute(Long idDesignOption, Long idDesignOptionRelation, DesignOptionRelationDto newValues, Class<T> clazz) {
+    public <T extends DOAttributeRelationship<A>, A extends CoreData> DesignOptionRelationDto updateExistingRelationAttribute(Long idDesignOption, Long idDesignOptionRelation, DesignOptionRelationDto newValues, Class<T> clazz, Class<A> toNodeType) {
         // Fetch AP Relation from Graph DB
         T loadedRelation = doAttributeRelationshipRepository.findById(clazz, idDesignOptionRelation);
         Assert.notNull(loadedRelation);
+
+        //Change Endnode
+        if (newValues.getIdAttribute() != null) {
+            //Does the endnode exist?
+            if (nodeAttributeRepository.findById(newValues.getIdAttribute(), loadedRelation.getEndNode().getClass()) != null) {
+                if (doAttributeRelationshipRepository.findRelationByStartNodeEndNode(clazz, idDesignOption, newValues.getIdAttribute()).iterator().hasNext())
+                    throw new RelationToDesignOptionAlreadyExists();
+                doAttributeRelationshipRepository.delete(loadedRelation);
+                loadedRelation.setId(null);
+                loadedRelation.setEndNode(nodeAttributeRepository.findById(newValues.getIdAttribute(), toNodeType));
+            }
+        }
 
         // Setting the new value for the rationale
         if (newValues.getRationale() != null)

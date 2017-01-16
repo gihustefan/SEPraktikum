@@ -47,9 +47,9 @@ public interface DesignOptionBusiness {
      *                              class information at runtime)
      * @return The updated and already persisted DesignOption Relation
      */
-    <T extends DOAttributeRelationship<? extends CoreData>> DesignOptionRelationDto updateExistingRelationAttribute(
+    <T extends DOAttributeRelationship<A>, A extends CoreData> DesignOptionRelationDto updateExistingRelationAttribute(
             Long idDesignOption, Long idDesignOptionRelation, DesignOptionRelationDto newValues,
-            Class<T> clazz);
+            Class<T> clazz, Class<A> toNodeType);
 
     /**
      * Generic service for deleting an existing DesignOption Relationship (e.g.

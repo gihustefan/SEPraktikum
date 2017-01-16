@@ -38,6 +38,17 @@ public class DOAttributeRelationshipRepositoryImpl implements DOAttributeRelatio
     }
 
     @Override
+    public <T extends DOAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz, Long idStartNode, Long idEndNode) {
+        String query = "MATCH (start:DesignOption)-[rel:HAS_AFFECTEDGUIDANCEMODEL]->(end:DecisionGuidanceModel) WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel";
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("idStartNode", idStartNode);
+        parameters.put("idEndNode", idEndNode);
+
+        return neo4jOperations.queryForObjects(clazz, query, parameters);
+    }
+
+    @Override
     public <T extends DOAttributeRelationship<? extends CoreData>> void delete(T relation) {
         neo4jOperations.delete(relation);
     }

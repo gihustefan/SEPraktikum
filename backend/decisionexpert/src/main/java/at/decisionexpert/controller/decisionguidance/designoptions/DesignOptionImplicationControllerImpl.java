@@ -27,7 +27,7 @@ public class DesignOptionImplicationControllerImpl implements DesignOptionRelati
     @Override
     @RequestMapping(value = "/{idDesginOptionImplication}",method = RequestMethod.PATCH)
     public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionImplication, @RequestBody DesignOptionRelationDto newValues) {
-        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionImplication, newValues, HasImplication.class);
+        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionImplication, newValues, HasImplication.class, Implication.class);
     }
 
     @Override
