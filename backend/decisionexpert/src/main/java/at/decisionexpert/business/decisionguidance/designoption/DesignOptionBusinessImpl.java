@@ -40,7 +40,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness {
     private DOAttributeRelationshipRepository doAttributeRelationshipRepository;
 
     @Autowired
-    private DOHasAffectedGuidanceModelRepository doHasEffectedGuidanceModelRepository;
+    private DOHasAffectedGuidanceModelRepository doHasAffectedGuidanceModelRepository;
 
     @Autowired
     private NodeAttributeRepository nodeAttributeRepository;

@@ -25,13 +25,13 @@ public class DecisionDocumentationModelEffectedDocumentationModelDto {
     public DecisionDocumentationModelEffectedDocumentationModelDto() {
     }
 
-    public DecisionDocumentationModelEffectedDocumentationModelDto(HasEffectedDocumentationModel hasEffectedGuidanceModels) {
-        setId(hasEffectedGuidanceModels.getId());
-        setTitle(hasEffectedGuidanceModels.getEndNode().getTitle());
-        setIdAttribute(hasEffectedGuidanceModels.getEndNode().getId());
-        setDescription(hasEffectedGuidanceModels.getDescription());
-        setOrdering(hasEffectedGuidanceModels.getOrdering());
-        setIdAttribute(hasEffectedGuidanceModels.getEndNode().getId());
+    public DecisionDocumentationModelEffectedDocumentationModelDto(HasEffectedDocumentationModel hasEffectedDocumentationModel) {
+        setId(hasEffectedDocumentationModel.getId());
+        setTitle(hasEffectedDocumentationModel.getEndNode().getTitle());
+        setIdAttribute(hasEffectedDocumentationModel.getEndNode().getId());
+        setDescription(hasEffectedDocumentationModel.getDescription());
+        setOrdering(hasEffectedDocumentationModel.getOrdering());
+        setIdAttribute(hasEffectedDocumentationModel.getEndNode().getId());
     }
 
 

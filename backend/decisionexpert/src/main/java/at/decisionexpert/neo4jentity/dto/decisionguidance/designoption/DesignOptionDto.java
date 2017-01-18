@@ -29,7 +29,7 @@ public class DesignOptionDto {
 
     private List<DesignOptionRelationDto> addressedRequirements;
 
-    private List<DesignOptionRelationDto> effectedGuidanceModels;
+    private List<DesignOptionRelationDto> affectedGuidanceModels;
 
     private List<DesignOptionRelationDto> requiredComponents;
 
@@ -55,7 +55,7 @@ public class DesignOptionDto {
         setAddressedRequirements(getNeo4JRelationDto(designOption.getAddressedRequirements()));
 
         // EffectedTopics
-        setEffectedGuidanceModels(getNeo4JRelationDto(designOption.getEffectedGuidanceModels()));
+        setAffectedGuidanceModels(getNeo4JRelationDto(designOption.getAffectedGuidanceModels()));
 
         //RequiredComponents
         setRequiredComponents(getNeo4JRelationDto(designOption.getRequiredComponents()));
@@ -129,12 +129,12 @@ public class DesignOptionDto {
         this.addressedRequirements = addressedRequirements;
     }
 
-    public List<DesignOptionRelationDto> getEffectedGuidanceModels() {
-        return effectedGuidanceModels;
+    public List<DesignOptionRelationDto> getAffectedGuidanceModels() {
+        return affectedGuidanceModels;
     }
 
-    public void setEffectedGuidanceModels(List<DesignOptionRelationDto> effectedTopics) {
-        this.effectedGuidanceModels = effectedGuidanceModels;
+    public void setAffectedGuidanceModels(List<DesignOptionRelationDto> affectedGuidanceModels) {
+        this.affectedGuidanceModels = affectedGuidanceModels;
     }
 
     public List<DesignOptionRelationDto> getRequiredComponents() {

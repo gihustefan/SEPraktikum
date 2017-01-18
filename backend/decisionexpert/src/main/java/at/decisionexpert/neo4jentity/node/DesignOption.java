@@ -25,8 +25,8 @@ public class DesignOption extends CoreData {
     @Relationship(type = "HAS_ADDRESSEDREQUIREMENT", direction = Relationship.OUTGOING)
     private Set<HasAddressedRequirement> addressedRequirements = new HashSet<>(0);
 
-    @Relationship(type = "HAS_EFFECTEDGUIDANCEMODEL", direction = Relationship.OUTGOING)
-    private Set<HasAffectedGuidanceModels> effectedGuidanceModels = new HashSet<>(0);
+    @Relationship(type = "HAS_AFFECTEDGUIDANCEMODEL", direction = Relationship.OUTGOING)
+    private Set<HasAffectedGuidanceModels> affectedGuidanceModels = new HashSet<>(0);
 
     @Relationship(type = "HAS_REQUIREDCOMPONENT", direction = Relationship.OUTGOING)
     private Set<HasRequiredComponent> requiredComponents = new HashSet<>(0);
@@ -78,12 +78,12 @@ public class DesignOption extends CoreData {
         this.addressedRequirements = addressedRequirements;
     }
 
-    public Set<HasAffectedGuidanceModels> getEffectedGuidanceModels() {
-        return effectedGuidanceModels;
+    public Set<HasAffectedGuidanceModels> getAffectedGuidanceModels() {
+        return affectedGuidanceModels;
     }
 
-    public void setEffectedGuidanceModels(Set<HasAffectedGuidanceModels> effectedGuidanceModels) {
-        this.effectedGuidanceModels = effectedGuidanceModels;
+    public void setAffectedGuidanceModels(Set<HasAffectedGuidanceModels> affectedGuidanceModels) {
+        this.affectedGuidanceModels = affectedGuidanceModels;
     }
 
     public Set<HasRequiredComponent> getRequiredComponents() {
