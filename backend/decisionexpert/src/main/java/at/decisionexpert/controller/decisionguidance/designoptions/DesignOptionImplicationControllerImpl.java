@@ -25,14 +25,14 @@ public class DesignOptionImplicationControllerImpl implements DesignOptionRelati
     }
 
     @Override
-    @RequestMapping(value = "/{idDesginOptionImplication}",method = RequestMethod.PATCH)
-    public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionImplication, @RequestBody DesignOptionRelationDto newValues) {
-        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionImplication, newValues, HasImplication.class, Implication.class);
+    @RequestMapping(value = "/{idDesginOptionImplicationRelation}",method = RequestMethod.PATCH)
+    public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionImplicationRelation, @RequestBody DesignOptionRelationDto newValues) {
+        return designOptionService.updateExistingRelationAttribute(idDesginOption, idDesginOptionImplicationRelation, newValues, HasImplication.class, Implication.class);
     }
 
     @Override
-    @RequestMapping(value = "/{idDesginOptionImplication}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionImplication) {
-        designOptionService.deleteRelationAttribute(idDesginOption, idDesginOptionImplication, HasImplication.class);
+    @RequestMapping(value = "/{idDesginOptionImplicationRelation}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable Long idDesginOption, @PathVariable Long idDesginOptionImplicationRelation) {
+        designOptionService.deleteRelationAttribute(idDesginOption, idDesginOptionImplicationRelation, HasImplication.class);
     }
 }
