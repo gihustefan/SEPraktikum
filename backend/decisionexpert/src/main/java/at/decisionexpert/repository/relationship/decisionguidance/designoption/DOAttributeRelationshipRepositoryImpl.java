@@ -1,7 +1,7 @@
 package at.decisionexpert.repository.relationship.decisionguidance.designoption;
 
 import at.decisionexpert.neo4jentity.node.CoreData;
-import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.DOAttributeRelationship;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.*;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
@@ -39,13 +39,25 @@ public class DOAttributeRelationshipRepositoryImpl implements DOAttributeRelatio
 
     @Override
     public <T extends DOAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz, Long idStartNode, Long idEndNode) {
-        String query = "MATCH (start:DesignOption)-[rel:HAS_AFFECTEDGUIDANCEMODEL]->(end:DecisionGuidanceModel) WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel";
+        StringBuilder query = new StringBuilder();
+        query.append("MATCH (start:DesignOption)");
+        if(clazz == HasAffectedGuidanceModels.class)
+            query.append("-[rel:HAS_AFFECTEDGUIDANCEMODEL]->(end:DecisionGuidanceModel)");
+        else if (clazz == HasImplication.class)
+            query.append("-[rel:HAS_IMPLICATION]->(end:Implication)");
+        else if (clazz == HasRequiredComponent.class)
+            query.append("-[rel:HAS_REQUIREDCOMPONENT]->(end:Component)");
+        else if (clazz == HasAddressedRequirement.class)
+            query.append("-[rel:HAS_ADDRESSEDREQUIREMENT]->(end:Requirement)");
+
+
+        query.append(" WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel");
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idStartNode", idStartNode);
         parameters.put("idEndNode", idEndNode);
 
-        return neo4jOperations.queryForObjects(clazz, query, parameters);
+        return neo4jOperations.queryForObjects(clazz, query.toString(), parameters);
     }
 
     @Override

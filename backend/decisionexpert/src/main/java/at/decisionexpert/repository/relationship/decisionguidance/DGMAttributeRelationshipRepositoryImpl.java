@@ -2,6 +2,8 @@ package at.decisionexpert.repository.relationship.decisionguidance;
 
 import at.decisionexpert.neo4jentity.node.CoreData;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
@@ -39,13 +41,21 @@ public class DGMAttributeRelationshipRepositoryImpl implements DGMAttributeRelat
 
     @Override
     public <T extends DGMAttributeRelationship<? extends CoreData>> Iterable<T> findRelationByStartNodeEndNode(Class<T> clazz, Long idStartNode, Long idEndNode) {
-        String query = "MATCH (start:DecisionGuidanceModel)-[rel:HAS_RELATEDGUIDANCEMODEL]->(end:DecisionGuidanceModel) WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel";
+        StringBuilder query = new StringBuilder();
+        query.append("MATCH (start:DecisionGuidanceModel)");
+
+        if(clazz == HasRelatedGuidanceModels.class)
+            query.append("-[rel:HAS_RELATEDGUIDANCEMODEL]->(end:DecisionGuidanceModel)");
+        else if (clazz == HasPotentialRequirement.class)
+            query.append("-[rel:HAS_POTENTIALREQUIREMENT]->(end:Requirement)");
+
+        query.append(" WHERE id(start) = {idStartNode} AND id(end) = {idEndNode} RETURN rel");
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idStartNode", idStartNode);
         parameters.put("idEndNode", idEndNode);
 
-        return neo4jOperations.queryForObjects(clazz, query, parameters);
+        return neo4jOperations.queryForObjects(clazz, query.toString(), parameters);
     }
 
     @Override
@@ -79,8 +89,7 @@ public class DGMAttributeRelationshipRepositoryImpl implements DGMAttributeRelat
      *            The relation Class under investigation
      * @return the Relation Name based on the relation class
      */
-    private String getRelationType(
-            Class<? extends DGMAttributeRelationship<? extends CoreData>> relationClass) {
+    private String getRelationType(Class<? extends DGMAttributeRelationship<? extends CoreData>> relationClass) {
         RelationshipEntity relEntity = relationClass.getAnnotation(RelationshipEntity.class);
         Assert.notNull(relEntity);
         return relEntity.type();
