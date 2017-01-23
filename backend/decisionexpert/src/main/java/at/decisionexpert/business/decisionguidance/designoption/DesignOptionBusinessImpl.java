@@ -223,10 +223,10 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness {
         Assert.notNull(idDesignOptionRelation);
         Assert.notNull(relationClass);
 
-        T archProfileRelationToDelete = doAttributeRelationshipRepository.findById(relationClass, idDesignOptionRelation);
-        Assert.notNull(archProfileRelationToDelete);
+        T designOptionRelationToDelete = doAttributeRelationshipRepository.findById(relationClass, idDesignOptionRelation);
+        Assert.notNull(designOptionRelationToDelete);
 
-        doAttributeRelationshipRepository.delete(archProfileRelationToDelete);
+        doAttributeRelationshipRepository.delete(designOptionRelationToDelete);
 
         // TODO Reorder
     }

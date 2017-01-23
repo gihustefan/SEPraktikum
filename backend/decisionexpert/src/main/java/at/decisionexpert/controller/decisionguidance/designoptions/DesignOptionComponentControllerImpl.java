@@ -25,14 +25,14 @@ public class DesignOptionComponentControllerImpl implements DesignOptionRelation
     }
 
     @Override
-    @RequestMapping(value = "/{idDesginOptionComponent}",method = RequestMethod.PATCH)
-    public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesignOption, @PathVariable Long idDesginOptionComponent, @RequestBody DesignOptionRelationDto newValues) {
-        return designOptionService.updateExistingRelationAttribute(idDesignOption, idDesginOptionComponent, newValues, HasRequiredComponent.class, Component.class);
+    @RequestMapping(value = "/{idDesginOptionComponentRelation}",method = RequestMethod.PATCH)
+    public DesignOptionRelationDto updateAttributes(@PathVariable Long idDesignOption, @PathVariable Long idDesginOptionComponentRelation, @RequestBody DesignOptionRelationDto newValues) {
+        return designOptionService.updateExistingRelationAttribute(idDesignOption, idDesginOptionComponentRelation, newValues, HasRequiredComponent.class, Component.class);
     }
 
     @Override
-    @RequestMapping(value = "/{idDesginOptionComponent}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long idDesignOption, @PathVariable Long idDesginOptionComponent) {
-        designOptionService.deleteRelationAttribute(idDesignOption, idDesginOptionComponent, HasRequiredComponent.class);
+    @RequestMapping(value = "/{idDesginOptionComponentRelation}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable Long idDesignOption, @PathVariable Long idDesginOptionComponentRelation) {
+        designOptionService.deleteRelationAttribute(idDesignOption, idDesginOptionComponentRelation, HasRequiredComponent.class);
     }
 }
