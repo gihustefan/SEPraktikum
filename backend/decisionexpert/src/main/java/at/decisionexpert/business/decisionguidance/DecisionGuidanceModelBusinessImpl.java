@@ -1,6 +1,7 @@
 package at.decisionexpert.business.decisionguidance;
 
 import at.decisionexpert.business.coredata.CreateCoreDataImpl;
+import at.decisionexpert.business.decisionguidance.designoption.DesignOptionBusinessImpl;
 import at.decisionexpert.business.user.UserBusiness;
 import at.decisionexpert.controller.decisionguidance.DecisionGuidanceModelController;
 import at.decisionexpert.exception.DecisionGuidanceModelNotFoundException;
@@ -10,11 +11,16 @@ import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelC
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelPageableDto;
 import at.decisionexpert.neo4jentity.dto.decisionguidance.DecisionGuidanceModelRelationDto;
-import at.decisionexpert.neo4jentity.node.CoreData;
-import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
-import at.decisionexpert.neo4jentity.node.User;
-import at.decisionexpert.neo4jentity.node.UserAuthority;
+import at.decisionexpert.neo4jentity.dto.decisionguidance.designoption.DesignOptionRelationDto;
+import at.decisionexpert.neo4jentity.node.*;
 import at.decisionexpert.neo4jentity.relationship.decisionguidance.DGMAttributeRelationship;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasDesignOption;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasPotentialRequirement;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.HasRelatedGuidanceModels;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAddressedRequirement;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasAffectedGuidanceModels;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasImplication;
+import at.decisionexpert.neo4jentity.relationship.decisionguidance.designoption.HasRequiredComponent;
 import at.decisionexpert.repository.node.NodeAttributeRepository;
 import at.decisionexpert.repository.node.RequirementRepository;
 import at.decisionexpert.repository.node.comment.CommentRepository;
@@ -78,6 +84,9 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
 
     @Autowired
     private CreateCoreDataImpl createCoreDataImpl;
+
+    @Autowired
+    private DesignOptionBusinessImpl designOptionBusiness;
 
     @Override
     public DecisionGuidanceModelDto getDecisionGuidanceModel(Long id) {
@@ -164,6 +173,71 @@ public class DecisionGuidanceModelBusinessImpl implements DecisionGuidanceModelB
     @Override
     public void deleteDecisionGuidanceModel(Long id) {
         decisionGuidanceModelRepository.delete(id);
+    }
+
+    @Override
+    public DecisionGuidanceModelDto cloneDecisionGuidanceModel(Long id) {
+        if (id < 0)
+            throw new DecisionGuidanceModelNotFoundException();
+
+        DecisionGuidanceModel decisionGuidanceModel = decisionGuidanceModelRepository.findOne(id, 2);
+
+        if (decisionGuidanceModel == null)
+            throw new DecisionGuidanceModelNotFoundException();
+
+        // Fetching the authenticated user
+        User authenticatedUser = userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        DecisionGuidanceModel clonedDecisionGuidanceModel = decisionGuidanceModelRepository.save(new DecisionGuidanceModel(authenticatedUser, decisionGuidanceModel.getName(), decisionGuidanceModel.getDescription()));
+        clonedDecisionGuidanceModel.setPublished(false);
+
+        //Potential Concerns
+        decisionGuidanceModel.getPotentialRequirements().forEach(hasPotentialRequirement -> {
+            DecisionGuidanceModelRelationDto decisionGuidanceModelRelationDto =  new DecisionGuidanceModelRelationDto(hasPotentialRequirement);
+            decisionGuidanceModelRelationDto.setId(null);
+            createRelation(clonedDecisionGuidanceModel.getId(), decisionGuidanceModelRelationDto, HasPotentialRequirement.class, Requirement.class);
+        });
+
+        //Design Options
+        decisionGuidanceModel.getDesignOptions().forEach(hasDesignOption -> {
+            DesignOption clonedDesignOption = designOptionRepository.save(new DesignOption(authenticatedUser, hasDesignOption.getEndNode().getName(),hasDesignOption.getEndNode().getDescription()));
+            createRelation(clonedDecisionGuidanceModel.getId(), new DecisionGuidanceModelRelationDto(clonedDesignOption), HasDesignOption.class, DesignOption.class);
+
+            //Addressed Concerns
+            hasDesignOption.getEndNode().getAddressedRequirements().forEach(hasAddressedRequirement -> {
+                DesignOptionRelationDto designOptionRelationDto =  new DesignOptionRelationDto(hasAddressedRequirement);
+                designOptionRelationDto.setId(null);
+                designOptionBusiness.createRelation(clonedDesignOption.getId(), designOptionRelationDto, HasAddressedRequirement.class, Requirement.class);
+            });
+            //Implications
+            hasDesignOption.getEndNode().getImplications().forEach(hasImplication -> {
+                DesignOptionRelationDto designOptionRelationDto =  new DesignOptionRelationDto(hasImplication);
+                designOptionRelationDto.setId(null);
+                designOptionBusiness.createRelation(clonedDesignOption.getId(), designOptionRelationDto, HasImplication.class, Implication.class);
+            });
+            //AffectedGuidanceModels
+            hasDesignOption.getEndNode().getAffectedGuidanceModels().forEach(hasAffectedGuidanceModels -> {
+                DesignOptionRelationDto designOptionRelationDto =  new DesignOptionRelationDto(hasAffectedGuidanceModels);
+                designOptionRelationDto.setId(null);
+                designOptionBusiness.createRelation(clonedDesignOption.getId(), designOptionRelationDto, HasAffectedGuidanceModels.class, DecisionGuidanceModel.class);
+            });
+            //RequiredComponents
+            hasDesignOption.getEndNode().getRequiredComponents().forEach(hasRequiredComponent -> {
+                DesignOptionRelationDto designOptionRelationDto =  new DesignOptionRelationDto(hasRequiredComponent);
+                designOptionRelationDto.setId(null);
+                designOptionBusiness.createRelation(clonedDesignOption.getId(), designOptionRelationDto, HasRequiredComponent.class, at.decisionexpert.neo4jentity.node.Component.class);
+            });
+        });
+
+        //RelatedGuidanceModels
+        decisionGuidanceModel.getRelatedGuidanceModels().forEach(hasRelatedGuidanceModels -> {
+            DecisionGuidanceModelRelationDto decisionGuidanceModelRelationDto =  new DecisionGuidanceModelRelationDto(hasRelatedGuidanceModels);
+            decisionGuidanceModelRelationDto.setId(null);
+            createRelation(clonedDecisionGuidanceModel.getId(), decisionGuidanceModelRelationDto, HasRelatedGuidanceModels.class, DecisionGuidanceModel.class);
+        });
+
+        decisionGuidanceModelRepository.save(clonedDecisionGuidanceModel);
+        return new DecisionGuidanceModelDto(decisionGuidanceModelRepository.findOne(clonedDecisionGuidanceModel.getId(), 2));
     }
 
     @Override

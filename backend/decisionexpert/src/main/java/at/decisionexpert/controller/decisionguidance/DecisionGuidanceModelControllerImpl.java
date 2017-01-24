@@ -47,4 +47,10 @@ public class DecisionGuidanceModelControllerImpl implements DecisionGuidanceMode
     public void deleteDecisionGuidanceModel(@PathVariable Long idDecisionGuidanceModel) {
         decisionGuidanceModelService.deleteDecisionGuidanceModel(idDecisionGuidanceModel);
     }
+
+    @Override
+    @RequestMapping(value = "/{idDecisionGuidanceModel}", method = RequestMethod.POST)
+    public DecisionGuidanceModelDto cloneDecisionGuidanceModel(@PathVariable Long idDecisionGuidanceModel) {
+        return decisionGuidanceModelService.cloneDecisionGuidanceModel(idDecisionGuidanceModel);
+    }
 }

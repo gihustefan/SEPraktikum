@@ -47,11 +47,18 @@ public interface DecisionGuidanceModelController {
     DecisionGuidanceModelPageableDto getDecisionGuidanceModels(Integer page, Integer size, DecisionGuidanceModelType type, String searchText, Long groupId);
 
     /**
-     * Deleting an DecisionGuidanceModel
+     * Deleting a DecisionGuidanceModel
      *
      * @param idDecisionGuidanceModel Which DecisionGuidanceModel
      */
     void deleteDecisionGuidanceModel(Long idDecisionGuidanceModel);
+
+    /**
+     * Clone a DecisionGuidanceModel and return the new one (also DesignOptions are cloned)
+     *
+     * @param idDecisionGuidanceModel Which DecisionGuidanceModel should be cloned
+     */
+    DecisionGuidanceModelDto cloneDecisionGuidanceModel(Long idDecisionGuidanceModel);
 
     enum DecisionGuidanceModelType {
         NEWEST, ALPHABET, RATING

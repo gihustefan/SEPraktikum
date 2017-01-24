@@ -49,6 +49,9 @@ public interface DecisionGuidanceModelService {
     void deleteDecisionGuidanceModel(@NotNull Long id);
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    DecisionGuidanceModelDto cloneDecisionGuidanceModel(@NotNull Long id);
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@NotNull Long idDecisionGuidanceModel);
 
     /**
@@ -95,4 +98,6 @@ public interface DecisionGuidanceModelService {
     @PreAuthorize("hasRole('ROLE_USER') and hasPermission(#idDecisionGuidanceModel, 'at.decisionexpert.neo4jentity.node.DecisionGuidanceModel', 'OWNER')")
     <T extends DGMAttributeRelationship<? extends CoreData>> void deleteRelationAttribute(
             @NotNull Long idDecisionGuidanceModel, @NotNull Long idDecisionGuidanceModelRelation, Class<T> relationClass);
+
+
 }

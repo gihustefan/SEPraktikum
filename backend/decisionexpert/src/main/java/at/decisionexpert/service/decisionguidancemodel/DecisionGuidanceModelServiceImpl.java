@@ -56,6 +56,11 @@ public class DecisionGuidanceModelServiceImpl implements DecisionGuidanceModelSe
     }
 
     @Override
+    public DecisionGuidanceModelDto cloneDecisionGuidanceModel(@NotNull Long id) {
+        return decisionGuidanceModelBusiness.cloneDecisionGuidanceModel(id);
+    }
+
+    @Override
     public List<DecisionGuidanceModelRelationDto> getPotentialRequirements(@NotNull Long idDecisionGuidanceModel) {
         return decisionGuidanceModelBusiness.getPotentialRequirements(idDecisionGuidanceModel);
     }
