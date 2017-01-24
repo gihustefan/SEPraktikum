@@ -6,11 +6,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 @Configuration
 public class ValidationConfig {
+
+	@Bean
+	public Validator validator() {
+		return new LocalValidatorFactoryBean();
+	}
+
+	@Bean //this could be provided via auto-configuration
+	MethodValidationPostProcessor methodValidationPostProcessor() {
+		return new MethodValidationPostProcessor();
+	}
+
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

@@ -120,7 +120,7 @@ public class DesignOptionBusinessImpl implements DesignOptionBusiness {
             doAttributeRelationshipRepository.delete(doAttributeRelationshipRepository.findById(relationClass, attributeInfo.getId()));
         }
 
-        DesignOption designOption = designOptionRepository.findOne(idDesignOption, 0);
+        DesignOption designOption = designOptionRepository.findOne(idDesignOption, 1);
 
         // ArchProfile is not allowed to be null
         Assert.notNull(designOption);
