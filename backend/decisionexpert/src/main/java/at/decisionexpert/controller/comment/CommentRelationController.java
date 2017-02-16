@@ -1,6 +1,5 @@
 package at.decisionexpert.controller.comment;
 
-import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
 
@@ -9,7 +8,7 @@ import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
  */
 public interface CommentRelationController {
 
-    CommentRelationDto create(Long idModel, CommentRelationChangeRequestDto commentValue);
+    CommentRelationDto create(Long idModel, CommentRelationChangeRequestDto commentValue, CommentRelationControllerImpl.CommentStartNodeType type);
 
     CommentRelationDto updateAttributes(Long idModel, Long idCommentRelation, CommentRelationChangeRequestDto newCommentValue);
 

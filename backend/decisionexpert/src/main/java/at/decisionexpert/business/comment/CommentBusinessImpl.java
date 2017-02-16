@@ -63,15 +63,15 @@ public class CommentBusinessImpl implements CommentBusiness {
         Assert.notNull(idModel);
         Assert.notNull(commentValue);
 
-        A startModel = null;
+        A startNode = null;
         if (toNodeType == DecisionGuidanceModel.class) {
-            startModel = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
+            startNode = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
         } else if (toNodeType == DecisionDocumentationModel.class) {
-            startModel = (A) decisionDocumentationRepository.findOne(idModel, 0);
+            startNode = (A) decisionDocumentationRepository.findOne(idModel, 0);
         } else if (toNodeType == Comment.class) {
-            startModel = (A) commentRepository.findOne(idModel, 0);
+            startNode = (A) commentRepository.findOne(idModel, 0);
         }
-        Assert.notNull(startModel);
+        Assert.notNull(startNode);
 
         Comment newComment = new Comment();
         newComment.setText(commentValue.getText());
@@ -80,7 +80,7 @@ public class CommentBusinessImpl implements CommentBusiness {
         newComment.setCreator(userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         Comment endComment = commentRepository.save(newComment);
 
-        HasComment hasComment = new HasComment(startModel, endComment);
+        HasComment hasComment = new HasComment(startNode, endComment);
         hasComment = hasCommentRepository.save(hasComment);
 
         return new CommentRelationDto(hasComment);

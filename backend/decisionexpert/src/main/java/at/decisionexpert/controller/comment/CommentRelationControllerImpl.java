@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/comment/{idComment}/comments")
 @ResponseBody
-public class CommentCommentRelationControllerImpl implements CommentRelationController{
+public class CommentRelationControllerImpl implements CommentRelationController{
 
     @Autowired
     private CommentService commentService;
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto commentValue) {
+    public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto commentValue, @RequestBody CommentStartNodeType type) {
         return commentService.createCommentRelation(idComment, commentValue, Comment.class);
     }
 
@@ -35,5 +35,9 @@ public class CommentCommentRelationControllerImpl implements CommentRelationCont
     @RequestMapping(value = "/{idCommentRelation}",method = RequestMethod.DELETE)
     public void delete(@PathVariable Long idComment, @PathVariable Long idCommentRelation) {
         commentService.deleteCommentRelationAttribute(idComment, idCommentRelation);
+    }
+
+    enum CommentStartNodeType {
+        DGM, Comment
     }
 }
