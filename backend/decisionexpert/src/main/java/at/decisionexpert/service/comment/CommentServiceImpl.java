@@ -1,7 +1,6 @@
 package at.decisionexpert.service.comment;
 
 import at.decisionexpert.business.comment.CommentBusiness;
-import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
@@ -25,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull CommentRelationControllerImpl.CommentStartNodeType toNodeType) {
+    public CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull String comment, @NotNull String toNodeType) {
         return commentBusiness.createCommentRelation(idModel, comment, toNodeType);
     }
 

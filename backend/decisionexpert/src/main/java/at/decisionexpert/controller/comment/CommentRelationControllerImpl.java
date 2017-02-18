@@ -19,8 +19,8 @@ public class CommentRelationControllerImpl implements CommentRelationController{
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto commentValue, @RequestBody CommentStartNodeType type) {
-        return commentService.createCommentRelation(idComment, commentValue, type);
+    public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto comment) {
+        return commentService.createCommentRelation(idComment, comment.getText(), comment.getType());
     }
 
     @Override

@@ -1,6 +1,5 @@
 package at.decisionexpert.service.comment;
 
-import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
@@ -17,7 +16,7 @@ public interface CommentService {
     CommentDto getComment(@NotNull Long idComment);
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull CommentRelationControllerImpl.CommentStartNodeType toNodeType);
+    CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull String comment, @NotNull String toNodeType);
 
     @PreAuthorize("hasRole('ROLE_USER')")
     CommentRelationDto updateExistingCommentRelationAttribute(@NotNull Long idModel, @NotNull Long idCommentRelation, @NotNull CommentRelationChangeRequestDto newValues);

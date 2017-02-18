@@ -1,7 +1,6 @@
 package at.decisionexpert.business.comment;
 
 import at.decisionexpert.business.user.UserBusiness;
-import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.exception.CommentNotFoundException;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
@@ -61,24 +60,27 @@ public class CommentBusinessImpl implements CommentBusiness {
     }
 
     @Override
-    public <A extends Node> CommentRelationDto createCommentRelation(Long idModel, CommentRelationChangeRequestDto commentValue, CommentRelationControllerImpl.CommentStartNodeType toNodeType) {
+    public <A extends Node> CommentRelationDto createCommentRelation(Long idModel, String commentText, String toNodeType) {
         Assert.notNull(idModel);
-        Assert.notNull(commentValue);
+//        Assert.notNull(commentValue);
+
+        System.out.println(commentText);
+        System.out.println(toNodeType);
 
         A startNode = null;
-        if (toNodeType == DGM) {
+        if (toNodeType.equals(DGM.toString())) {
             startNode = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
         }
 //        else if (toNodeType == DecisionDocumentationModel.class) {
 //            startNode = (A) decisionDocumentationRepository.findOne(idModel, 0);
 //        }
-        else if (toNodeType == ParentComment) {
+        else if (toNodeType.equals(ParentComment.toString())) {
             startNode = (A) commentRepository.findOne(idModel, 0);
         }
         Assert.notNull(startNode);
 
         Comment newComment = new Comment();
-        newComment.setText(commentValue.getText());
+        newComment.setText(commentText);
         newComment.setCreationDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         newComment.setLastModified(newComment.getCreationDate());
         newComment.setCreator(userBusiness.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
