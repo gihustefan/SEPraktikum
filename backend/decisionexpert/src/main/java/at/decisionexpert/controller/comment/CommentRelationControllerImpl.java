@@ -1,9 +1,7 @@
 package at.decisionexpert.controller.comment;
 
-import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
-import at.decisionexpert.neo4jentity.node.Comment;
 import at.decisionexpert.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +20,7 @@ public class CommentRelationControllerImpl implements CommentRelationController{
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto commentValue, @RequestBody CommentStartNodeType type) {
-        return commentService.createCommentRelation(idComment, commentValue, Comment.class);
+        return commentService.createCommentRelation(idComment, commentValue, type);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class CommentRelationControllerImpl implements CommentRelationController{
         commentService.deleteCommentRelationAttribute(idComment, idCommentRelation);
     }
 
-    enum CommentStartNodeType {
-        DGM, Comment
+    public enum CommentStartNodeType {
+        DGM, ParentComment
     }
 }

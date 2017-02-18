@@ -1,10 +1,10 @@
 package at.decisionexpert.service.comment;
 
 import at.decisionexpert.business.comment.CommentBusiness;
+import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
-import at.decisionexpert.neo4jentity.node.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public <A extends Node> CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull Class<A> toNodeType) {
+    public CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull CommentRelationControllerImpl.CommentStartNodeType toNodeType) {
         return commentBusiness.createCommentRelation(idModel, comment, toNodeType);
     }
 

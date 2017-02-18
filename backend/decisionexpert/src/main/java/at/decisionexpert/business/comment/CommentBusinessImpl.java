@@ -1,13 +1,12 @@
 package at.decisionexpert.business.comment;
 
 import at.decisionexpert.business.user.UserBusiness;
+import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.exception.CommentNotFoundException;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
 import at.decisionexpert.neo4jentity.node.Comment;
-import at.decisionexpert.neo4jentity.node.DecisionDocumentationModel;
-import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.neo4jentity.node.Node;
 import at.decisionexpert.neo4jentity.relationship.HasComment;
 import at.decisionexpert.repository.node.comment.CommentRepository;
@@ -21,6 +20,9 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import static at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType.DGM;
+import static at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType.ParentComment;
 
 /**
  * Created by stefanhaselboeck on 14.11.16.
@@ -59,16 +61,18 @@ public class CommentBusinessImpl implements CommentBusiness {
     }
 
     @Override
-    public <A extends Node> CommentRelationDto createCommentRelation(Long idModel, CommentRelationChangeRequestDto commentValue, Class<A> toNodeType) {
+    public <A extends Node> CommentRelationDto createCommentRelation(Long idModel, CommentRelationChangeRequestDto commentValue, CommentRelationControllerImpl.CommentStartNodeType toNodeType) {
         Assert.notNull(idModel);
         Assert.notNull(commentValue);
 
         A startNode = null;
-        if (toNodeType == DecisionGuidanceModel.class) {
+        if (toNodeType == DGM) {
             startNode = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
-        } else if (toNodeType == DecisionDocumentationModel.class) {
-            startNode = (A) decisionDocumentationRepository.findOne(idModel, 0);
-        } else if (toNodeType == Comment.class) {
+        }
+//        else if (toNodeType == DecisionDocumentationModel.class) {
+//            startNode = (A) decisionDocumentationRepository.findOne(idModel, 0);
+//        }
+        else if (toNodeType == ParentComment) {
             startNode = (A) commentRepository.findOne(idModel, 0);
         }
         Assert.notNull(startNode);

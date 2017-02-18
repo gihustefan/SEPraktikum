@@ -1,9 +1,9 @@
 package at.decisionexpert.service.comment;
 
+import at.decisionexpert.controller.comment.CommentRelationControllerImpl;
 import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
-import at.decisionexpert.neo4jentity.node.Node;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ public interface CommentService {
     CommentDto getComment(@NotNull Long idComment);
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    <A extends Node> CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull Class<A> toNodeType);
+    CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull CommentRelationChangeRequestDto comment, @NotNull CommentRelationControllerImpl.CommentStartNodeType toNodeType);
 
     @PreAuthorize("hasRole('ROLE_USER')")
     CommentRelationDto updateExistingCommentRelationAttribute(@NotNull Long idModel, @NotNull Long idCommentRelation, @NotNull CommentRelationChangeRequestDto newValues);

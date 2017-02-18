@@ -1,9 +1,8 @@
 package at.decisionexpert.controller.comment;
 
-import at.decisionexpert.neo4jentity.dto.comment.CommentDto;
+import at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationChangeRequestDto;
 import at.decisionexpert.neo4jentity.dto.comment.CommentRelationDto;
-import at.decisionexpert.neo4jentity.node.DecisionGuidanceModel;
 import at.decisionexpert.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +20,8 @@ public class DecisionGuidanceModelCommentRelationControllerImpl implements Comme
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public CommentRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody CommentRelationChangeRequestDto commentValue) {
-        return commentService.createCommentRelation(idDecisionGuidanceModel, commentValue, DecisionGuidanceModel.class);
+    public CommentRelationDto create(@PathVariable Long idDecisionGuidanceModel, @RequestBody CommentRelationChangeRequestDto commentValue, CommentStartNodeType type) {
+        return commentService.createCommentRelation(idDecisionGuidanceModel, commentValue, type);
     }
 
     @Override
