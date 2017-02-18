@@ -20,8 +20,8 @@ import org.springframework.util.Assert;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import static at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType.COMMENT;
 import static at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType.DGM;
-import static at.decisionexpert.controller.comment.CommentRelationControllerImpl.CommentStartNodeType.ParentComment;
 
 /**
  * Created by stefanhaselboeck on 14.11.16.
@@ -68,13 +68,13 @@ public class CommentBusinessImpl implements CommentBusiness {
         System.out.println(toNodeType);
 
         A startNode = null;
-        if (toNodeType.equals(DGM.toString())) {
+        if (toNodeType.equalsIgnoreCase(DGM.toString())) {
             startNode = (A) decisionGuidanceModelRepository.findOne(idModel, 0);
         }
 //        else if (toNodeType == DecisionDocumentationModel.class) {
 //            startNode = (A) decisionDocumentationRepository.findOne(idModel, 0);
 //        }
-        else if (toNodeType.equals(ParentComment.toString())) {
+        else if (toNodeType.equalsIgnoreCase(COMMENT.toString())) {
             startNode = (A) commentRepository.findOne(idModel, 0);
         }
         Assert.notNull(startNode);

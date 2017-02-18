@@ -10,14 +10,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class CommentRelationChangeRequestDto<V extends Node> {
 
     private String text;
-    private String type;
+    private String parentType;
 
     public String getText() {
         return text;
     }
 
-    public String getType() {
-        return type;
+    public String getParentType() {
+        return parentType;
     }
 
     public void setText(String text) {

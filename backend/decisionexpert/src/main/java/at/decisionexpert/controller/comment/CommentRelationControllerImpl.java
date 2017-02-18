@@ -20,7 +20,7 @@ public class CommentRelationControllerImpl implements CommentRelationController{
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public CommentRelationDto create(@PathVariable Long idParent, @RequestBody CommentRelationChangeRequestDto comment) {
-        return commentService.createCommentRelation(idParent, comment.getText(), comment.getType());
+        return commentService.createCommentRelation(idParent, comment.getText(), comment.getParentType());
     }
 
     @Override
@@ -36,6 +36,6 @@ public class CommentRelationControllerImpl implements CommentRelationController{
     }
 
     public enum CommentStartNodeType {
-        DGM, ParentComment
+        DGM, COMMENT
     }
 }
