@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by stefanhaselboeck on 23.12.16.
  */
 @RestController
-@RequestMapping("api/comment/{idComment}/comments")
+@RequestMapping("api/comment/{idParent}/comments")
 @ResponseBody
 public class CommentRelationControllerImpl implements CommentRelationController{
 
@@ -19,8 +19,8 @@ public class CommentRelationControllerImpl implements CommentRelationController{
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public CommentRelationDto create(@PathVariable Long idComment, @RequestBody CommentRelationChangeRequestDto comment) {
-        return commentService.createCommentRelation(idComment, comment.getText(), comment.getType());
+    public CommentRelationDto create(@PathVariable Long idParent, @RequestBody CommentRelationChangeRequestDto comment) {
+        return commentService.createCommentRelation(idParent, comment.getText(), comment.getType());
     }
 
     @Override
