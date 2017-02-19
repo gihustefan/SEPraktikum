@@ -62,10 +62,6 @@ public class CommentBusinessImpl implements CommentBusiness {
     @Override
     public <A extends Node> CommentRelationDto createCommentRelation(Long idModel, String commentText, String toNodeType) {
         Assert.notNull(idModel);
-//        Assert.notNull(commentValue);
-
-        System.out.println(commentText);
-        System.out.println(toNodeType);
 
         A startNode = null;
         if (toNodeType.equalsIgnoreCase(DGM.toString())) {
