@@ -24,8 +24,8 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentRelationDto createCommentRelation(@NotNull Long idModel, @NotNull String comment, @NotNull String toNodeType) {
-        return commentBusiness.createCommentRelation(idModel, comment, toNodeType);
+    public CommentRelationDto createCommentRelation(@NotNull Long idParent, @NotNull String comment, @NotNull String toNodeType) {
+        return commentBusiness.createCommentRelation(idParent, comment, toNodeType);
     }
 
     @Override

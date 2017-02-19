@@ -31,8 +31,8 @@ public class CommentRelationControllerImpl implements CommentRelationController{
 
     @Override
     @RequestMapping(value = "/{idCommentRelation}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long idComment, @PathVariable Long idCommentRelation) {
-        commentService.deleteCommentRelationAttribute(idComment, idCommentRelation);
+    public void delete(@PathVariable Long idParent, @PathVariable Long idCommentRelation) {
+        commentService.deleteCommentRelationAttribute(idParent, idCommentRelation);
     }
 
     public enum CommentStartNodeType {
