@@ -25,8 +25,8 @@ public class CommentRelationControllerImpl implements CommentRelationController{
 
     @Override
     @RequestMapping(value = "/{idCommentRelation}",method = RequestMethod.PATCH)
-    public CommentRelationDto updateAttributes(@PathVariable Long idComment, @PathVariable Long idCommentRelation, @RequestBody CommentRelationChangeRequestDto newCommentValue) {
-        return commentService.updateExistingCommentRelationAttribute(idComment, idCommentRelation, newCommentValue);
+    public CommentRelationDto updateAttributes(@PathVariable Long idParent, @PathVariable Long idCommentRelation, @RequestBody CommentRelationChangeRequestDto newCommentValue) {
+        return commentService.updateExistingCommentRelationAttribute(idParent, idCommentRelation, newCommentValue);
     }
 
     @Override
